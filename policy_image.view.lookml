@@ -87,12 +87,24 @@
     timeframes: [date, week, month]
     sql: ${TABLE}.texp_date
     
-  - measure: premium_written
-    label: 'Written Premium'
-    type: sum
+  - dimension: premium_written
+    hidden: true
+    type: number
     sql: ${TABLE}.premium_written
     
-  - measure: premium_chg_written
+  - dimension: premium_chg_written
+    hidden: true
+    type: number
+    sql: ${TABLE}.premium_chg_written
+    
+  - measure: sum_premium_written
+    label: 'Written Premium'
+    type: sum
+    value_format_name: usd
+    sql: ${premium_written}
+    
+  - measure: sum_premium_chg_written
     label: 'Change in Written Premium'
     type: sum
-    sql: ${TABLE}.premium_chg_written
+    value_format_name: usd
+    sql: ${premium_chg_written}
