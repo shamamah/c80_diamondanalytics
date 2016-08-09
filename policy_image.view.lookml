@@ -17,18 +17,6 @@
     type: number
     sql: ${TABLE}.current_payplan_id
 
-  - dimension_group: eff
-    hidden: true
-    type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.eff_date
-
-  - dimension_group: exp
-    hidden: true
-    type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.exp_date
-
   - dimension: policy
     hidden: true
     type: string
@@ -38,43 +26,6 @@
     hidden: true
     type: number
     sql: ${TABLE}.policy_id
-
-  - dimension: policyimage_num
-    hidden: true
-    type: number
-    sql: ${TABLE}.policyimage_num
-
-  - dimension: premium_chg_written
-    hidden: true
-    type: string
-    sql: ${TABLE}.premium_chg_written
-
-  - dimension: premium_written
-    hidden: true
-    type: string
-    sql: ${TABLE}.premium_written
-
-  - dimension: pure_newbusiness
-    hidden: true
-    type: string
-    sql: ${TABLE}.pure_newbusiness
-
-  - dimension: renewal_ver
-    hidden: true
-    type: number
-    sql: ${TABLE}.renewal_ver
-
-  - dimension_group: teff
-    hidden: true
-    type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.teff_date
-
-  - dimension_group: texp
-    hidden: true
-    type: time
-    timeframes: [date, week, month]
-    sql: ${TABLE}.texp_date
 
   - dimension_group: trans_date
     hidden: true
@@ -96,3 +47,52 @@
     hidden: true
     type: number
     sql: ${TABLE}.transtype_id
+
+  - dimension: policyimage_num
+    label: 'Image Number'
+    type: string
+    sql: ${TABLE}.policyimage_num
+
+  - dimension: pure_newbusiness
+    label : 'Pure New Business'
+    type: string
+    sql: ${TABLE}.pure_newbusiness
+    
+  - dimension: renewal_ver
+    label : 'Renewal Version'
+    type: string
+    sql: ${TABLE}.renewal_ver
+
+  - dimension: eff
+    label: 'Effective'
+    type: time
+    timeframes: [date, week, month]
+    sql: ${TABLE}.eff_date   
+
+  - dimension: exp
+    label: 'Expiration'
+    type: time
+    timeframes: [date, week, month]
+    sql: ${TABLE}.exp_date
+    
+  - dimension: teff
+    label: 'Transaction Effective'
+    type: time
+    timeframes: [date, week, month]
+    sql: ${TABLE}.teff_date
+    
+  - dimension: texp
+    label: 'Transaction Expiration'
+    type: time
+    timeframes: [date, week, month]
+    sql: ${TABLE}.texp_date
+    
+  - measure: premium_written
+    label: 'Written Premium'
+    type: sum
+    sql: ${TABLE}.premium_written
+    
+  - measure: premium_chg_written
+    label: 'Change in Written Premium'
+    type: sum
+    sql: ${TABLE}.premium_chg_written

@@ -3,7 +3,7 @@
   fields:
 
   - dimension: description
-    hidden: true
+#    hidden: true
     type: string
     sql: ${TABLE}.dscr
 

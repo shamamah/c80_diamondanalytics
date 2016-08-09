@@ -9,8 +9,8 @@
        sql_on: ${policy.policy_id} = ${policy_image.policy_id}
        relationship: one_to_many
        
-     - join: policy_current_status
-       sql_on: ${policy.policycurrentstatus_id} = ${policy_current_status.policycurrentstatus_id}
+     - join: current_status
+       sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id}
        relationship: one_to_one
 
      - join: trans_reason

@@ -1,9 +1,9 @@
-- view: policy_current_status
+- view: current_status
   sql_table_name: dbo.PolicyCurrentStatus
   fields:
 
   - dimension: description
-    hidden: true
+    label: 'Current Status'
     type: string
     sql: ${TABLE}.description
 
@@ -11,3 +11,4 @@
     hidden: true
     type: number
     sql: ${TABLE}.policycurrentstatus_id
+    

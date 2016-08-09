@@ -3,28 +3,11 @@
   fields:
 
   - dimension: description
+    label: 'Description'
     type: string
     sql: ${TABLE}.description
 
-  - dimension_group: last_modified
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.last_modified_date
-
-  - dimension_group: pcadded
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.pcadded_date
-
   - dimension: policystatuscode_id
+    hidden: true
     type: number
     sql: ${TABLE}.policystatuscode_id
-
-  - dimension: status
-    type: string
-    sql: ${TABLE}.status
-
-  - measure: count
-    type: count
-    drill_fields: []
-
