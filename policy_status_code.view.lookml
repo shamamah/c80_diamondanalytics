@@ -1,5 +1,5 @@
 - view: policy_status_code
-  lable: 'Policy Status'
+  label: 'Policy Status'
   sql_table_name: dbo.PolicyStatusCode
   fields:
 
