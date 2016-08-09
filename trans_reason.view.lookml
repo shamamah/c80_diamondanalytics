@@ -1,4 +1,5 @@
-- view: trans_reason
+- view: transaction_reason
+  label: 'Transaction Reason'
   sql_table_name: dbo.TransReason
   fields:
 

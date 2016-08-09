@@ -46,3 +46,9 @@
     type: time
     timeframes: [date]
     sql: ${TABLE}.first_exp_date
+    
+#  - measure: premium_chg_written
+#    label: 'Written Premium Change'
+#    type: sum
+#    value_format_name: usd
+#    sql: ${policy_image.premium_chg_written}

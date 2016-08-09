@@ -2,6 +2,11 @@
   sql_table_name: dbo.PolicyImage
   fields:
 
+  - dimension: compound_primary_key
+    hidden: true
+    primary_key: true
+    sql: CONCAT(${TABLE}.policy_id, '  ', ${TABLE}.policyimage_num)
+
   - dimension: agency_id
     hidden: true
     type: number
@@ -47,6 +52,11 @@
     hidden: true
     type: number
     sql: ${TABLE}.transtype_id
+    
+  - dimension: version_id
+    hidden: true
+    type: number
+    sql: ${TABLE}.version_id
 
   - dimension: policyimage_num
     label: 'Image Number'
@@ -87,24 +97,24 @@
     timeframes: [date, week, month]
     sql: ${TABLE}.texp_date
     
-  - dimension: premium_written
-    hidden: true
-    type: number
-    sql: ${TABLE}.premium_written
+  - dimension: trans
+    label: 'Transaction'
+    type: time
+    timeframes: [date, week, month]
+    sql: ${TABLE}.trans_date
     
   - dimension: premium_chg_written
     hidden: true
+    label: 'Written Premium Change'
     type: number
     sql: ${TABLE}.premium_chg_written
     
-  - measure: sum_premium_written
-    label: 'Written Premium'
-    type: sum
+  - measure: premium_chg_written_sum
+    #hidden: true
+    label: 'Written Premium Change'
+    type: sum_distinct
     value_format_name: usd
-    sql: ${premium_written}
-    
-  - measure: sum_premium_chg_written
-    label: 'Change in Written Premium'
-    type: sum
-    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key}
     sql: ${premium_chg_written}
+    
+

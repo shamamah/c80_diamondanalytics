@@ -1,4 +1,5 @@
-- view: trans_type
+- view: transaction_type
+  label: 'Transaction Type'
   sql_table_name: dbo.TransType
   fields:
 
