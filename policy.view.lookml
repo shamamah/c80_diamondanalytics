@@ -91,6 +91,12 @@
     type: string
     sql: ${trans_type.description}    
 
+  - dimension: pure_newbusiness
+    label : 'Pure New Business'
+    hidden: true
+    type: string
+    sql: ${policy_image.pure_newbusiness}
+
   - measure: premium_written
     label: 'Written Premium'
     type: sum
