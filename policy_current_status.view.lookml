@@ -1,4 +1,5 @@
 - view: current_status
+  label: 'Policy Status'
   sql_table_name: dbo.PolicyCurrentStatus
   fields:
 
