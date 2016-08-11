@@ -1,4 +1,4 @@
-- view: sex
+- view: policy_holder_sex
   sql_table_name: dbo.Sex
   fields:
 
@@ -10,6 +10,5 @@
 
   - dimension: dscr
     label: 'Sex'
-    view_label: 'Policy Holder'
     type: string
     sql: ${TABLE}.dscr

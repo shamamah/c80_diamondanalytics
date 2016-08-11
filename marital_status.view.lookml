@@ -1,9 +1,8 @@
-- view: marital_status
+- view: policy_holder_marital_status
   sql_table_name: dbo.MaritalStatus
   fields:
 
   - dimension: dscr
-    view_label: 'Policy Holder'
     type: string
     sql: ${TABLE}.dscr
 

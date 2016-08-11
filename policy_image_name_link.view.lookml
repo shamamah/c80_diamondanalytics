@@ -1,4 +1,4 @@
-- view: policy_image_name_link_policy_holder
+- view: policy_holder_policy_image_name_link
   sql_table_name: dbo.PolicyImageNameLink
   fields:
 
