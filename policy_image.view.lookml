@@ -103,6 +103,12 @@
     timeframes: [date]
     sql: ${TABLE}.trans_date
     
+  - dimension: trans_remark
+    label: 'Transaction Remark'
+    type: time
+    timeframes: [date]
+    sql: ${TABLE}.trans_remark
+    
   - dimension: premium_written
     label: 'Written Premium'
     type: number

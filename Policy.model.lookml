@@ -93,3 +93,27 @@
        type: inner
        sql_on: ${driver_name.dlstate_id} = ${driver_dln_state.state_id}
        relationship: one_to_one 
+       
+     - join: vehicle
+       view_label: 'Vehicle'
+       type: left_outer
+       sql_on: ${policy_image.policy_id} = ${vehicle.policy_id} AND ${policy_image.policyimage_num} = ${vehicle.policyimage_num} AND ${vehicle.detailstatuscode_id} = 1
+       relationship: one_to_many
+       
+     - join: coverage
+       view_label: 'Coverage'
+       type: left_outer
+       sql_on: ${policy_image.policy_id} = ${coverage.policy_id} AND ${policy_image.policyimage_num} = ${coverage.policyimage_num} AND ${vehicle.vehicle_num} = ${coverage.unit_num} AND ${coverage.detailstatuscode_id} = 1
+       relationship: one_to_many
+       
+     - join: coverage_code
+       view_label: 'Coverage'
+       type: inner
+       sql_on: ${coverage.coveragecode_id} = ${coverage_code.coveragecode_id}
+       relationship: one_to_one
+       
+     - join: coverage_limit
+       view_label: 'Coverage'
+       type: inner
+       sql_on: ${coverage.coveragelimit_id} = ${coverage_limit.coveragelimit_id}
+       relationship: one_to_one
