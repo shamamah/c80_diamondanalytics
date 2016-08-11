@@ -103,11 +103,27 @@
     timeframes: [date]
     sql: ${TABLE}.trans_date
     
+  - dimension: premium_written
+    label: 'Written Premium'
+    type: number
+    value_format_name: usd
+    sql: ${TABLE}.premium_written
+    
+  - dimension: premium_fullterm
+    label: 'Fullterm Premium'
+    type: number
+    value_format_name: usd
+    sql: ${TABLE}.premium_fullterm
+    
   - dimension: premium_chg_written
     hidden: true
-    label: 'Written Premium Change'
     type: number
     sql: ${TABLE}.premium_chg_written
+    
+  - dimension: premium_chg_fullterm
+    hidden: true
+    type: number
+    sql: ${TABLE}.premium_chg_fullterm
     
   - measure: premium_chg_written_sum
     #hidden: true
@@ -116,5 +132,13 @@
     value_format_name: usd
     sql_distinct_key: ${compound_primary_key}
     sql: ${premium_chg_written}
+    
+  - measure: premium_chg_fullterm_sum
+    #hidden: true
+    label: 'Fullterm Premium Change'
+    type: sum_distinct
+    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key}
+    sql: ${premium_chg_fullterm}
     
 

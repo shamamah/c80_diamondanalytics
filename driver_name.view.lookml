@@ -1,5 +1,5 @@
-- view: policy_holder_name
-  label: 'Policy Holder'
+- view: driver_name
+  label: 'Driver'
   sql_table_name: dbo.vName
   fields:
 
@@ -52,8 +52,3 @@
     hidden: true
     type: number
     sql: ${TABLE}.sex_id
-    
-  - dimension: detailstatuscode_id
-    hidden: true
-    type: number
-    sql: ${TABLE}.detailstatuscode_id

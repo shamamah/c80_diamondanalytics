@@ -41,11 +41,11 @@
      - join: policy_holder_policy_image_name_link
        type: inner
        sql_on: ${policy_image.policy_id} = ${policy_holder_policy_image_name_link.policy_id} AND ${policy_image.policyimage_num} = ${policy_holder_policy_image_name_link.policyimage_num} AND ${policy_holder_policy_image_name_link.nameaddresssource_id} = 3
-       relationship: one_to_one
+       relationship: one_to_many
 
      - join: policy_holder_name
        type: inner
-       sql_on: ${policy_holder_policy_image_name_link.name_id} = ${policy_holder_name.name_id}
+       sql_on: ${policy_holder_policy_image_name_link.name_id} = ${policy_holder_name.name_id} AND ${policy_holder_name.detailstatuscode_id} = 1
        relationship: one_to_one
 
      - join: policy_holder_marital_status
@@ -59,3 +59,37 @@
        type: inner
        sql_on: ${policy_holder_name.sex_id} = ${policy_holder_sex.sex_id}
        relationship: one_to_one
+       
+     - join: driver
+       view_label: 'Driver'
+       type: left_outer
+       sql_on: ${policy_image.policy_id} = ${driver.policy_id} AND ${policy_image.policyimage_num} = ${driver.policyimage_num} AND ${driver.detailstatuscode_id} = 1
+       relationship: one_to_many
+       
+     - join: driver_name_link
+       type: inner
+       sql_on: ${driver.policy_id} = ${driver_name_link.policy_id} AND ${driver.policyimage_num} = ${driver_name_link.policyimage_num} AND ${driver.driver_num} = ${driver_name_link.driver_num}
+       relationship: one_to_many
+       
+     - join: driver_name
+       type: inner
+       sql_on: ${driver_name_link.name_id} = ${driver_name.name_id}
+       relationship: one_to_one
+       
+     - join: driver_marital_status
+       view_label: 'Driver'
+       type: inner
+       sql_on: ${driver_name.maritalstatus_id} = ${driver_marital_status.maritalstatus_id}
+       relationship: one_to_one
+       
+     - join: driver_sex
+       view_label: 'Driver'
+       type: inner
+       sql_on: ${driver_name.sex_id} = ${driver_sex.sex_id}
+       relationship: one_to_one
+      
+     - join: driver_dln_state
+       view_label: 'Driver'
+       type: inner
+       sql_on: ${driver_name.dlstate_id} = ${driver_dln_state.state_id}
+       relationship: one_to_one 
