@@ -2,7 +2,7 @@
 
 - include: "*.view.lookml"       # include all the views
 - include: "*.dashboard.lookml"  # include all the dashboards
-
+-
 - explore: policy
   joins:
      - join: policy_image
@@ -35,4 +35,3 @@
        type: inner
        sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id}
        relationship: one_to_one
-

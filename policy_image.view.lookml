@@ -35,7 +35,7 @@
   - dimension_group: trans_date
     hidden: true
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.trans_date
 
   - dimension: trans_remark
@@ -76,31 +76,31 @@
   - dimension: eff # effective_date, effective_month, etc.
     label: 'Effective'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.eff_date   
 
   - dimension: exp
     label: 'Expiration'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.exp_date
     
   - dimension: teff
     label: 'Transaction Effective'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.teff_date
     
   - dimension: texp
     label: 'Transaction Expiration'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.texp_date
     
   - dimension: trans
     label: 'Transaction'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.trans_date
     
   - dimension: premium_chg_written

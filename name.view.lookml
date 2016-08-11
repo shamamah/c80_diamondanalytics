@@ -1,5 +1,6 @@
-- view: name
-  sql_table_name: dbo.Name
+- view: policy_holder_name
+  label: 'Policy Holder'
+  sql_table_name: dbo.vName
   fields:
 
   - dimension: name_id
@@ -10,88 +11,44 @@
 
   - dimension_group: birth
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.birth_date
-
-  - dimension: commercial_name1
-    type: string
-    sql: ${TABLE}.commercial_name1
-
-  - dimension: commercial_name2
-    type: string
-    sql: ${TABLE}.commercial_name2
 
   - dimension: display_name
     type: string
     sql: ${TABLE}.display_name
 
   - dimension: dln
+    label: 'Drivers License Number'
     type: string
     sql: ${TABLE}.dln
 
-  - dimension_group: dln
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.dln_date
-
-  - dimension: dlstate_id
-    type: number
-    sql: ${TABLE}.dlstate_id
-
-  - dimension: doing_business_as
-    type: string
-    sql: ${TABLE}.doing_business_as
-
-  - dimension: entitytype_id
-    type: number
-    sql: ${TABLE}.entitytype_id
-
   - dimension: first_name
+    label: 'First Name'
     type: string
     sql: ${TABLE}.first_name
 
-  - dimension: health_insurance_claim_number
-    type: string
-    sql: ${TABLE}.health_insurance_claim_number
-
-  - dimension_group: last_modified
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.last_modified_date
-
   - dimension: last_name
+    label: 'Last Name'
     type: string
     sql: ${TABLE}.last_name
+    
+  - dimension: dlstate_id
+    hidden: true
+    type: number
+    sql: ${TABLE}.dlstate_id
 
   - dimension: maritalstatus_id
+    hidden: true
     type: number
     sql: ${TABLE}.maritalstatus_id
 
-  - dimension: middle_name
-    type: string
-    sql: ${TABLE}.middle_name
-
-  - dimension: naics_code
-    type: string
-    sql: ${TABLE}.naics_code
-
-  - dimension: name_display_num
-    type: number
-    sql: ${TABLE}.name_display_num
-
-  - dimension: name_num
-    type: number
-    sql: ${TABLE}.name_num
-
-  - dimension: nameaddresssource_id
-    type: number
-    sql: ${TABLE}.nameaddresssource_id
-
   - dimension: nametype_id
+    hidden: true
     type: number
     sql: ${TABLE}.nametype_id
 
   - dimension: sex_id
+    hidden: true
     type: number
-    # hidden: true
     sql: ${TABLE}.sex_id

@@ -4,6 +4,7 @@
   fields:
 
   - dimension: description
+    label: 'Transaction Type'
 #    hidden: true
     type: string
     sql: ${TABLE}.dscr

@@ -5,7 +5,7 @@
 
   - dimension: description
 #     hidden: true
-    label: 'Description'
+    label: 'Transaction Reason'
     type: string
     sql: ${TABLE}.dscr
 

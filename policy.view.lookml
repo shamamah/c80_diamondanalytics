@@ -16,7 +16,7 @@
   - dimension_group: cancel_date
     label: 'Cancellation'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.cancel_date
 
   - dimension: client_id
@@ -32,13 +32,13 @@
   - dimension_group: first_eff
     label: 'First Effective'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.first_eff_date
 
   - dimension_group: firstwritten
     label: 'First Written'
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.firstwritten_date
     
   - dimension_group: first_exp
