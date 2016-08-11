@@ -1,4 +1,4 @@
-- view: transaction_reason
+- view: policy_image_trans_reason
   label: 'Transaction Reason'
   sql_table_name: dbo.TransReason
   fields:

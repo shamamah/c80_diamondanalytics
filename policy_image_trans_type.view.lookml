@@ -1,4 +1,4 @@
-- view: transaction_type
+- view: policy_image_trans_type
   label: 'Transaction Type'
   sql_table_name: dbo.TransType
   fields:
