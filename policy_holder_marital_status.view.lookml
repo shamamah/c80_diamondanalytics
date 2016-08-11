@@ -3,6 +3,7 @@
   fields:
 
   - dimension: dscr
+    label: 'Marital Status'
     type: string
     sql: ${TABLE}.dscr
 
