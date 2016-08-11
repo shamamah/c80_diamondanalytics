@@ -16,6 +16,7 @@
        relationship: one_to_one
 
      - join: transaction_reason
+       view_label: 'Policy Image'
        type: inner
        sql_on: ${policy_image.transreason_id} = ${transaction_reason.transreason_id}
        relationship: one_to_one

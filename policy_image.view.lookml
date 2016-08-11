@@ -73,7 +73,7 @@
     type: string
     sql: ${TABLE}.renewal_ver
 
-  - dimension: eff
+  - dimension: eff # effective_date, effective_month, etc.
     label: 'Effective'
     type: time
     timeframes: [date, week, month]

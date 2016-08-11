@@ -4,7 +4,7 @@
   fields:
 
   - dimension: description
-#    hidden: true
+#     hidden: true
     label: 'Description'
     type: string
     sql: ${TABLE}.dscr
