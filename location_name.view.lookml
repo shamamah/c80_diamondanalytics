@@ -1,5 +1,5 @@
 - view: location_name
-  label: 'location'
+  label: 'Location'
   sql_table_name: dbo.vName
   fields:
 
