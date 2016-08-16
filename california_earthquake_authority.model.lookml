@@ -76,6 +76,17 @@
        sql_on: ${location_name_link.name_id} = ${location_name.name_id}
        relationship: one_to_one
        
+     - join: location_address_link
+       type: inner
+       sql_on: ${location.policy_id} = ${location_address_link.policy_id} AND ${location.policyimage_num} = ${location_address_link.policyimage_num} AND ${location.location_num} = ${location_address_link.location_num}
+       relationship: one_to_many
+       
+     - join: location_address
+       view_label: 'Location'
+       type: inner
+       sql_on: ${location_address_link.address_id} = ${location_address.address_id}
+       relationship: one_to_one
+       
      - join: coverage
        view_label: 'Coverage'
        type: left_outer
@@ -93,3 +104,6 @@
        type: inner
        sql_on: ${coverage.coveragelimit_id} = ${coverage_limit.coveragelimit_id}
        relationship: one_to_one
+     
+
+  
