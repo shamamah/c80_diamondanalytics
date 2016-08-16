@@ -36,8 +36,8 @@
     sql: ${TABLE}.state_id
 
   - dimension: zip
-    type: string
-    sql: ${TABLE}.zip
+    type: zipcode
+    sql: LEFT(${TABLE}.zip,5)
 
 
 

@@ -66,15 +66,15 @@
        sql_on: ${policy_image.policy_id} = ${location.policy_id} AND ${policy_image.policyimage_num} = ${location.policyimage_num} AND ${location.detailstatuscode_id} = 1
        relationship: one_to_many
        
-     - join: location_name_link
-       type: inner
-       sql_on: ${location.policy_id} = ${location_name_link.policy_id} AND ${location.policyimage_num} = ${location_name_link.policyimage_num} AND ${location.location_num} = ${location_name_link.location_num}
-       relationship: one_to_many
+    # - join: location_name_link
+    #   type: inner
+    #   sql_on: ${location.policy_id} = ${location_name_link.policy_id} AND ${location.policyimage_num} = ${location_name_link.policyimage_num} AND ${location.location_num} = ${location_name_link.location_num}
+    #   relationship: one_to_many
        
-     - join: location_name
-       type: inner
-       sql_on: ${location_name_link.name_id} = ${location_name.name_id}
-       relationship: one_to_one
+    # - join: location_name
+    #   type: inner
+    #   sql_on: ${location_name_link.name_id} = ${location_name.name_id}
+    #   relationship: one_to_one
        
      - join: location_address_link
        type: inner

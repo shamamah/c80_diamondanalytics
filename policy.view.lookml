@@ -52,3 +52,7 @@
 #    type: sum
 #    value_format_name: usd
 #    sql: ${policy_image.premium_chg_written}
+
+  - measure: count
+    type: count
+    drill_fields: [client.client_id]
