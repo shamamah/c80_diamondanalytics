@@ -60,50 +60,26 @@
        sql_on: ${policy_holder_name.sex_id} = ${policy_holder_sex.sex_id}
        relationship: one_to_one
        
-     - join: driver
-       view_label: 'Driver'
+     - join: location
+       view_label: 'Location'
        type: left_outer
-       sql_on: ${policy_image.policy_id} = ${driver.policy_id} AND ${policy_image.policyimage_num} = ${driver.policyimage_num} AND ${driver.detailstatuscode_id} = 1
+       sql_on: ${policy_image.policy_id} = ${location.policy_id} AND ${policy_image.policyimage_num} = ${location.policyimage_num} AND ${location.detailstatuscode_id} = 1
        relationship: one_to_many
        
-     - join: driver_name_link
+     - join: location_name_link
        type: inner
-       sql_on: ${driver.policy_id} = ${driver_name_link.policy_id} AND ${driver.policyimage_num} = ${driver_name_link.policyimage_num} AND ${driver.driver_num} = ${driver_name_link.driver_num}
+       sql_on: ${location.policy_id} = ${location_name_link.policy_id} AND ${location.policyimage_num} = ${location_name_link.policyimage_num} AND ${location.location_num} = ${location_name_link.location_num}
        relationship: one_to_many
        
-     - join: driver_name
+     - join: location_name
        type: inner
-       sql_on: ${driver_name_link.name_id} = ${driver_name.name_id}
+       sql_on: ${location_name_link.name_id} = ${location_name.name_id}
        relationship: one_to_one
-       
-     - join: driver_marital_status
-       view_label: 'Driver'
-       type: inner
-       sql_on: ${driver_name.maritalstatus_id} = ${driver_marital_status.maritalstatus_id}
-       relationship: one_to_one
-       
-     - join: driver_sex
-       view_label: 'Driver'
-       type: inner
-       sql_on: ${driver_name.sex_id} = ${driver_sex.sex_id}
-       relationship: one_to_one
-      
-     - join: driver_dln_state
-       view_label: 'Driver'
-       type: inner
-       sql_on: ${driver_name.dlstate_id} = ${driver_dln_state.state_id}
-       relationship: one_to_one 
-       
-     - join: vehicle
-       view_label: 'Vehicle'
-       type: left_outer
-       sql_on: ${policy_image.policy_id} = ${vehicle.policy_id} AND ${policy_image.policyimage_num} = ${vehicle.policyimage_num} AND ${vehicle.detailstatuscode_id} = 1
-       relationship: one_to_many
        
      - join: coverage
        view_label: 'Coverage'
        type: left_outer
-       sql_on: ${policy_image.policy_id} = ${coverage.policy_id} AND ${policy_image.policyimage_num} = ${coverage.policyimage_num} AND ${vehicle.vehicle_num} = ${coverage.unit_num} AND ${coverage.detailstatuscode_id} = 1
+       sql_on: ${policy_image.policy_id} = ${coverage.policy_id} AND ${policy_image.policyimage_num} = ${coverage.policyimage_num} AND ${location.location_num} = ${coverage.unit_num} AND ${coverage.detailstatuscode_id} = 1
        relationship: one_to_many
        
      - join: coverage_code
