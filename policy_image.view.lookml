@@ -37,17 +37,23 @@
     type: number
     sql: ${TABLE}.policystatuscode_id
 
-  - dimension_group: trans_date
+  - dimension_group: trans
     hidden: true
     type: time
-    timeframes: [date]
+    timeframes: [raw, date, week, month, year]
     sql: ${TABLE}.trans_date
     
   - dimension: added
     hidden: true
     type: time
-    timeframes: [date]
+    timeframes: [raw, date, week, month, year]
     sql: ${TABLE}.added_date
+  
+  - dimension: days_from_offer_generation_to_policy_issue
+    type: number
+    sql: DATEDIFF(day,${added_raw}, ${trans_raw})
+
+#    P.policycurrenstatus = In-Force AND PIM.policyimage_num = 1
 
   - dimension: transreason_id
     hidden: true
@@ -103,7 +109,7 @@
     timeframes: [date]
     sql: ${TABLE}.texp_date
     
-  - dimension: trans
+  - dimension: trans_date
     label: 'Transaction'
     type: time
     timeframes: [date, week]
@@ -141,6 +147,22 @@
     type: number
     sql: DateDiff(d,${added_date},${trans_date})
     
+  - measure: count
+    type: count
+    drill_fields: [client.client_id]
+    
+  - dimension: days_to_convert_tier
+    label: 'Days to Convert - Tier'
+    type: tier
+    style: integer
+    tiers: [0,31,61,91,365]
+    sql: ${days_to_convert}
+
+  - measure: average_days_from_offer_generation_to_policy_issue
+    type: average
+    sql: ${days_from_offer_generation_to_policy_issue}
+    value_format_name: decimal_2
+    
   - measure: premium_chg_written_sum
     #hidden: true
     label: 'Written Premium Change'
@@ -164,17 +186,5 @@
     value_format: '0.#'
     sql_distinct_key: ${compound_primary_key}
     sql: DateDiff(d,${added_date},${trans_date})
-    
-  - measure: count
-    type: count
-    drill_fields: [client.client_id]
-    
-  - dimension: days_to_convert_tier
-    label: 'Days to Convert - Tier'
-    type: tier
-    style: integer
-    tiers: [0,31,61,91,365]
-    sql: ${days_to_convert}
-    
     
 
