@@ -28,6 +28,12 @@
        sql_on: ${policy_image.transtype_id} = ${policy_image_trans_type.transtype_id}
        relationship: one_to_one
        
+     - join: policy_status_code
+       view_label: 'Policy Image'
+       type: inner
+       sql_on: ${policy_image.policystatuscode_id} = ${policy_status_code.policystatuscode_id}
+       relationship: one_to_one
+       
      - join: version
        type: inner
        sql_on: ${policy_image.version_id} = ${version.version_id}

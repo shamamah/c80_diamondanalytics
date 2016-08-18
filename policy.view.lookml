@@ -56,3 +56,7 @@
   - measure: count
     type: count
     drill_fields: [client.client_id]
+    
+  - measure: percent_of_total_count
+    type: percent_of_total
+    sql: ${count}

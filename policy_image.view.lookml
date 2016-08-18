@@ -31,17 +31,23 @@
     hidden: true
     type: number
     sql: ${TABLE}.policy_id
+    
+  - dimension: policystatuscode_id
+    hidden: true
+    type: number
+    sql: ${TABLE}.policystatuscode_id
 
   - dimension_group: trans_date
     hidden: true
     type: time
     timeframes: [date]
     sql: ${TABLE}.trans_date
-
-  - dimension: trans_remark
+    
+  - dimension: added
     hidden: true
-    type: string
-    sql: ${TABLE}.trans_remark
+    type: time
+    timeframes: [date]
+    sql: ${TABLE}.added_date
 
   - dimension: transreason_id
     hidden: true
@@ -65,7 +71,7 @@
 
   - dimension: pure_newbusiness
     label : 'Pure New Business'
-    type: string
+    type: yesno
     sql: ${TABLE}.pure_newbusiness
     
   - dimension: renewal_ver
@@ -76,7 +82,7 @@
   - dimension: eff # effective_date, effective_month, etc.
     label: 'Effective'
     type: time
-    timeframes: [date]
+    timeframes: [date, month]
     sql: ${TABLE}.eff_date   
 
   - dimension: exp
@@ -100,13 +106,12 @@
   - dimension: trans
     label: 'Transaction'
     type: time
-    timeframes: [date]
+    timeframes: [date, week]
     sql: ${TABLE}.trans_date
     
   - dimension: trans_remark
     label: 'Transaction Remark'
-    type: time
-    timeframes: [date]
+    type: string
     sql: ${TABLE}.trans_remark
     
   - dimension: premium_written
@@ -131,6 +136,11 @@
     type: number
     sql: ${TABLE}.premium_chg_fullterm
     
+  - dimension: days_to_convert
+    label: 'Days to Convert'
+    type: number
+    sql: DateDiff(d,${added_date},${trans_date})
+    
   - measure: premium_chg_written_sum
     #hidden: true
     label: 'Written Premium Change'
@@ -146,5 +156,25 @@
     value_format_name: usd
     sql_distinct_key: ${compound_primary_key}
     sql: ${premium_chg_fullterm}
+    
+  - measure: avg_days_to_convert
+    #hidden: true
+    label: 'Average Days to Convert'
+    type: avg_distinct
+    value_format: '0.#'
+    sql_distinct_key: ${compound_primary_key}
+    sql: DateDiff(d,${added_date},${trans_date})
+    
+  - measure: count
+    type: count
+    drill_fields: [client.client_id]
+    
+  - dimension: days_to_convert_tier
+    label: 'Days to Convert - Tier'
+    type: tier
+    style: integer
+    tiers: [0,31,61,91,365]
+    sql: ${days_to_convert}
+    
     
 
