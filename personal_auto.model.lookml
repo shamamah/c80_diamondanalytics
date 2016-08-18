@@ -117,3 +117,9 @@
        type: inner
        sql_on: ${coverage.coveragelimit_id} = ${coverage_limit.coveragelimit_id}
        relationship: one_to_one
+
+     - join: policy_image_attachment_link
+       view_label: 'Policy Image'
+       type: inner
+       sql_on: ${policy_image.policy_id} = ${policy_image_attachment_link.policy_id} AND ${policy_image.policyimage_num} = ${policy_image_attachment_link.policyimage_num}
+       relationship: one_to_many
