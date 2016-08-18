@@ -52,6 +52,11 @@
   - dimension: days_from_offer_generation_to_policy_issue
     type: number
     sql: DATEDIFF(day,${added_raw}, ${trans_raw})
+  
+  - dimension: days_from_offer_generation_to_policy_issue_tier
+    type: tier
+    tiers: [0, 30, 60, 90]
+    sql: ${days_from_offer_generation_to_policy_issue}
 
 #    P.policycurrenstatus = In-Force AND PIM.policyimage_num = 1
 
