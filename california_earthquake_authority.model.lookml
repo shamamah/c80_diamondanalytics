@@ -110,6 +110,12 @@
        type: inner
        sql_on: ${coverage.coveragelimit_id} = ${coverage_limit.coveragelimit_id}
        relationship: one_to_one
+       
+     - join: users
+       view_label: 'Users'
+       type: inner
+       sql_on: ${policy_image.trans_users_id} = ${users.users_id}
+       relationship: one_to_one
      
 
   

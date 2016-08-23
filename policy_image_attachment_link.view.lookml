@@ -5,6 +5,7 @@
   - dimension: attachment_id
     type: number
     hidden: true
+    primary_key: true
     sql: ${TABLE}.attachment_id
 
   - dimension: policy_id
@@ -20,4 +21,5 @@
   - measure: count
     label: 'Attachment Count'
     type: count
+    drill_fields: [attachment_id]
 

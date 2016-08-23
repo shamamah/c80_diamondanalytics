@@ -74,6 +74,11 @@
     hidden: true
     type: number
     sql: ${TABLE}.version_id
+    
+  - dimension: trans_users_id
+    hidden: true
+    type: number
+    sql: ${TABLE}.trans_users_id
 
   - dimension: policyimage_num
     label: 'Image Number'
