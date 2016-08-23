@@ -19,10 +19,10 @@
     sql: ${TABLE}.name_id
 
   - dimension: is_automated
-    type: yesno
+    type: string
     sql: |
         CASE
-          WHEN ${TABLE}.users_id = 'RHAdmin' THEN true
-          WHEN ${TABLE}.users_id <> 'RHAdmin' THEN false
-          ELSE false 
+          WHEN ${TABLE}.login_name = 'RHAdmin' THEN 'Yes'
+          WHEN ${TABLE}.login_name <> 'RHAdmin' THEN 'No'
+          ELSE 'No'
         END
