@@ -19,11 +19,6 @@
     timeframes: [date]
     sql: ${TABLE}.cancel_date
 
-  - dimension: client_id
-    type: number
-    hidden: true
-    sql: ${TABLE}.client_id
-
   - dimension: current_policy
     label: 'Number'
     type: string
