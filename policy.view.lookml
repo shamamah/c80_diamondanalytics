@@ -50,7 +50,7 @@
 
   - measure: count
     type: count
-    drill_fields: [client.client_id]
+    drill_fields: [location_address.zip, company_state_lob.commercial_name1, policy.current_policy]
     
   - measure: percent_of_total_count
     type: percent_of_total

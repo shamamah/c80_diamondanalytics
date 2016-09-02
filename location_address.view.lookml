@@ -38,6 +38,7 @@
   - dimension: zip
     type: zipcode
     sql: LEFT(${TABLE}.zip,5)
+    drill_fields: [location_address.zip, company_state_lob.commercial_name1, policy.current_policy]
 
 
 
