@@ -23,6 +23,11 @@
     label: 'Number'
     type: string
     sql: ${TABLE}.current_policy
+    
+  - dimension: activeimage_num
+    label: 'Active Image Number'
+    type: string
+    sql: ${TABLE}.activeimage_num
 
   - dimension_group: first_eff
     label: 'First Effective'
