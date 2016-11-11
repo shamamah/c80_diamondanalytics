@@ -2,7 +2,30 @@
 
 - include: "*.view.lookml"       # include all the views
 - include: "*.dashboard.lookml"  # include all the dashboards
--
+
+- explore: v_billing_cash
+  label: "Billing"
+  joins:
+    - join: v_billing_cash_detail
+      type: inner
+      relationship: many_to_many
+      sql_on: |
+        ${v_billing_cash.policy_id} = ${v_billing_cash_detail.policy_id}
+        AND ${v_billing_cash.billingcash_num} = ${v_billing_cash_detail.billingcash_num}
+    
+    - join: policy
+      type: inner
+      relationship: many_to_one
+      sql_on: ${v_billing_cash.policy_id} = ${policy.policy_id}
+       
+    - join: v_billing_futures
+      type: inner
+      relationship: many_to_many
+      sql_on: |
+        ${v_billing_cash.policy_id} = ${v_billing_futures.policy_id}
+        AND ${v_billing_futures.renewal_ver} <> ''
+      
+
 - explore: policy
   joins:
      - join: policy_image

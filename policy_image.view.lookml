@@ -5,7 +5,7 @@
   - dimension: compound_primary_key
     hidden: true
     primary_key: true
-    sql: CONCAT(${TABLE}.policy_id, '  ', ${TABLE}.policyimage_num)
+    sql: CONCAT(${policy_id}, '  ', ${policyimage_num})
 
   - dimension: agency_id
     hidden: true
