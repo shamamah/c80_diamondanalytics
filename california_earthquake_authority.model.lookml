@@ -3,6 +3,28 @@
 - include: "*.view.lookml"       # include all the views
 - include: "*.dashboard.lookml"  # include all the dashboards
 
+- explore: claim_control
+  label: "Claim"
+  joins: 
+    - join: v_claim_detail_claimant
+      type: inner
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id}
+    - join: v_claim_detail_feature
+      type: inner
+      relationship: one_to_many
+      sql_on: |
+        ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id}
+        AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num} 
+    - join: v_claim_detail_transaction
+      type: inner
+      relationship: one_to_many
+      sql_on: |
+        ${v_claim_detail_feature.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
+        AND ${v_claim_detail_feature.claimant_num} = ${v_claim_detail_transaction.claimant_num} 
+        AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
+        
+    
 - explore: v_billing_cash
   label: "Billing"
   joins:
