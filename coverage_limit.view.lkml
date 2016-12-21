@@ -3,21 +3,26 @@ view: coverage_limit {
 
   dimension: coveragelimit_id {
     hidden: yes
-    type: number
+    type: string
     sql: ${TABLE}.coveragelimit_id ;;
   }
 
-  dimension: deductible {
+  dimension: deductible_dscr {
     label: "Deductible"
-    type: number
-    value_format_name: usd
-    sql: ${TABLE}.deductible ;;
+    type: string
+    sql: ${TABLE}.deductible_dscr ;;
   }
 
   dimension: dscr {
     label: "Limit Description"
     type: string
-    sql: ${TABLE}.dscr ;;
+    sql: case when ${coveragelimit_id} = '0' then ${coverage.manual_limit_amount} else  ${dscr_raw} end;;
+  }
+  dimension: dscr_raw {
+    label: "Limit Description Raw"
+    hidden: yes
+    type: string
+    sql:${TABLE}.limit_dscr ;;
   }
 
   dimension: peroccur_limit {

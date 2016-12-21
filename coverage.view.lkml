@@ -93,6 +93,10 @@ view: coverage {
     value_format_name: usd
     sql: ${TABLE}.premium_written ;;
   }
+  dimension: manual_limit_amount {
+    type: string
+    sql: cast(${TABLE}.manuallimitamount as varchar(25)) ;;
+  }
 
   dimension: unit_num {
     hidden: yes
