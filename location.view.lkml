@@ -40,7 +40,6 @@ view: location {
   }
 
   dimension: territory_num {
-    hidden: yes
     type: number
     sql: ${TABLE}.territory_num ;;
   }
@@ -48,6 +47,10 @@ view: location {
   dimension: year_built {
     type: number
     sql: ${TABLE}.year_built ;;
+  }
+  dimension: square_feet {
+    type:  number
+    sql: ${TABLE}.square_feet ;;
   }
 
   dimension: location_num {

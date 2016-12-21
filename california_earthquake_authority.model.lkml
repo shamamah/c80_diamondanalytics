@@ -31,6 +31,17 @@ explore: claim_control {
       AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
        ;;
   }
+  join:  policy {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${policy.policy_id} = ${claim_control.policy_id}  ;;
+
+  }
+  join: policy_image {
+    type: inner
+    sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
+    relationship: many_to_many
+    }
 }
 
 explore: v_billing_cash {

@@ -24,7 +24,6 @@ view: territory {
   }
 
   dimension: territory_num {
-    hidden: yes
     type: number
     sql: ${TABLE}.territory_num ;;
   }

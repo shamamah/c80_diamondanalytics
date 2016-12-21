@@ -212,4 +212,17 @@ view: v_claim_detail_claimant {
     type: count
     drill_fields: [name, display_name]
   }
+  measure:  sum_indemnity_paid {
+    type: sum
+    sql: ${indemnity_paid} ;;
+  }
+  measure:  sum_indemnity_reserve {
+    type:  sum
+    sql:  ${indemnity_reserve} ;;
+
+  }
+  measure: sum_total_incurred{
+    type: number
+    sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
+  }
 }
