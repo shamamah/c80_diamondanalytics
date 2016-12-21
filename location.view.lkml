@@ -68,7 +68,26 @@ view: location {
     type: number
     sql: ${TABLE}.constructiontype_id ;;
   }
-
+  dimension: programtype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.programtype_id ;;
+  }
+  dimension: rooftype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.rooftype_id ;;
+  }
+  dimension: foundationtype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.foundationtype_id ;;
+  }
+  dimension: numberofstoriestype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.numberofstoriestype_id ;;
+  }
   measure: premium_chg_written_sum {
     #hidden: true
     label: "Written Premium Change"

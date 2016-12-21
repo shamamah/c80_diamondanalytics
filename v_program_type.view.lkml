@@ -3,11 +3,13 @@ view: v_program_type {
 
   dimension: dscr {
     type: string
+    label: "ProgramType"
     sql: ${TABLE}.dscr ;;
   }
 
   dimension: programtype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.programtype_id ;;
   }
 
@@ -19,7 +21,7 @@ view: v_program_type {
 
   dimension: version_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.version_id ;;
   }
 

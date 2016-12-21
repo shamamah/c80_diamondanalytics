@@ -3,11 +3,13 @@ view: v_construction_type {
 
   dimension: constructiontype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.constructiontype_id ;;
   }
 
   dimension: dscr {
     type: string
+    label: "ContructionType"
     sql: ${TABLE}.dscr ;;
   }
 
@@ -19,6 +21,7 @@ view: v_construction_type {
 
   dimension: version_id {
     type: number
+    hidden: yes
     # hidden: yes
     sql: ${TABLE}.version_id ;;
   }

@@ -3,6 +3,7 @@ view: v_foundation_type {
 
   dimension: dscr {
     type: string
+    label: "FoundationType"
     sql: ${TABLE}.dscr ;;
   }
 
@@ -20,7 +21,7 @@ view: v_foundation_type {
 
   dimension: version_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.version_id ;;
   }
 

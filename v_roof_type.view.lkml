@@ -3,11 +3,13 @@ view: v_roof_type {
 
   dimension: dscr {
     type: string
+    label: "RoofType"
     sql: ${TABLE}.dscr ;;
   }
 
   dimension: rooftype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.rooftype_id ;;
   }
 
@@ -19,7 +21,7 @@ view: v_roof_type {
 
   dimension: version_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.version_id ;;
   }
 

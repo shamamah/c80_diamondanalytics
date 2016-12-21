@@ -155,7 +155,24 @@ explore: policy {
     sql_on: ${location.contructiontype_id} = ${v_construction_type.constructiontype_id} ;;
     relationship: one_to_one
   }
-
+  join: v_program_type {
+    view_label: "Location"
+    type: inner
+    sql_on: ${location.programtype_id} = ${v_program_type.programtype_id} ;;
+    relationship: one_to_one
+  }
+  join: v_roof_type {
+    view_label: "Location"
+    type: inner
+    sql_on: ${location.rooftype_id} = ${v_roof_type.rooftype_id} ;;
+    relationship: one_to_one
+  }
+  join: v_number_of_stories {
+    view_label: "Location"
+    type: inner
+    sql_on: ${location.numberofstoriestype_id} = ${v_number_of_stories.numberofstoriestype_id} ;;
+    relationship: one_to_one
+  }
   # - join: location_name_link
   #   type: inner
   #   sql_on: ${location.policy_id} = ${location_name_link.policy_id} AND ${location.policyimage_num} = ${location_name_link.policyimage_num} AND ${location.location_num} = ${location_name_link.location_num}
