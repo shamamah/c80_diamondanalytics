@@ -173,6 +173,12 @@ explore: policy {
     sql_on: ${location.numberofstoriestype_id} = ${v_number_of_stories.numberofstoriestype_id} ;;
     relationship: one_to_one
   }
+  join: number_of_chimneys_type {
+    view_label: "Location"
+    type: inner
+    sql_on: ${location.numberofchimneystype_id} = ${number_of_chimneys_type.numberofchimneystype_id} ;;
+    relationship: one_to_one
+    }
   # - join: location_name_link
   #   type: inner
   #   sql_on: ${location.policy_id} = ${location_name_link.policy_id} AND ${location.policyimage_num} = ${location_name_link.policyimage_num} AND ${location.location_num} = ${location_name_link.location_num}

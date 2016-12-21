@@ -88,6 +88,11 @@ view: location {
     type: number
     sql: ${TABLE}.numberofstoriestype_id ;;
   }
+  dimension: numberofchimneystype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.numberofchimneystype_id ;;
+  }
   measure: premium_chg_written_sum {
     #hidden: true
     label: "Written Premium Change"
