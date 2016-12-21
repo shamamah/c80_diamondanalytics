@@ -63,6 +63,11 @@ view: location {
     type: number
     sql: ${TABLE}.detailstatuscode_id ;;
   }
+  dimension: contructiontype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.constructiontype_id ;;
+  }
 
   measure: premium_chg_written_sum {
     #hidden: true

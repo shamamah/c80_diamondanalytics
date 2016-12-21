@@ -149,6 +149,12 @@ explore: policy {
     sql_on: ${policy_image.policy_id} = ${location.policy_id} AND ${policy_image.policyimage_num} = ${location.policyimage_num} AND ${location.detailstatuscode_id} = 1 ;;
     relationship: one_to_many
   }
+  join: v_construction_type {
+    view_label: "Location"
+    type: inner
+    sql_on: ${location.contructiontype_id} = ${v_construction_type.constructiontype_id} ;;
+    relationship: one_to_one
+  }
 
   # - join: location_name_link
   #   type: inner
