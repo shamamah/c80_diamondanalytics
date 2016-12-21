@@ -20,7 +20,7 @@ view: coverage_code {
   }
 
   dimension: dscr {
-    label: "Code Description"
+    label: "Coverage Description"
     type: string
     sql: ${TABLE}.dscr ;;
   }
