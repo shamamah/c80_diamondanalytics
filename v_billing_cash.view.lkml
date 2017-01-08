@@ -3,11 +3,13 @@ view: v_billing_cash {
 
   dimension: accountingbatch_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.accountingbatch_id ;;
   }
 
   dimension: accountingsuspendedcash_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.accountingsuspendedcash_id ;;
   }
 
@@ -20,7 +22,7 @@ view: v_billing_cash {
 
   dimension: address_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.address_id ;;
   }
 
@@ -36,16 +38,19 @@ view: v_billing_cash {
 
   dimension: approval_code {
     type: string
+    hidden: yes
     sql: ${TABLE}.approval_code ;;
   }
 
   dimension: authresponse_code {
     type: string
+    hidden: yes
     sql: ${TABLE}.authresponse_code ;;
   }
 
   dimension: authresponse_msg {
     type: string
+    hidden: yes
     sql: ${TABLE}.authresponse_msg ;;
   }
 
@@ -56,11 +61,13 @@ view: v_billing_cash {
 
   dimension: billingaccountcash_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingaccountcash_id ;;
   }
 
   dimension: billingaccountinvoice_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingaccountinvoice_id ;;
   }
 
@@ -76,6 +83,7 @@ view: v_billing_cash {
 
   dimension: billingcash_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingcash_id ;;
   }
 
@@ -86,21 +94,25 @@ view: v_billing_cash {
 
   dimension: billingcashinsource_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingcashinsource_id ;;
   }
 
   dimension: billingcashtype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingcashtype_id ;;
   }
 
   dimension: billinglocation_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billinglocation_id ;;
   }
 
   dimension: billingreason_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingreason_id ;;
   }
 
@@ -117,42 +129,50 @@ view: v_billing_cash {
 
   dimension: checkitem_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.checkitem_id ;;
   }
 
   dimension: checkpayeetype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.checkpayeetype_id ;;
   }
 
   dimension: creditcardaccount_num {
     type: string
+    hidden: yes
     sql: ${TABLE}.creditcardaccount_num ;;
   }
 
   dimension: creditcardtype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.creditcardtype_id ;;
   }
 
   dimension: expiration_date {
     type: string
+    hidden: yes
     sql: ${TABLE}.expiration_date ;;
   }
 
   dimension_group: export {
     type: time
     timeframes: [time, date, week, month]
+    hidden: yes
     sql: ${TABLE}.export_date ;;
   }
 
   dimension: exportstatus_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.exportstatus_id ;;
   }
 
   dimension: login_name {
     type: string
+    hidden: yes
     sql: ${TABLE}.login_name ;;
   }
 
@@ -173,12 +193,13 @@ view: v_billing_cash {
 
   dimension: mail_to_type_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.mail_to_type_id ;;
   }
 
   dimension: name_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.name_id ;;
   }
 
@@ -189,33 +210,38 @@ view: v_billing_cash {
 
   dimension: paylinxtype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.paylinxtype_id ;;
   }
 
   dimension: paymentprocessor_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.paymentprocessor_id ;;
   }
 
   dimension_group: pcadded {
     type: time
+    hidden: yes
     timeframes: [time, date, week, month]
     sql: ${TABLE}.pcadded_date ;;
   }
 
   dimension: peoplesoftstatus_dscr {
     type: string
+    hidden: yes
     sql: ${TABLE}.peoplesoftstatus_dscr ;;
   }
 
   dimension: peoplesoftstatus_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.peoplesoftstatus_id ;;
   }
 
   dimension: policy_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.policy_id ;;
   }
 
@@ -228,6 +254,7 @@ view: v_billing_cash {
 
   dimension: printprocess_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.printprocess_id ;;
   }
 
@@ -255,6 +282,7 @@ view: v_billing_cash {
 
   dimension: tax_version {
     type: number
+    hidden: yes
     sql: ${TABLE}.tax_version ;;
   }
 
@@ -265,11 +293,13 @@ view: v_billing_cash {
 
   dimension: transfer_from_policy_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.transfer_from_policy_id ;;
   }
 
   dimension: transfer_from_suspenseaccount_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.transfer_from_suspenseaccount_id ;;
   }
 
@@ -285,6 +315,7 @@ view: v_billing_cash {
 
   dimension: transfer_to_policy_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.transfer_to_policy_id ;;
   }
 
@@ -295,7 +326,7 @@ view: v_billing_cash {
 
   dimension: users_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.users_id ;;
   }
 

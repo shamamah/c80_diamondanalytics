@@ -21,11 +21,13 @@ view: v_billing_cash_detail {
 
   dimension: billingaccount_payment {
     type: string
+    hidden: yes
     sql: ${TABLE}.billingaccount_payment ;;
   }
 
   dimension: billingaccountcash_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingaccountcash_id ;;
   }
 
@@ -46,32 +48,37 @@ view: v_billing_cash_detail {
 
   dimension: billingcashdetailtype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingcashdetailtype_id ;;
   }
 
   dimension: billingcashinsource_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingcashinsource_id ;;
   }
 
   dimension: cashin_dscr {
     type: string
+    label: "Cash Type"
     sql: ${TABLE}.cashin_dscr ;;
   }
 
   dimension: dscr {
     type: string
+    label: "Description"
     sql: ${TABLE}.dscr ;;
   }
 
   dimension: policy_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.policy_id ;;
   }
 
   dimension: renewal_ver {
     type: number
+    hidden: yes
     sql: ${TABLE}.renewal_ver ;;
   }
 

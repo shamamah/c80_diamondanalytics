@@ -57,9 +57,25 @@ explore: claim_control {
 
 explore: v_billing_cash {
   label: "Billing"
+   view_label: "Billing Cash"
 
+  join:  billing_cash_type {
+    view_label: "Billing Cash"
+    type:  inner
+    relationship: one_to_one
+    sql_on: ${v_billing_cash.billingcashtype_id} = ${billing_cash_type.billingcashtype_id} ;;
+  }
+
+  join:  billing_reason {
+    view_label: "Billing Cash"
+    type:  inner
+    relationship: one_to_one
+    sql_on: ${v_billing_cash.billingreason_id} = ${billing_reason.billingreason_id}
+     and ${v_billing_cash.billingreason_id} <> 0 ;;
+  }
   join: v_billing_cash_detail {
-    type: inner
+   view_label: "Billing Cash Detail"
+   type: inner
     relationship: many_to_many
     sql_on: ${v_billing_cash.policy_id} = ${v_billing_cash_detail.policy_id}
       AND ${v_billing_cash.billingcash_num} = ${v_billing_cash_detail.billingcash_num}
@@ -73,6 +89,7 @@ explore: v_billing_cash {
   }
 
   join: v_billing_futures {
+    view_label: "Billing Futures"
     type: inner
     relationship: many_to_many
     sql_on: ${v_billing_cash.policy_id} = ${v_billing_futures.policy_id}
