@@ -19,6 +19,7 @@ view: v_billing_futures {
 
   dimension: billingchargescreditstype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingchargescreditstype_id ;;
   }
 
@@ -29,6 +30,7 @@ view: v_billing_futures {
 
   dimension: billingchargetypecategory_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.billingchargetypecategory_id ;;
   }
 
@@ -60,17 +62,20 @@ view: v_billing_futures {
 
   dimension: packagepart_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.packagepart_num ;;
   }
 
   dimension: policy_id {
     type: number
+    hidden: yes
     # hidden: true
     sql: ${TABLE}.policy_id ;;
   }
 
   dimension: renewal_ver {
     type: string
+    hidden: yes
     sql: ${TABLE}.renewal_ver ;;
   }
 
@@ -81,6 +86,7 @@ view: v_billing_futures {
 
   dimension: tax_rate {
     type: string
+    hidden: yes
     sql: ${TABLE}.tax_rate ;;
   }
 
