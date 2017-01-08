@@ -1,36 +1,41 @@
-view: number_of_chimneys_type {
-  sql_table_name: dbo.NumberOfChimneysType ;;
+view: claimant_status {
+  sql_table_name: dbo.ClaimantStatus ;;
+
+  dimension: claimantstatus_id {
+    type: number
+    hidden:  yes
+    sql: ${TABLE}.claimantstatus_id ;;
+  }
 
   dimension: dscr {
+    label: "Status"
     type: string
-    label: "Number Of Chimneys"
     sql: ${TABLE}.dscr ;;
+  }
+
+  dimension: enabled {
+    type: string
+    hidden:  yes
+    sql: ${TABLE}.enabled ;;
   }
 
   dimension_group: last_modified {
     type: time
-    hidden: yes
     timeframes: [time, date, week, month]
+    hidden:  yes
     sql: ${TABLE}.last_modified_date ;;
-  }
-
-  dimension: numberofchimneystype_id {
-    type: number
-    hidden: yes
-
-    sql: ${TABLE}.numberofchimneystype_id ;;
   }
 
   dimension_group: pcadded {
     type: time
-    hidden: yes
     timeframes: [time, date, week, month]
+    hidden:  yes
     sql: ${TABLE}.pcadded_date ;;
   }
 
   measure: count {
     type: count
-    hidden: yes
+    hidden:  yes
     drill_fields: []
   }
 }

@@ -3,6 +3,7 @@ view: v_construction_type {
 
   dimension: constructiontype_id {
     type: number
+    primary_key: yes
     hidden: yes
     sql: ${TABLE}.constructiontype_id ;;
   }
@@ -28,6 +29,7 @@ view: v_construction_type {
 
   measure: count {
     type: count
+    hidden: yes
     drill_fields: [detail*]
   }
 

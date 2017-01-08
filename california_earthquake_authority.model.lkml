@@ -8,22 +8,25 @@ include: "*.dashboard"
 
 explore: claim_control {
   label: "Claim"
-
+  view_label: "Claim"
   join: v_claim_detail_claimant {
+    view_label: "Claim Detail Claimant"
     type: inner
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id} ;;
   }
 
   join: v_claim_detail_feature {
+    view_label: "Claim Detail Feature"
     type: inner
     relationship: one_to_many
-    sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id}
+    sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
       AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
        ;;
   }
 
   join: v_claim_detail_transaction {
+    view_label: "Claim Detail Transaction"
     type: inner
     relationship: one_to_many
     sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
@@ -31,6 +34,14 @@ explore: claim_control {
       AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
        ;;
   }
+  join: claim_catastrophe {
+    view_label: "Claim"
+    type: inner
+    sql_on: ${claim_catastrophe.claimcatastrophe_id} = ${claim_control.claimcatastrophe_id} ;;
+    relationship: one_to_one
+
+  }
+
   join:  policy {
     type: left_outer
     relationship: many_to_one

@@ -3,12 +3,13 @@ view: v_number_of_stories {
 
   dimension: dscr {
     type: string
-    label: "NumberOfStories"
+    label: "Number Of Stories"
     sql: ${TABLE}.dscr ;;
   }
 
   dimension: numberofstoriestype_id {
     type: number
+    primary_key: yes
     hidden: yes
     sql: ${TABLE}.numberofstoriestype_id ;;
   }
@@ -27,6 +28,7 @@ view: v_number_of_stories {
 
   measure: count {
     type: count
+    hidden: yes
     drill_fields: [detail*]
   }
 

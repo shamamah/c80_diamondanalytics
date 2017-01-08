@@ -3,12 +3,13 @@ view: v_roof_type {
 
   dimension: dscr {
     type: string
-    label: "RoofType"
+    label: "Roof Type"
     sql: ${TABLE}.dscr ;;
   }
 
   dimension: rooftype_id {
     type: number
+    primary_key: yes
     hidden: yes
     sql: ${TABLE}.rooftype_id ;;
   }
@@ -27,6 +28,7 @@ view: v_roof_type {
 
   measure: count {
     type: count
+    hidden: yes
     drill_fields: [detail*]
   }
 

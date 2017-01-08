@@ -21,6 +21,7 @@ view: location {
 
   dimension: premium_chg_written {
     type: string
+    hidden: yes
     sql: ${TABLE}.premium_chg_written ;;
   }
 
@@ -31,11 +32,13 @@ view: location {
 
   dimension: premium_normal {
     type: string
+    hidden: yes
     sql: ${TABLE}.premium_normal ;;
   }
 
   dimension: premium_written {
     type: string
+    hidden: yes
     sql: ${TABLE}.premium_written ;;
   }
 

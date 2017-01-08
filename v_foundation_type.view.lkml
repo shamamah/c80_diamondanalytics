@@ -9,6 +9,7 @@ view: v_foundation_type {
 
   dimension: foundationtype_id {
     type: number
+    primary_key: yes
     hidden: yes
     sql: ${TABLE}.foundationtype_id ;;
   }

@@ -120,6 +120,7 @@ view: v_claim_detail_transaction {
 
   dimension: claimcontrol_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcontrol_id ;;
   }
 
@@ -130,11 +131,13 @@ view: v_claim_detail_transaction {
 
   dimension: claimscheduledpaymentcycle_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimscheduledpaymentcycle_id ;;
   }
 
   dimension: claimstoppmt_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimstoppmt_id ;;
   }
 
@@ -145,6 +148,7 @@ view: v_claim_detail_transaction {
 
   dimension: claimtransactioncategory_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimtransactioncategory_id ;;
   }
 
@@ -155,11 +159,13 @@ view: v_claim_detail_transaction {
 
   dimension: claimtransactionstatus_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimtransactionstatus_id ;;
   }
 
   dimension: claimtransactiontype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimtransactiontype_id ;;
   }
 
@@ -213,6 +219,7 @@ view: v_claim_detail_transaction {
 
   dimension: user_code {
     type: string
+    hidden: yes
     sql: ${TABLE}.user_code ;;
   }
 

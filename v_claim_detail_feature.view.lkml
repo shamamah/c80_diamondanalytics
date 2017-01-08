@@ -10,11 +10,13 @@ view: v_claim_detail_feature {
 
   dimension: alae_paid {
     type: string
+    hidden: yes
     sql: ${TABLE}.alae_paid ;;
   }
 
   dimension: alae_reserve {
     type: string
+    hidden: yes
     sql: ${TABLE}.alae_reserve ;;
   }
 
@@ -45,6 +47,7 @@ view: v_claim_detail_feature {
 
   dimension: claimcontrol_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcontrol_id ;;
   }
 
@@ -61,6 +64,7 @@ view: v_claim_detail_feature {
 
   dimension: claimdenialreason_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimdenialreason_id ;;
   }
 
@@ -71,11 +75,13 @@ view: v_claim_detail_feature {
 
   dimension: claimdenialusers_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimdenialusers_id ;;
   }
 
   dimension: claimexposure_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimexposure_id ;;
   }
 
@@ -86,11 +92,13 @@ view: v_claim_detail_feature {
 
   dimension: claimfeaturestatus_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimfeaturestatus_id ;;
   }
 
   dimension: claimpersonnel_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimpersonnel_id ;;
   }
 
@@ -111,11 +119,13 @@ view: v_claim_detail_feature {
 
   dimension: coveragecode {
     type: string
+    hidden: yes
     sql: ${TABLE}.coveragecode ;;
   }
 
   dimension: coveragecode_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.coveragecode_id ;;
   }
 
@@ -126,21 +136,25 @@ view: v_claim_detail_feature {
 
   dimension: display_name {
     type: string
+    hidden: yes
     sql: ${TABLE}.display_name ;;
   }
 
   dimension: expense_paid {
     type: string
+    hidden: yes
     sql: ${TABLE}.expense_paid ;;
   }
 
   dimension: expense_recovery {
     type: string
+    hidden: yes
     sql: ${TABLE}.expense_recovery ;;
   }
 
   dimension: expense_reserve {
     type: string
+    hidden: yes
     sql: ${TABLE}.expense_reserve ;;
   }
 
@@ -156,11 +170,13 @@ view: v_claim_detail_feature {
 
   dimension: indemnity_paid {
     type: string
+    hidden: yes
     sql: ${TABLE}.indemnity_paid ;;
   }
 
   dimension: indemnity_reserve {
     type: string
+    hidden: yes
     sql: ${TABLE}.indemnity_reserve ;;
   }
 
@@ -221,6 +237,7 @@ view: v_claim_detail_feature {
 
   dimension: status_dscr {
     type: string
+    label: "Status"
     sql: ${TABLE}.status_dscr ;;
   }
 
@@ -237,6 +254,7 @@ view: v_claim_detail_feature {
 
   dimension: subcoveragecode_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.subcoveragecode_id ;;
   }
 
@@ -252,12 +270,53 @@ view: v_claim_detail_feature {
 
   dimension: users_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.users_id ;;
   }
 
   measure: count {
     type: count
     drill_fields: [display_name, users.users_id, users.login_name]
+  }
+
+  measure:  sum_indemnity_paid {
+    type: sum
+    sql: ${indemnity_paid} ;;
+  }
+  measure:  sum_indemnity_reserve {
+    type:  sum
+    sql:  ${indemnity_reserve} ;;
+
+  }
+  measure: sum_total_indemnity_incurred{
+    type: number
+    sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
+  }
+
+  measure:  sum_expense_paid {
+    type: sum
+    sql: ${expense_paid} ;;
+  }
+
+  measure:  sum_expense_reserve {
+    type:  sum
+    sql:  ${expense_reserve} ;;
+
+  }
+
+  measure:  sum_expense_recovery {
+    type:  sum
+    sql:  ${expense_recovery} ;;
+
+  }
+
+  measure:  sum_alae_paid {
+    type: sum
+    sql: ${alae_paid} ;;
+  }
+
+  measure:  sum_alae_reserve {
+    type: sum
+    sql: ${alae_reserve} ;;
   }
 }

@@ -10,11 +10,13 @@ view: v_claim_detail_claimant {
 
   dimension: alae_paid {
     type: string
+    hidden: yes
     sql: ${TABLE}.alae_paid ;;
   }
 
   dimension: alae_reserve {
     type: string
+    hidden: yes
     sql: ${TABLE}.alae_reserve ;;
   }
 
@@ -40,6 +42,7 @@ view: v_claim_detail_claimant {
 
   dimension: applicant_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.applicant_num ;;
   }
 
@@ -59,72 +62,86 @@ view: v_claim_detail_claimant {
   }
 
   dimension: claimantstatus_id {
+    hidden: yes
     type: number
     sql: ${TABLE}.claimantstatus_id ;;
   }
 
   dimension: claimanttypecode {
     type: string
+    hidden: yes
     sql: ${TABLE}.claimanttypecode ;;
   }
 
   dimension: claimanttypedscr {
     type: string
+    label: "Clainmant Type"
     sql: ${TABLE}.claimanttypedscr ;;
   }
 
   dimension: claimcontrol_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcontrol_id ;;
   }
 
   dimension: claimcontrolproperty_num {
     type: number
+    label: "Property Number"
     sql: ${TABLE}.claimcontrolproperty_num ;;
   }
 
   dimension: claimcontrolvehicle_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcontrolvehicle_num ;;
   }
 
   dimension: display_address {
     type: string
+    label: "Address"
     sql: ${TABLE}.display_address ;;
   }
 
   dimension: display_name {
     type: string
+    label: "Name"
     sql: ${TABLE}.display_name ;;
   }
 
   dimension: driver_num {
+    hidden: yes
     type: number
     sql: ${TABLE}.driver_num ;;
   }
 
   dimension: driverexcludetypecode {
+    hidden: yes
     type: string
     sql: ${TABLE}.driverexcludetypecode ;;
   }
 
   dimension: driverexcludetypedscr {
     type: string
+    hidden: yes
     sql: ${TABLE}.driverexcludetypedscr ;;
   }
 
   dimension: expense_paid {
     type: string
+    hidden: yes
     sql: ${TABLE}.expense_paid ;;
   }
 
   dimension: expense_recovery {
     type: string
+    hidden: yes
     sql: ${TABLE}.expense_recovery ;;
   }
 
   dimension: expense_reserve {
     type: string
+    hidden: yes
     sql: ${TABLE}.expense_reserve ;;
   }
 
@@ -135,11 +152,13 @@ view: v_claim_detail_claimant {
 
   dimension: indemnity_paid {
     type: string
+    hidden: yes
     sql: ${TABLE}.indemnity_paid ;;
   }
 
   dimension: indemnity_reserve {
     type: string
+    hidden: yes
     sql: ${TABLE}.indemnity_reserve ;;
   }
 
@@ -160,6 +179,7 @@ view: v_claim_detail_claimant {
 
   dimension: name {
     type: string
+    hidden: yes
     sql: ${TABLE}.name ;;
   }
 
@@ -174,12 +194,14 @@ view: v_claim_detail_claimant {
   }
 
   dimension: relationshiptypecode {
+    hidden: yes
     type: string
     sql: ${TABLE}.relationshiptypecode ;;
   }
 
   dimension: relationshiptypedscr {
     type: string
+    label: "Relationship"
     sql: ${TABLE}.relationshiptypedscr ;;
   }
 
@@ -194,6 +216,7 @@ view: v_claim_detail_claimant {
   }
 
   dimension: status_dscr {
+    label: "Status"
     type: string
     sql: ${TABLE}.status_dscr ;;
   }
@@ -204,6 +227,7 @@ view: v_claim_detail_claimant {
   }
 
   dimension: taxnum {
+    hidden: yes
     type: string
     sql: ${TABLE}.taxnum ;;
   }
@@ -221,8 +245,35 @@ view: v_claim_detail_claimant {
     sql:  ${indemnity_reserve} ;;
 
   }
-  measure: sum_total_incurred{
+  measure: sum_total_indemnity_incurred{
     type: number
     sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
+  }
+
+  measure:  sum_expense_paid {
+    type: sum
+    sql: ${expense_paid} ;;
+  }
+
+  measure:  sum_expense_reserve {
+    type:  sum
+    sql:  ${expense_reserve} ;;
+
+  }
+
+  measure:  sum_expense_recovery {
+    type:  sum
+    sql:  ${expense_recovery} ;;
+
+  }
+
+  measure:  sum_alae_paid {
+    type: sum
+    sql: ${alae_paid} ;;
+  }
+
+  measure:  sum_alae_reserve {
+    type: sum
+    sql: ${alae_reserve} ;;
   }
 }

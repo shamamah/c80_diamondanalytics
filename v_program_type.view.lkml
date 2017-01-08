@@ -3,12 +3,13 @@ view: v_program_type {
 
   dimension: dscr {
     type: string
-    label: "ProgramType"
+    label: "Program Type"
     sql: ${TABLE}.dscr ;;
   }
 
   dimension: programtype_id {
     type: number
+    primary_key: yes
     hidden: yes
     sql: ${TABLE}.programtype_id ;;
   }
@@ -27,6 +28,7 @@ view: v_program_type {
 
   measure: count {
     type: count
+    hidden: yes
     drill_fields: [detail*]
   }
 

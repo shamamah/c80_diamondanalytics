@@ -10,11 +10,13 @@ view: claim_control {
 
   dimension: ccr1_yesno_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.ccr1_yesno_id ;;
   }
 
   dimension: ccr2_yesno_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.ccr2_yesno_id ;;
   }
 
@@ -30,47 +32,56 @@ view: claim_control {
 
   dimension: claim_type_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claim_type_id ;;
   }
 
   dimension: claimadministrator_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimadministrator_id ;;
   }
 
   dimension: claimassistant_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimassistant_id ;;
   }
 
   dimension: claimcatastrophe_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcatastrophe_id ;;
   }
 
   dimension: claimclosereason_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimclosereason_id ;;
   }
 
   dimension: claimcluedisp_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcluedisp_id ;;
   }
 
   dimension: claimcontact_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcontact_id ;;
   }
 
   dimension: claimcontrol_id {
     primary_key: yes
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcontrol_id ;;
   }
 
   dimension: claimcontrolstatus_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimcontrolstatus_id ;;
   }
 
@@ -82,6 +93,7 @@ view: claim_control {
 
   dimension: claimdenialreason_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimdenialreason_id ;;
   }
 
@@ -92,21 +104,25 @@ view: claim_control {
 
   dimension: claimdenialusers_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimdenialusers_id ;;
   }
 
   dimension: claimfault_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimfault_id ;;
   }
 
   dimension: claimfinancials_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimfinancials_num ;;
   }
 
   dimension: claimfiredept_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimfiredept_id ;;
   }
 
@@ -114,82 +130,97 @@ view: claim_control {
     type: time
     timeframes: [date, week, month]
     convert_tz: no
+    hidden: yes
     sql: ${TABLE}.claimliabilitydecision_added_date ;;
   }
 
   dimension: claimliabilitydecision_percentage {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimliabilitydecision_percentage ;;
   }
 
   dimension: claimliabilitydecision_user_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimliabilitydecision_user_id ;;
   }
 
   dimension: claimliabilitydecisiontype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimliabilitydecisiontype_id ;;
   }
 
   dimension: claimlnimage_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimlnimage_num ;;
   }
 
   dimension: claimlnmaster_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimlnmaster_id ;;
   }
 
   dimension: claimlossdescriptiontype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimlossdescriptiontype_id ;;
   }
 
   dimension: claimlosstype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimlosstype_id ;;
   }
 
   dimension: claimoffice_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimoffice_id ;;
   }
 
   dimension: claimpolicedept_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimpolicedept_id ;;
   }
 
   dimension: claimpoliceofficer_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimpoliceofficer_id ;;
   }
 
   dimension: claimreportedby_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimreportedby_id ;;
   }
 
   dimension: claimreportedbymethod_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimreportedbymethod_id ;;
   }
 
   dimension: claims_made {
     type: string
+    hidden: yes
     sql: ${TABLE}.claims_made ;;
   }
 
   dimension: claimseverity_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.claimseverity_id ;;
   }
 
   dimension: client_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.client_id ;;
   }
 
@@ -201,6 +232,7 @@ view: claim_control {
 
   dimension: dscr {
     type: string
+    label: "Loss Description"
     sql: ${TABLE}.dscr ;;
   }
 
@@ -321,17 +353,20 @@ view: claim_control {
   dimension_group: last_modified {
     type: time
     timeframes: [time, date, week, month]
+    hidden: yes
     sql: ${TABLE}.last_modified_date ;;
   }
 
   dimension_group: last_transaction {
     type: time
     timeframes: [time, date, week, month]
+    hidden: yes
     sql: ${TABLE}.last_transaction_date ;;
   }
 
   dimension: loss_address_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.loss_address_id ;;
   }
 
@@ -348,11 +383,13 @@ view: claim_control {
 
   dimension: losstimegiven {
     type: string
+    hidden: yes
     sql: ${TABLE}.losstimegiven ;;
   }
 
   dimension: officer_badge_no {
     type: string
+    hidden: yes
     sql: ${TABLE}.officer_badge_no ;;
   }
 
@@ -360,6 +397,7 @@ view: claim_control {
     type: time
     timeframes: [date, week, month]
     convert_tz: no
+    hidden: yes
     sql: ${TABLE}.original_iso_loss_date ;;
   }
 
@@ -370,22 +408,26 @@ view: claim_control {
 
   dimension: outside_adjuster_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.outside_adjuster_id ;;
   }
 
   dimension: packagepart_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.packagepart_num ;;
   }
 
   dimension_group: pcadded {
     type: time
     timeframes: [time, date, week, month]
+    hidden: yes
     sql: ${TABLE}.pcadded_date ;;
   }
 
   dimension: police_case_no {
     type: string
+    hidden: yes
     sql: ${TABLE}.police_case_no ;;
   }
 
@@ -396,7 +438,7 @@ view: claim_control {
 
   dimension: policy_id {
     type: number
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.policy_id ;;
   }
 
@@ -443,6 +485,7 @@ view: claim_control {
 
   dimension: reported_to_iso {
     type: string
+    hidden: yes
     sql: ${TABLE}.reported_to_iso ;;
   }
 
@@ -450,6 +493,7 @@ view: claim_control {
     type: time
     timeframes: [date, week, month]
     convert_tz: no
+    hidden: yes
     sql: ${TABLE}.reported_to_iso_date ;;
   }
 
@@ -457,46 +501,55 @@ view: claim_control {
     type: time
     timeframes: [date, week, month]
     convert_tz: no
+    hidden: yes
     sql: ${TABLE}.reported_to_iso_last_submitted_date ;;
   }
 
   dimension: reported_to_iso_update_claim {
     type: string
+    hidden: yes
     sql: ${TABLE}.reported_to_iso_update_claim ;;
   }
 
   dimension: request_claimsdirector_search {
     type: string
+    hidden: yes
     sql: ${TABLE}.request_claimsdirector_search ;;
   }
 
   dimension: single_vehicle_loss {
     type: string
+    hidden: yes
     sql: ${TABLE}.single_vehicle_loss ;;
   }
 
   dimension: siu_indicator {
     type: string
+    hidden: yes
     sql: ${TABLE}.siu_indicator ;;
   }
 
   dimension: submit_to_iso {
     type: string
+    hidden: yes
     sql: ${TABLE}.submit_to_iso ;;
   }
 
   dimension: update_iso_loss_date {
     type: string
+    hidden: yes
     sql: ${TABLE}.update_iso_loss_date ;;
   }
 
   dimension: violation_text {
     type: string
+    hidden: yes
     sql: ${TABLE}.violation_text ;;
   }
 
   dimension: waive_clue_reporting {
     type: string
+    hidden: yes
     sql: ${TABLE}.waive_clue_reporting ;;
   }
 
