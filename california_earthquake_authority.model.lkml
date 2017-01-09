@@ -133,6 +133,13 @@ explore: policy {
     relationship: one_to_one
   }
 
+  join:  policy_level {
+    view_label: "Policy Image"
+    type:  inner
+    relationship: many_to_many
+    sql_on: ${policy_image.policy_id} = ${policy_level.policy_id}
+    and ${policy_image.policyimage_num} = ${policy_level.policyimage_num};;
+  }
   join: version {
     type: inner
     sql_on: ${policy_image.version_id} = ${version.version_id} ;;
@@ -169,6 +176,29 @@ explore: policy {
     type: inner
     sql_on: ${policy_holder_name.sex_id} = ${policy_holder_sex.sex_id} ;;
     relationship: one_to_one
+  }
+
+  join:  additional_interest {
+    view_label: "Additional Interest"
+    type: inner
+    relationship: many_to_many
+    sql_on: ${policy_image.policy_id} = ${additional_interest.policy_id}
+    and ${policy_image.policyimage_num} = ${additional_interest.policyimage_num} ;;
+  }
+
+  join: additional_interest_list_name_link {
+    view_label: "Additional Interest"
+    type: inner
+    relationship: one_to_one
+    sql_on: ${additional_interest.additionalinterestlist_id} = ${additional_interest_list_name_link.additionalinterestlist_id} ;;
+  }
+
+  join: name {
+    view_label: "Additional Interest"
+    type: inner
+    relationship: one_to_one
+    sql_on: ${additional_interest_list_name_link.nameaddresssource_id} = ${name.nameaddresssource_id}
+    and ${additional_interest_list_name_link.name_id} = ${name.name_id};;
   }
 
   join: location {

@@ -20,47 +20,53 @@ view: additional_interest {
 
   dimension: additionalinterestlist_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.additionalinterestlist_id ;;
   }
 
   dimension: additionalinteresttype_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.additionalinteresttype_id ;;
   }
 
   dimension: atima {
     type: string
-    sql: ${TABLE}.atima ;;
+    sql: case when ${TABLE}.atima = 'true' then 'Yes' else 'No' end;;
   }
 
   dimension: bill_to {
     type: string
-    sql: ${TABLE}.bill_to ;;
+    sql: case when ${TABLE}.bill_to = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: deleted_policyimage_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.deleted_policyimage_num ;;
   }
 
   dimension: description {
     type: string
+    hidden: yes
     sql: ${TABLE}.description ;;
   }
 
   dimension: detailstatuscode_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.detailstatuscode_id ;;
   }
 
   dimension: external_id {
     type: string
+    hidden: yes
     sql: ${TABLE}.external_id ;;
   }
 
   dimension: has_waiver_of_subrogation {
     type: string
-    sql: ${TABLE}.has_waiver_of_subrogation ;;
+    sql: case when ${TABLE}.has_waiver_of_subrogation = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: interestinproperty {
@@ -70,11 +76,12 @@ view: additional_interest {
 
   dimension: isaoa {
     type: string
-    sql: ${TABLE}.isaoa ;;
+    sql: case when ${TABLE}.isaoa = 'true' then 'Yes' else 'No' end;;
   }
 
   dimension_group: last_modified {
     type: time
+    hidden: yes
     timeframes: [time, date, week, month]
     sql: ${TABLE}.last_modified_date ;;
   }
@@ -96,29 +103,33 @@ view: additional_interest {
 
   dimension_group: pcadded {
     type: time
+    hidden: yes
     timeframes: [time, date, week, month]
     sql: ${TABLE}.pcadded_date ;;
   }
 
   dimension: policy_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.policy_id ;;
   }
 
   dimension: policyimage_num {
     type: number
+    hidden: yes
     sql: ${TABLE}.policyimage_num ;;
   }
 
   dimension_group: trustagreement {
     type: time
+    hidden: yes
     timeframes: [time, date, week, month]
     sql: ${TABLE}.trustagreement_date ;;
   }
 
   measure: count {
     type: count
+    hidden: yes
     drill_fields: [policy.rewrittenfrom_policy_id]
   }
 }
