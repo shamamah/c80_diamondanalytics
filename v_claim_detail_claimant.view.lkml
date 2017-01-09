@@ -147,7 +147,7 @@ view: v_claim_detail_claimant {
 
   dimension: in_litigation {
     type: string
-    sql: ${TABLE}.in_litigation ;;
+    sql: case when ${TABLE}.in_litigation = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: indemnity_paid {
@@ -164,17 +164,17 @@ view: v_claim_detail_claimant {
 
   dimension: is_insured1 {
     type: string
-    sql: ${TABLE}.is_insured1 ;;
+    sql: case when ${TABLE}.is_insured1 = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_insured2 {
     type: string
-    sql: ${TABLE}.is_insured2 ;;
+    sql: case when ${TABLE}.is_insured2 = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_represented {
     type: string
-    sql: ${TABLE}.is_represented ;;
+    sql: case when ${TABLE}.is_represented = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: name {

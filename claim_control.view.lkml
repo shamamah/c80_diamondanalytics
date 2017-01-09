@@ -254,22 +254,22 @@ view: claim_control {
 
   dimension: has_other_insurance {
     type: string
-    sql: ${TABLE}.has_other_insurance ;;
+    sql: case when ${TABLE}.has_other_insurance = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: has_public_adjuster {
     type: string
-    sql: ${TABLE}.has_public_adjuster ;;
+    sql: case when ${TABLE}.has_public_adjuster = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: has_related_treatments {
     type: string
-    sql: ${TABLE}.has_related_treatments ;;
+    sql: case when ${TABLE}.has_related_treatments = 'true' then 'Yes' else 'No' end;;
   }
 
   dimension: hit_and_run_loss {
     type: string
-    sql: ${TABLE}.hit_and_run_loss ;;
+    sql: case when ${TABLE}.hit_and_run_loss = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension_group: hospital_admittance {
@@ -302,46 +302,50 @@ view: claim_control {
 
   dimension: is_clinic_notified {
     type: string
-    sql: ${TABLE}.is_clinic_notified ;;
+    sql: case when${TABLE}.is_clinic_notified = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_converted {
     type: string
-    sql: ${TABLE}.is_converted ;;
+    sql: case when ${TABLE}.is_converted = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_euthanized {
     type: string
+    hidden: yes
     sql: ${TABLE}.is_euthanized ;;
   }
 
   dimension: is_euthanized_vet_advice {
     type: string
+    hidden:  yes
     sql: ${TABLE}.is_euthanized_vet_advice ;;
   }
 
   dimension: is_external_policy {
     type: string
-    sql: ${TABLE}.is_external_policy ;;
+    sql: case when ${TABLE}.is_external_policy = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_policy_verified {
     type: string
-    sql: ${TABLE}.is_policy_verified ;;
+    sql: case when ${TABLE}.is_policy_verified = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_shell_policy {
     type: string
-    sql: ${TABLE}.is_shell_policy ;;
+    sql: case when ${TABLE}.is_shell_policy = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_vacation_cancelled {
     type: string
+    hidden: yes
     sql: ${TABLE}.is_vacation_cancelled ;;
   }
 
   dimension: is_vacation_planned {
     type: string
+    hidden: yes
     sql: ${TABLE}.is_vacation_planned ;;
   }
 
@@ -433,7 +437,7 @@ view: claim_control {
 
   dimension: police_notified {
     type: string
-    sql: ${TABLE}.police_notified ;;
+    sql: case when ${TABLE}.police_notified = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: policy_id {
@@ -459,12 +463,12 @@ view: claim_control {
 
   dimension: previously_reported {
     type: string
-    sql: ${TABLE}.previously_reported ;;
+    sql: case when ${TABLE}.previously_reported = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: process_medical_bill {
     type: string
-    sql: ${TABLE}.process_medical_bill ;;
+    sql: case when ${TABLE}.process_medical_bill = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: reinsurance_claim_number {

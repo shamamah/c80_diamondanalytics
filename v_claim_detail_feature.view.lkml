@@ -131,7 +131,7 @@ view: v_claim_detail_feature {
 
   dimension: denied {
     type: string
-    sql: ${TABLE}.denied ;;
+    sql: case when ${TABLE}.denied = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: display_name {
@@ -165,7 +165,7 @@ view: v_claim_detail_feature {
 
   dimension: in_suit {
     type: string
-    sql: ${TABLE}.in_suit ;;
+    sql: case when ${TABLE}.in_suit = 'true' then 'Yes' else 'No' end;;
   }
 
   dimension: indemnity_paid {
@@ -227,7 +227,7 @@ view: v_claim_detail_feature {
 
   dimension: record_only {
     type: string
-    sql: ${TABLE}.record_only ;;
+    sql: case when ${TABLE}.record_only = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: salvage {
