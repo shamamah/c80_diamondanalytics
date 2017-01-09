@@ -88,6 +88,20 @@ explore: v_billing_cash {
     sql_on: ${v_billing_cash.policy_id} = ${policy.policy_id} ;;
   }
 
+  join:  v_billing_account_detail {
+    view_label: "Policy"
+    type: inner
+    relationship:one_to_one
+    sql_on: ${v_billing_account_detail.policy_id}  = ${policy.policy_id};;
+  }
+
+  join: billing_payplan_type {
+    view_label: "Policy"
+    type: inner
+    relationship: one_to_one
+    sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.billingpayplantype_id} ;;
+  }
+
   join: v_billing_futures {
     view_label: "Billing Futures"
     type: inner
