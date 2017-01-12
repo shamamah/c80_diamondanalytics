@@ -234,46 +234,55 @@ view: v_claim_detail_claimant {
 
   measure: count {
     type: count
+    label: "Number of Claimants"
     drill_fields: [name, display_name]
   }
   measure:  sum_indemnity_paid {
     type: sum
+    label: "Total Claimant Indemnity Paid"
     sql: ${indemnity_paid} ;;
   }
   measure:  sum_indemnity_reserve {
     type:  sum
+    label: "Total Claimant Indemnity Reserve"
     sql:  ${indemnity_reserve} ;;
 
   }
   measure: sum_total_indemnity_incurred{
     type: number
+    label: "Total Claimant Indemnity Incurred"
     sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
   }
 
   measure:  sum_expense_paid {
     type: sum
+    label: "Total Claimant Expense Paid"
     sql: ${expense_paid} ;;
   }
 
   measure:  sum_expense_reserve {
     type:  sum
+    label: "Total Claimant Expense Reserve"
     sql:  ${expense_reserve} ;;
 
   }
 
   measure:  sum_expense_recovery {
     type:  sum
+    label: "Total Claimant Expense Recovery"
     sql:  ${expense_recovery} ;;
 
   }
 
   measure:  sum_alae_paid {
     type: sum
+    label: "Total Claimant Alae Paid"
     sql: ${alae_paid} ;;
   }
 
   measure:  sum_alae_reserve {
     type: sum
+    label: "Total Claimant Alae Reserve"
     sql: ${alae_reserve} ;;
   }
 }

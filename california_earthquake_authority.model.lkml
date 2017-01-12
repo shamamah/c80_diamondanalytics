@@ -154,6 +154,22 @@ explore: policy {
     sql_on: ${policy_image.policy_id} = ${policy_level.policy_id}
     and ${policy_image.policyimage_num} = ${policy_level.policyimage_num};;
   }
+
+  join: policy_underwriting {
+    view_label: "Policy Image"
+    type:  inner
+    relationship: many_to_many
+    fields: [policy_underwriting.underwriting_response]
+    sql_on: ${policy_image.policy_id} = ${policy_underwriting.policy_id}
+    and ${policy_image.policyimage_num} = ${policy_underwriting.policyimage_num};;
+  }
+  join:  policy_underwriting_code {
+    view_label: "Policy Image"
+    type:  inner
+    fields: [policy_underwriting_code.underwriting_question]
+    relationship: many_to_one
+    sql_on: ${policy_underwriting.policyunderwritingcode_id} = ${policy_underwriting_code.policyunderwritingcode_id};;
+  }
   join: version {
     type: inner
     sql_on: ${policy_image.version_id} = ${version.version_id} ;;
