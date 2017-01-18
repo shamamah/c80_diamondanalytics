@@ -9,7 +9,7 @@ view: billing_cash_type {
 
   dimension: dscr {
     type: string
-    label: "Description"
+    label: "Transaction Type"
     sql: ${TABLE}.dscr ;;
   }
 
@@ -34,6 +34,7 @@ view: billing_cash_type {
   }
 
   dimension: print_description {
+    hidden: yes
     type: string
     sql: ${TABLE}.print_description ;;
   }

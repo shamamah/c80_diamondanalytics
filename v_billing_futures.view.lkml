@@ -7,13 +7,15 @@ view: v_billing_futures {
     sql: CONCAT(${policy_id},${renewal_ver},${billinginstallment_num},${num}) ;;
   }
 
-  dimension: amount {
+  dimension: amount_hidden {
+    hidden:  yes
     type: string
     sql: ${TABLE}.amount ;;
   }
 
   dimension: amountspread {
-    type: string
+    hidden:  yes
+    type: number
     sql: ${TABLE}.amountspread ;;
   }
 
@@ -24,6 +26,7 @@ view: v_billing_futures {
   }
 
   dimension: billingchargetypecategory_dscr {
+    label: "Charge Category"
     type: string
     sql: ${TABLE}.billingchargetypecategory_dscr ;;
   }
@@ -35,16 +38,19 @@ view: v_billing_futures {
   }
 
   dimension: billingfuturecash_num {
+    label: "Order Number"
     type: number
     sql: ${TABLE}.billingfuturecash_num ;;
   }
 
   dimension: billinginstallment_num {
+    label: "Installment Number"
     type: number
     sql: ${TABLE}.billinginstallment_num ;;
   }
 
   dimension: dscr {
+    label: "Description"
     type: string
     sql: ${TABLE}.dscr ;;
   }
@@ -56,6 +62,7 @@ view: v_billing_futures {
   }
 
   dimension: num {
+    label: "Number"
     type: number
     sql: ${TABLE}.num ;;
   }
@@ -74,13 +81,14 @@ view: v_billing_futures {
   }
 
   dimension: renewal_ver {
-    type: string
+    type: number
     hidden: yes
     sql: ${TABLE}.renewal_ver ;;
   }
 
-  dimension: tax_amount {
-    type: string
+  dimension: tax_amount_hidden {
+    hidden: yes
+    type: number
     sql: ${TABLE}.tax_amount ;;
   }
 
@@ -95,10 +103,24 @@ view: v_billing_futures {
     sql: ${TABLE}.total ;;
   }
 
-  dimension_group: tran {
+  dimension_group: transaction {
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.tran_date ;;
+  }
+
+  measure: amount {
+    type: sum
+    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key} ;;
+    sql: ${amount_hidden} ;;
+  }
+
+  measure: tax_amount {
+    type: sum
+    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key} ;;
+    sql: ${tax_amount_hidden} ;;
   }
 
   measure: count {

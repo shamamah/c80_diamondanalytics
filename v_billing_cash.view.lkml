@@ -31,7 +31,8 @@ view: v_billing_cash {
     sql: ${TABLE}.adjust_num ;;
   }
 
-  dimension: amount {
+  dimension: amount_hidden {
+    hidden: yes
     type: string
     sql: ${TABLE}.amount ;;
   }
@@ -55,6 +56,7 @@ view: v_billing_cash {
   }
 
   dimension: billingaccount_payment {
+    label: "Account Payment"
     type: string
     sql: ${TABLE}.billingaccount_payment ;;
   }
@@ -72,11 +74,13 @@ view: v_billing_cash {
   }
 
   dimension: billingaccountinvoice_num {
+    label: "Account Invoice Number"
     type: number
     sql: ${TABLE}.billingaccountinvoice_num ;;
   }
 
   dimension: billingactivityorder {
+    label: "Activity Order"
     type: number
     sql: ${TABLE}.billingactivityorder ;;
   }
@@ -88,6 +92,7 @@ view: v_billing_cash {
   }
 
   dimension: billingcash_num {
+    label: "Number"
     type: number
     sql: ${TABLE}.billingcash_num ;;
   }
@@ -177,16 +182,19 @@ view: v_billing_cash {
   }
 
   dimension: mail_to_address {
+    label: "Mail To - Address"
     type: string
     sql: ${TABLE}.mail_to_address ;;
   }
 
   dimension: mail_to_name1 {
+    label: "Mail To - Name 1"
     type: string
     sql: ${TABLE}.mail_to_name1 ;;
   }
 
   dimension: mail_to_name2 {
+    label: "Mail To - Name 2"
     type: string
     sql: ${TABLE}.mail_to_name2 ;;
   }
@@ -271,11 +279,13 @@ view: v_billing_cash {
   }
 
   dimension: sequence_number {
+    hidden: yes
     type: string
     sql: ${TABLE}.sequence_number ;;
   }
 
-  dimension: tax_amount {
+  dimension: tax_amount_hidden {
+    hidden: yes
     type: string
     sql: ${TABLE}.tax_amount ;;
   }
@@ -304,6 +314,7 @@ view: v_billing_cash {
   }
 
   dimension: transfer_num {
+    hidden:  yes
     type: number
     sql: ${TABLE}.transfer_num ;;
   }
@@ -319,7 +330,8 @@ view: v_billing_cash {
     sql: ${TABLE}.transfer_to_policy_id ;;
   }
 
-  dimension: unapplied_amount {
+  dimension: unapplied_amount_hidden {
+    hidden: yes
     type: string
     sql: ${TABLE}.unapplied_amount ;;
   }
@@ -328,6 +340,27 @@ view: v_billing_cash {
     type: number
     hidden: yes
     sql: ${TABLE}.users_id ;;
+  }
+
+  measure: unapplied_amount {
+    type: sum
+    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key} ;;
+    sql: ${unapplied_amount_hidden} ;;
+  }
+
+  measure: amount {
+    type: sum
+    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key} ;;
+    sql: ${amount_hidden} ;;
+  }
+
+  measure: tax_amount {
+    type: sum
+    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key} ;;
+    sql: ${tax_amount_hidden} ;;
   }
 
   measure: count {

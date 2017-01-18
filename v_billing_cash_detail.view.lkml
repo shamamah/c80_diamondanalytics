@@ -4,7 +4,7 @@ view: v_billing_cash_detail {
   dimension: compound_primary_key {
     primary_key: yes
     hidden: yes
-    sql: CONCAT(${policy_id},${billingcash_num},${billingcashdetail_num}} ;;
+    sql: CONCAT(${policy_id},${billingcash_num},${billingcashdetail_num}) ;;
   }
 
   dimension_group: added {
@@ -14,7 +14,8 @@ view: v_billing_cash_detail {
     sql: ${TABLE}.added_date ;;
   }
 
-  dimension: amount {
+  dimension: amount_hidden {
+    hidden: yes
     type: string
     sql: ${TABLE}.amount ;;
   }
@@ -32,16 +33,19 @@ view: v_billing_cash_detail {
   }
 
   dimension: billingactivityorder {
+    label: "Activity Order"
     type: number
     sql: ${TABLE}.billingactivityorder ;;
   }
 
   dimension: billingcash_num {
+    label: "Number"
     type: number
     sql: ${TABLE}.billingcash_num ;;
   }
 
   dimension: billingcashdetail_num {
+    label: "Detail Number"
     type: number
     sql: ${TABLE}.billingcashdetail_num ;;
   }
@@ -66,7 +70,7 @@ view: v_billing_cash_detail {
 
   dimension: dscr {
     type: string
-    label: "Description"
+    label: "Applied To"
     sql: ${TABLE}.dscr ;;
   }
 
@@ -80,6 +84,13 @@ view: v_billing_cash_detail {
     type: number
     hidden: yes
     sql: ${TABLE}.renewal_ver ;;
+  }
+
+  measure: amount {
+    type: sum
+    value_format_name: usd
+    sql_distinct_key: ${compound_primary_key} ;;
+    sql: ${amount_hidden} ;;
   }
 
   measure: count {

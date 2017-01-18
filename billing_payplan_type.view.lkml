@@ -9,7 +9,7 @@ view: billing_payplan_type {
 
   dimension: dscr {
     type: string
-    label: "Pay Plan Type"
+    label: "Pay Plan"
     sql: ${TABLE}.dscr ;;
   }
 

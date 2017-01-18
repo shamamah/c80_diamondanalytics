@@ -36,6 +36,7 @@ view: additional_interest {
   }
 
   dimension: bill_to {
+    hidden: yes
     type: string
     sql: case when ${TABLE}.bill_to = 'true' then 'Yes' else 'No' end ;;
   }
@@ -70,11 +71,13 @@ view: additional_interest {
   }
 
   dimension: interestinproperty {
+    hidden: yes
     type: string
     sql: ${TABLE}.interestinproperty ;;
   }
 
   dimension: isaoa {
+    label: "Its Successors And/Or Assigns"
     type: string
     sql: case when ${TABLE}.isaoa = 'true' then 'Yes' else 'No' end;;
   }
@@ -97,6 +100,7 @@ view: additional_interest {
   }
 
   dimension: other {
+    hidden: yes
     type: string
     sql: ${TABLE}.other ;;
   }

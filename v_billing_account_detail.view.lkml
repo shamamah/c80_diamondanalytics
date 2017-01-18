@@ -2,6 +2,7 @@ view: v_billing_account_detail {
   sql_table_name: dbo.vBillingAccountDetail ;;
 
   dimension: account_num {
+    label: "Account Number"
     type: number
     sql: ${TABLE}.account_num ;;
   }
@@ -19,6 +20,7 @@ view: v_billing_account_detail {
   }
 
   dimension: billingpayplan_dscr {
+    hidden: yes
     type: string
     label: "Pay Plan"
     sql: ${TABLE}.billingpayplan_dscr ;;

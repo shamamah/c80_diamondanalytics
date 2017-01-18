@@ -34,6 +34,7 @@ explore: claim_control {
       AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
        ;;
   }
+
   join: claim_catastrophe {
     view_label: "Claim"
     type: inner
@@ -55,62 +56,63 @@ explore: claim_control {
     }
 }
 
-explore: v_billing_cash {
-  label: "Billing"
-   view_label: "Billing Cash"
+# explore: v_billing_cash {
+#   label: "Billing"
+#   view_label: "Billing Cash"
 
-  join:  billing_cash_type {
-    view_label: "Billing Cash"
-    type:  inner
-    relationship: one_to_one
-    sql_on: ${v_billing_cash.billingcashtype_id} = ${billing_cash_type.billingcashtype_id} ;;
-  }
+#   join:  billing_cash_type {
+#     view_label: "Billing Cash"
+#     type:  inner
+#     relationship: one_to_one
+#     sql_on: ${v_billing_cash.billingcashtype_id} = ${billing_cash_type.billingcashtype_id} ;;
+#   }
 
-  join:  billing_reason {
-    view_label: "Billing Cash"
-    type:  inner
-    relationship: one_to_one
-    sql_on: ${v_billing_cash.billingreason_id} = ${billing_reason.billingreason_id}
-     and ${v_billing_cash.billingreason_id} <> 0 ;;
-  }
-  join: v_billing_cash_detail {
-   view_label: "Billing Cash Detail"
-   type: inner
-    relationship: many_to_many
-    sql_on: ${v_billing_cash.policy_id} = ${v_billing_cash_detail.policy_id}
-      AND ${v_billing_cash.billingcash_num} = ${v_billing_cash_detail.billingcash_num}
-       ;;
-  }
+#   join:  billing_reason {
+#     view_label: "Cash"
+#     type:  inner
+#     relationship: one_to_one
+#     sql_on: ${v_billing_cash.billingreason_id} = ${billing_reason.billingreason_id}
+#     and ${v_billing_cash.billingreason_id} <> 0 ;;
+#   }
 
-  join: policy {
-    type: inner
-    relationship: many_to_one
-    sql_on: ${v_billing_cash.policy_id} = ${policy.policy_id} ;;
-  }
+#   join: v_billing_cash_detail {
+#   view_label: "Cash Detail"
+#   type: inner
+#     relationship: many_to_many
+#     sql_on: ${v_billing_cash.policy_id} = ${v_billing_cash_detail.policy_id}
+#       AND ${v_billing_cash.billingcash_num} = ${v_billing_cash_detail.billingcash_num}
+#       ;;
+#   }
 
-  join:  v_billing_account_detail {
-    view_label: "Policy"
-    type: inner
-    relationship:one_to_one
-    sql_on: ${v_billing_account_detail.policy_id}  = ${policy.policy_id};;
-  }
+#   join: policy {
+#     type: inner
+#     relationship: many_to_one
+#     sql_on: ${v_billing_cash.policy_id} = ${policy.policy_id} ;;
+#   }
 
-  join: billing_payplan_type {
-    view_label: "Policy"
-    type: inner
-    relationship: one_to_one
-    sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.billingpayplantype_id} ;;
-  }
+#   join:  v_billing_account_detail {
+#     view_label: "Policy"
+#     type: inner
+#     relationship:one_to_one
+#     sql_on: ${v_billing_account_detail.policy_id}  = ${policy.policy_id};;
+#   }
 
-  join: v_billing_futures {
-    view_label: "Billing Futures"
-    type: inner
-    relationship: many_to_many
-    sql_on: ${v_billing_cash.policy_id} = ${v_billing_futures.policy_id}
-      AND ${v_billing_futures.renewal_ver} <> ''
-       ;;
-  }
-}
+#   join: billing_payplan_type {
+#     view_label: "Policy"
+#     type: inner
+#     relationship: one_to_one
+#     sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.billingpayplantype_id} ;;
+#   }
+
+#   join: v_billing_futures {
+#     view_label: "Futures"
+#     type: inner
+#     relationship: many_to_many
+#     sql_on: ${v_billing_cash.policy_id} = ${v_billing_futures.policy_id}
+#       AND ${v_billing_futures.renewal_ver} <> ''
+#       ;;
+#   }
+# }
 
 explore: policy {
   join: policy_image {
@@ -317,4 +319,59 @@ explore: policy {
     sql_on: ${policy_image.trans_users_id} = ${users.users_id} ;;
     relationship: one_to_one
   }
+
+  join: v_billing_cash {
+    view_label: "Billing"
+    type: inner
+    relationship: many_to_one
+    sql_on: ${v_billing_cash.policy_id} = ${policy.policy_id} ;;
+  }
+
+  join:  billing_cash_type {
+    view_label: "Billing"
+    type:  inner
+    relationship: one_to_one
+    sql_on: ${v_billing_cash.billingcashtype_id} = ${billing_cash_type.billingcashtype_id} ;;
+  }
+
+  join:  billing_reason {
+    view_label: "Billing"
+    type:  inner
+    relationship: one_to_one
+    sql_on: ${v_billing_cash.billingreason_id} = ${billing_reason.billingreason_id}
+      and ${v_billing_cash.billingreason_id} <> 0 ;;
+  }
+
+  join: v_billing_cash_detail {
+    view_label: "Billing - Detail"
+    type: inner
+    relationship: many_to_many
+    sql_on: ${v_billing_cash.policy_id} = ${v_billing_cash_detail.policy_id}
+      AND ${v_billing_cash.billingcash_num} = ${v_billing_cash_detail.billingcash_num}
+       ;;
+  }
+
+  join:  v_billing_account_detail {
+    view_label: "Policy"
+    type: inner
+    relationship:one_to_one
+    sql_on: ${v_billing_account_detail.policy_id}  = ${policy.policy_id};;
+  }
+
+  join: billing_payplan_type {
+    view_label: "Policy"
+    type: inner
+    relationship: one_to_one
+    sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.billingpayplantype_id} ;;
+  }
+
+  join: v_billing_futures {
+    view_label: "Billing - Future"
+    type: inner
+    relationship: many_to_many
+    sql_on: ${v_billing_cash.policy_id} = ${v_billing_futures.policy_id}
+      AND ${v_billing_futures.renewal_ver} <> ''
+       ;;
+  }
+
 }
