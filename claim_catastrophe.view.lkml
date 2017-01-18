@@ -28,9 +28,10 @@ view: claim_catastrophe {
   }
 
   dimension_group: enddate {
+    label: "Catastrophe End"
     type: time
-    timeframes: [time, date, week, month]
-    hidden: yes
+    timeframes: [date, week, month]
+    #hidden: yes
     sql: ${TABLE}.enddate ;;
   }
 
@@ -49,15 +50,17 @@ view: claim_catastrophe {
   }
 
   dimension_group: startdate {
+    label: "Catastrophe Start"
     type: time
-    timeframes: [time, date, week, month]
-    hidden: yes
+    timeframes: [date, week, month]
+    #hidden: yes
     sql: ${TABLE}.startdate ;;
   }
 
   dimension: user_code {
+    label: "Catastrophe Code"
     type: string
-    hidden: yes
+    #hidden: yes
     sql: ${TABLE}.user_code ;;
   }
 
@@ -68,8 +71,9 @@ view: claim_catastrophe {
   }
 
   dimension: year {
+    label: "Catastrophe Year"
     type: number
-    hidden: yes
+    #hidden: yes
     sql: ${TABLE}.year ;;
   }
 
