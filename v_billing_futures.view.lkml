@@ -11,6 +11,7 @@ view: v_billing_futures {
     hidden:  yes
     type: string
     sql: ${TABLE}.amount ;;
+    value_format: "$0.00"
   }
 
   dimension: amountspread {
@@ -111,14 +112,14 @@ view: v_billing_futures {
 
   measure: amount {
     type: sum
-    value_format_name: usd
+    value_format_name:  usd
     sql_distinct_key: ${compound_primary_key} ;;
     sql: ${amount_hidden} ;;
   }
 
   measure: tax_amount {
     type: sum
-    value_format_name: usd
+    value_format_name:  usd
     sql_distinct_key: ${compound_primary_key} ;;
     sql: ${tax_amount_hidden} ;;
   }
