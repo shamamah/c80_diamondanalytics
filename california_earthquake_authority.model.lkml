@@ -7,6 +7,7 @@ include: "*.view"
 include: "*.dashboard"
 
 explore: claim_control {
+  access_filter_fields: [company_state_lob.commercial_name1]
   label: "Claim"
   view_label: "Claim"
   join: v_claim_detail_claimant {
@@ -49,13 +50,26 @@ explore: claim_control {
     sql_on: ${policy.policy_id} = ${claim_control.policy_id}  ;;
 
   }
+
   join: policy_image {
     type: inner
     sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
     relationship: many_to_many
     }
-}
 
+  join: version {
+    type: inner
+    sql_on: ${policy_image.version_id} = ${version.version_id} ;;
+    relationship: many_to_one
+    }
+
+  join: company_state_lob {
+    type: inner
+    sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
+    relationship: one_to_one
+    }
+
+}
 # explore: v_billing_cash {
 #   label: "Billing"
 #   view_label: "Billing Cash"
