@@ -64,6 +64,7 @@ explore: claim_control {
     }
 
   join: company_state_lob {
+    view_label: "Company"
     type: inner
     sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
     relationship: one_to_one
@@ -187,6 +188,7 @@ explore: policy {
     relationship: many_to_one
     sql_on: ${policy_underwriting.policyunderwritingcode_id} = ${policy_underwriting_code.policyunderwritingcode_id};;
   }
+
   join: version {
     type: inner
     sql_on: ${policy_image.version_id} = ${version.version_id} ;;
@@ -194,6 +196,7 @@ explore: policy {
   }
 
   join: company_state_lob {
+    view_label: "Company"
     type: inner
     sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
     relationship: one_to_one
@@ -395,5 +398,41 @@ explore: policy {
       AND ${v_billing_futures.renewal_ver} <> ''
        ;;
   }
+
+}
+
+explore: v_c63_rh_inbound_xml {
+  access_filter_fields: [company_state_lob.commercial_name1]
+  label: "Operations"
+  view_label: "Operations"
+
+  join: company_state_lob {
+    view_label: "Company"
+    type: left_outer
+    sql_on: ${v_c63_rh_inbound_xml.company_id} = ${company_state_lob.company_id} ;;
+    relationship: one_to_one
+  }
+
+  join: policy {
+    type: left_outer
+    sql_on: ${policy.policy_id} = ${v_c63_rh_inbound_xml.policy_id} ;;
+    relationship: many_to_one
+  }
+
+  join: policy_image {
+    type: left_outer
+    sql_on: ${v_c63_rh_inbound_xml.policy_id} = ${policy_image.policy_id}
+      AND ${v_c63_rh_inbound_xml.policyimage_num} = ${policy_image.policyimage_num}
+      ;;
+    relationship: many_to_many
+  }
+
+  join: version {
+    type: left_outer
+    sql_on: ${policy_image.version_id} = ${version.version_id} ;;
+    relationship: many_to_one
+  }
+
+
 
 }
