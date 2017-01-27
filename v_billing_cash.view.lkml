@@ -34,7 +34,7 @@ view: v_billing_cash {
   dimension: amount_hidden {
     hidden: yes
     type: string
-    sql: ${TABLE}.amount ;;
+    sql: (${TABLE}.amount * -1) ;;
   }
 
   dimension: approval_code {
@@ -333,7 +333,7 @@ view: v_billing_cash {
   dimension: unapplied_amount_hidden {
     hidden: yes
     type: string
-    sql: ${TABLE}.unapplied_amount ;;
+    sql: (${TABLE}.unapplied_amount * -1) ;;
   }
 
   dimension: users_id {

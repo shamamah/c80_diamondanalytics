@@ -115,6 +115,7 @@ explore: claim_control {
 # }
 
 explore: policy {
+  access_filter_fields: [company_state_lob.commercial_name1]
   join: policy_image {
     type: inner
     sql_on: ${policy.policy_id} = ${policy_image.policy_id} ;;
@@ -181,6 +182,13 @@ explore: policy {
   join: company_state_lob {
     type: inner
     sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
+    relationship: one_to_one
+  }
+
+  join: v_c63_offer_conversion_rate {
+    view_label: "Company/State/LOB"
+    type: inner
+    sql_on: ${company_state_lob.company_id} = ${v_c63_offer_conversion_rate.company_id} ;;
     relationship: one_to_one
   }
 

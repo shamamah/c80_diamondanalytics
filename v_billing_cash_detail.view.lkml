@@ -17,7 +17,7 @@ view: v_billing_cash_detail {
   dimension: amount_hidden {
     hidden: yes
     type: string
-    sql: ${TABLE}.amount ;;
+    sql: (${TABLE}.amount * -1) ;;
   }
 
   dimension: billingaccount_payment {

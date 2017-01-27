@@ -95,6 +95,7 @@ view: coverage {
   }
   dimension: manual_limit_amount {
     type: string
+    value_format_name: usd
     sql: cast(${TABLE}.manuallimitamount as varchar(25)) ;;
   }
 
