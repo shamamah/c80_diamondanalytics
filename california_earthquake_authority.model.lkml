@@ -53,7 +53,6 @@ explore: claim_control {
 
   join: current_status {
     type: inner
-    fields: []
     sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
     relationship: one_to_one
   }
@@ -436,7 +435,6 @@ explore: v_c63_rh_inbound_xml {
 
   join: current_status {
     type: inner
-    fields: []
     sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
     relationship: one_to_one
   }
