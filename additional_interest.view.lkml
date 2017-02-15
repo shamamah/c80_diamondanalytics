@@ -77,7 +77,7 @@ view: additional_interest {
   }
 
   dimension: isaoa {
-    label: "Its Successors And/Or Assigns-"
+    label: "Its Successors And/Or Assigns"
     type: string
     sql: case when ${TABLE}.isaoa = 'true' then 'Yes' else 'No' end;;
   }
