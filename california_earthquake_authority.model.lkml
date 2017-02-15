@@ -51,6 +51,13 @@ explore: claim_control {
 
   }
 
+  join: current_status {
+    type: inner
+    fields: []
+    sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
+    relationship: one_to_one
+  }
+
   join: policy_image {
     type: inner
     sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
@@ -128,6 +135,14 @@ explore: claim_control {
 #       ;;
 #   }
 # }
+
+explore: policy_cached {
+  view_name: policy
+  extends: [policy]
+  persist_for: "12 hours"
+  hidden: yes
+
+}
 
 explore: policy {
   access_filter_fields: [company_state_lob.commercial_name1]
@@ -417,6 +432,13 @@ explore: v_c63_rh_inbound_xml {
     type: left_outer
     sql_on: ${policy.policy_id} = ${v_c63_rh_inbound_xml.policy_id} ;;
     relationship: many_to_one
+  }
+
+  join: current_status {
+    type: inner
+    fields: []
+    sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
+    relationship: one_to_one
   }
 
   join: policy_image {

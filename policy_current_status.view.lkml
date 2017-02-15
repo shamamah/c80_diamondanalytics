@@ -8,6 +8,15 @@ view: current_status {
     sql: ${TABLE}.description ;;
   }
 
+  dimension: non_archive_cancel_status {
+    hidden: yes
+    type: string
+    sql: CASE
+        WHEN ${description} in ('In-Force','Pending','Future') THEN 'Yes'
+        ELSE 'No'
+        END ;;
+  }
+
   dimension: policycurrentstatus_id {
     hidden: yes
     type: number

@@ -65,6 +65,37 @@ view: policy {
     drill_fields: [location_address.zip, company_state_lob.commercial_name1, policy.current_policy]
   }
 
+  measure: pending_count {
+    type: count
+    filters: {
+      field: current_status.description
+      value: "Pending"
+    }
+  }
+
+  measure: inforce_count {
+    type: count
+    filters: {
+      field: current_status.description
+      value: "In-Force"
+    }
+  }
+
+  measure: non_archive_cancel_count {
+    type: count
+    filters: {
+      field: current_status.non_archive_cancel_status
+      value: "Yes"
+    }
+  }
+
+  measure: conversion_rate {
+    type: number
+    value_format_name: percent_2
+    sql: (1.0*${inforce_count})/NULLIF((1.0*${non_archive_cancel_count}),0) ;;
+
+  }
+
   measure: percent_of_total_count {
     type: percent_of_total
     sql: ${count} ;;
