@@ -14,7 +14,7 @@ view: coverage_code {
   }
 
   dimension: coveragetype {
-    label: "Type"
+    label: "Types"
     type: string
     sql: ${TABLE}.coveragetype ;;
   }

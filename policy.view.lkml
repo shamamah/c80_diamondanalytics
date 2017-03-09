@@ -84,8 +84,8 @@ view: policy {
   measure: non_archive_cancel_count {
     type: count
     filters: {
-      field: current_status.non_archive_cancel_status
-      value: "Yes"
+      field: policy.policy_id
+      value: ">=1"
     }
   }
 

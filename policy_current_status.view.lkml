@@ -12,7 +12,7 @@ view: current_status {
     hidden: yes
     type: string
     sql: CASE
-        WHEN ${description} in ('In-Force','Pending','Future') THEN 'Yes'
+        WHEN ${description} in ('In-Force','Future') THEN 'Yes'
         ELSE 'No'
         END ;;
   }
