@@ -7,7 +7,10 @@ include: "*.view"
 include: "*.dashboard"
 
 explore: claim_control {
-  access_filter_fields: [company_state_lob.commercial_name1]
+  access_filter: {
+    field: company_state_lob.commercial_name1
+    user_attribute: company_name
+  }
   label: "Claim"
   view_label: "Claim"
   join: v_claim_detail_claimant {
@@ -144,7 +147,10 @@ explore: policy_cached {
 }
 
 explore: policy {
-  access_filter_fields: [company_state_lob.commercial_name1]
+  access_filter: {
+    field: company_state_lob.commercial_name1
+    user_attribute: company_name
+  }
   join: policy_image {
     type: inner
     sql_on: ${policy.policy_id} = ${policy_image.policy_id} ;;
@@ -413,10 +419,29 @@ explore: policy {
        ;;
   }
 
+  join: v_c63_looker_accepted_offers {
+    view_label: "Policy"
+    type: inner
+    relationship: many_to_many
+    sql_on: ${policy.policy_id} = ${v_c63_looker_accepted_offers.policy_id}
+       ;;
+  }
+
+  join: v_c63_looker_total_offers {
+    view_label: "Policy"
+    type: inner
+    relationship: many_to_many
+    sql_on: ${policy.policy_id} = $v_c63_looker_total_offers.policy_id}
+       ;;
+  }
+
 }
 
 explore: v_c63_rh_inbound_xml {
-  access_filter_fields: [company_state_lob.commercial_name1]
+  access_filter: {
+    field: company_state_lob.commercial_name1
+    user_attribute: company_name
+  }
   label: "Operations"
   view_label: "Operations"
 

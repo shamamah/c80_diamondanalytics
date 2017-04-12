@@ -81,18 +81,10 @@ view: policy {
     }
   }
 
-  measure: non_archive_cancel_count {
-    type: count
-    filters: {
-      field: policy.policy_id
-      value: ">=1"
-    }
-  }
-
   measure: conversion_rate {
     type: number
     value_format_name: percent_2
-    sql: (1.0*${inforce_count})/NULLIF((1.0*${non_archive_cancel_count}),0) ;;
+    sql: (1.0*${inforce_count})/NULLIF((1.0*${inforce_count}),0) ;;
 
   }
 
