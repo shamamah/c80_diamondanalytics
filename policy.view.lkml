@@ -62,7 +62,7 @@ view: policy {
 
   measure: count {
     type: count
-    drill_fields: [location_address.zip, company_state_lob.commercial_name1, policy.current_policy]
+    drill_fields: []
   }
 
   measure: pending_count {
@@ -79,13 +79,6 @@ view: policy {
       field: current_status.description
       value: "In-Force"
     }
-  }
-
-  measure: conversion_rate {
-    type: number
-    value_format_name: percent_2
-    sql: (1.0*${inforce_count})/NULLIF((1.0*${inforce_count}),0) ;;
-
   }
 
   measure: percent_of_total_count {

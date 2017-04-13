@@ -407,7 +407,7 @@ explore: policy {
     view_label: "Policy"
     type: inner
     relationship: one_to_one
-    sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.billingpayplantype_id} ;;
+    sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.account_num}ng_account_detail.billingpayplantype_id} ;;
   }
 
   join: v_billing_futures {
@@ -419,19 +419,11 @@ explore: policy {
        ;;
   }
 
-  join: v_c63_looker_accepted_offers {
+  join: v_c63_looker_offers {
     view_label: "Policy"
     type: inner
-    relationship: many_to_many
-    sql_on: ${policy.policy_id} = ${v_c63_looker_accepted_offers.policy_id}
-       ;;
-  }
-
-  join: v_c63_looker_total_offers {
-    view_label: "Policy"
-    type: inner
-    relationship: many_to_many
-    sql_on: ${policy.policy_id} = $v_c63_looker_total_offers.policy_id}
+    relationship: one_to_one
+    sql_on: ${policy.policy_id} = ${v_c63_looker_offers.policy_id}
        ;;
   }
 
