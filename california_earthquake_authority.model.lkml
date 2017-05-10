@@ -1,4 +1,4 @@
-connection: "c63-prod"
+connection: "c63-test-cea"
 
 # include all the views
 include: "*.view"
