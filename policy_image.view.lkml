@@ -207,20 +207,11 @@ view: policy_image {
 
   measure: premium_chg_written_sum {
     #hidden: true
-    label: "Written Premium Change"
+    label: "Written Premium"
     type: sum_distinct
     value_format_name: usd
     sql_distinct_key: ${compound_primary_key} ;;
     sql: ${premium_chg_written} ;;
-  }
-
-  measure: premium_chg_fullterm_sum {
-    #hidden: true
-    label: "Fullterm Premium Change"
-    type: sum_distinct
-    value_format_name: usd
-    sql_distinct_key: ${compound_primary_key} ;;
-    sql: ${premium_chg_fullterm} ;;
   }
 
   measure: avg_days_to_convert {

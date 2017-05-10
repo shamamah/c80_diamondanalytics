@@ -1,4 +1,4 @@
-connection: "c63-test-cea"
+connection: "c63-prod"
 
 # include all the views
 include: "*.view"
@@ -151,16 +151,33 @@ explore: policy {
     field: company_state_lob.commercial_name1
     user_attribute: company_name
   }
+  persist_for: "4 hours"
+
   join: policy_image {
     type: inner
     sql_on: ${policy.policy_id} = ${policy_image.policy_id} ;;
     relationship: one_to_many
   }
 
+  join: policy_image_active {
+    view_label: "Policy"
+    type: inner
+    sql_on: ${policy.policy_id} = ${policy_image_active.policy_id} and
+            ${policy.activeimage_num} = ${policy_image_active.policyimage_num};;
+    relationship: one_to_one
+  }
+
   join: current_status {
     view_label: "Policy"
     type: inner
     sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
+    relationship: one_to_one
+  }
+
+  join: billing_invoice {
+    view_label: "Policy"
+    type: inner
+    sql_on: ${policy.policy_id} = ${billing_invoice.policy_id} ;;
     relationship: one_to_one
   }
 

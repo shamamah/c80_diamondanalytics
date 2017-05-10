@@ -21,6 +21,13 @@ view: policy {
     sql: ${TABLE}.cancel_date ;;
   }
 
+  dimension_group: legalcancel_date {
+    label: "Legal Cancellation"
+    type: time
+    timeframes: [date]
+    sql: ${TABLE}.legalcancel_date ;;
+  }
+
   dimension: current_policy {
     label: "Number"
     type: string
@@ -54,15 +61,35 @@ view: policy {
     sql: ${TABLE}.first_exp_date ;;
   }
 
+  dimension: legalcancelnotice {
+    label: "Legal Cancellation Notice"
+    type: yesno
+    sql: ${TABLE}.legalcancelnotice = 1 ;;
+  }
+
+  dimension: cancelled {
+    label: "Cancelled"
+    type: yesno
+    sql: ${TABLE}.cancelled = 1 ;;
+  }
+
   #  - measure: premium_chg_written
   #    label: 'Written Premium Change'
   #    type: sum
   #    value_format_name: usd
   #    sql: ${policy_image.premium_chg_written}
 
+  set: detail_cancel {
+    fields: [policy.current_policy, policy_holder_name.display_name, policy.legalcancel_date_date, policy.cancel_date_date, billing_invoice.current_outstanding_amount_sum]      # creates named set customers.detail
+  }
+
+  set: detail_count {
+    fields: [policy.current_policy, policy_holder_name.display_name, policy_image_active.premium_written_sum]
+  }
+
   measure: count {
     type: count
-    drill_fields: []
+    drill_fields: [detail_count*]
   }
 
   measure: pending_count {
@@ -71,6 +98,20 @@ view: policy {
       field: current_status.description
       value: "Pending"
     }
+  }
+
+  measure: legalcancellation_count {
+    label: "Legal Cancellation Count"
+    type: count
+    filters: {
+      field: legalcancelnotice
+      value: "Yes"
+    }
+    filters: {
+      field: cancelled
+      value: "No"
+    }
+    drill_fields: [detail_cancel*]
   }
 
   measure: inforce_count {

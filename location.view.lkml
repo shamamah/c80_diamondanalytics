@@ -97,8 +97,8 @@ view: location {
     sql: ${TABLE}.numberofchimneystype_id ;;
   }
   measure: premium_chg_written_sum {
-    #hidden: true
-    label: "Written Premium Change"
+    hidden: yes
+    label: "Written Premium"
     type: sum_distinct
     value_format_name: usd
     sql_distinct_key: ${compound_primary_key} ;;

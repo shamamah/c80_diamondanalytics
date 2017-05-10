@@ -44,6 +44,11 @@ view: location_address {
   dimension: zip {
     type: zipcode
     sql: LEFT(${TABLE}.zip,5) ;;
-    drill_fields: [location_address.zip, company_state_lob.commercial_name1, policy.current_policy]
+    drill_fields: [detail*]
   }
+
+  set: detail {
+    fields: [policy.current_policy, policy_holder_name.display_name, policy_image_active.premium_written_sum]
+  }
+
 }
