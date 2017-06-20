@@ -1,4 +1,4 @@
-connection: "c63-prod"
+connection: "c63-looker"
 
 # include all the views
 include: "*.view"
