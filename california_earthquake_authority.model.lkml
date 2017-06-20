@@ -1,4 +1,4 @@
-connection: "c63-test-cea"
+connection: "c63-prod"
 
 # include all the views
 include: "*.view"
@@ -424,7 +424,7 @@ explore: policy {
     view_label: "Policy"
     type: inner
     relationship: one_to_one
-    sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.account_num}ng_account_detail.billingpayplantype_id} ;;
+    sql_on: ${billing_payplan_type.billingpayplantype_id} = ${v_billing_account_detail.billingpayplantype_id} ;;
   }
 
   join: v_billing_futures {

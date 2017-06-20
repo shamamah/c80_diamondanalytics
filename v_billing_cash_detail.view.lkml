@@ -86,9 +86,14 @@ view: v_billing_cash_detail {
     sql: ${TABLE}.renewal_ver ;;
   }
 
+  set: detail {
+    fields: [policy.current_policy, policy_holder_name.display_name, pv_billing_cash_detail.amount, v_billing_cash_detail.added_date]
+  }
+
   measure: amount {
     type: sum
     value_format_name: usd
+    drill_fields: [detail*]
     sql_distinct_key: ${compound_primary_key} ;;
     sql: ${amount_hidden} ;;
   }
