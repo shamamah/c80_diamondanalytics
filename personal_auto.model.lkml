@@ -153,24 +153,24 @@ explore: policy {
     relationship: one_to_many
   }
 
-  join: address {
+  join: policy_address {
     view_label: "Address"
     type:  inner
-    sql_on:  ${policy_image_address_link.address_id} = ${address.address_id};;
+    sql_on:  ${policy_image_address_link.address_id} = ${policy_address.address_id};;
     relationship: one_to_one
   }
 
   join: name_address_source {
     view_label: "Address"
     type: inner
-    sql_on: ${address.nameaddresssource_id} = ${name_address_source.nameaddresssource_id} ;;
+    sql_on: ${policy_address.nameaddresssource_id} = ${name_address_source.nameaddresssource_id} ;;
     relationship: one_to_one
   }
 
   join: state {
     view_label: "Address"
     type:  inner
-    sql_on: ${address.state_id} = ${state.state_id} ;;
+    sql_on: ${policy_address.state_id} = ${state.state_id} ;;
     relationship:  one_to_one
   }
 }

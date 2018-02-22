@@ -1,4 +1,4 @@
-view: address {
+view: policy_address {
   sql_table_name: dbo.Address ;;
 
   dimension: address_id {
@@ -83,7 +83,7 @@ view: address {
   dimension: zip {
     label: "Zip Code"
     type: zipcode
-    sql: ${TABLE}.zip ;;
+    sql: LEFT(${TABLE}.zip,5) ;;
   }
 
   }
