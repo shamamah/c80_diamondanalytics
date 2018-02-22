@@ -14,36 +14,43 @@ view: address {
   }
 
   dimension: apt_num {
+    label: "Apartment Number"
     type: string
     sql: ${TABLE}.apt_num ;;
   }
 
   dimension: city {
+    label: "City"
     type: string
     sql: ${TABLE}.city ;;
   }
 
   dimension: detailstatuscode_id {
+    hidden:  yes
     type: number
     sql: ${TABLE}.detailstatuscode_id ;;
   }
 
   dimension: display_address {
+    label: "Display Address"
     type: string
     sql: ${TABLE}.display_address ;;
   }
 
   dimension: house_num {
+    label: "House Number"
     type: string
     sql: ${TABLE}.house_num ;;
   }
 
  dimension: nameaddresssource_id {
+    hidden:  yes
     type: number
     sql: ${TABLE}.nameaddresssource_id ;;
   }
 
   dimension: pobox {
+    label: "PO Box"
     type: string
     sql: ${TABLE}.pobox ;;
   }
@@ -60,22 +67,20 @@ view: address {
     sql: ${TABLE}.policyimage_num ;;
   }
 
-  dimension: state_code {
-    type: number
-    sql: ${TABLE}.state_code ;;
-  }
-
   dimension: state_id {
+    hidden:  yes
     type: number
     sql: ${TABLE}.state_id ;;
   }
 
   dimension: street_name {
+    label: "Street Name"
     type: string
     sql: ${TABLE}.street_name ;;
   }
 
   dimension: zip {
+    label: "Zip Code"
     type: zipcode
     sql: ${TABLE}.zip ;;
   }

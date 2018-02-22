@@ -166,4 +166,11 @@ explore: policy {
     sql_on: ${address.nameaddresssource_id} = ${name_address_source.nameaddresssource_id} ;;
     relationship: one_to_one
   }
+
+  join: state {
+    view_label: "Address"
+    type:  inner
+    sql_on: ${address.state_id} = ${state.state_id} ;;
+    relationship:  one_to_one
+  }
 }
