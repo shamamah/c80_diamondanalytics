@@ -156,7 +156,7 @@ explore: policy {
   join: address {
     view_label: "Address"
     type:  inner
-    sql_on:  ${policy_image_address_link.address_id}_id} = ${address.address_id};;
+    sql_on:  ${policy_image_address_link.address_id} = ${address.address_id};;
     relationship: one_to_one
   }
 
