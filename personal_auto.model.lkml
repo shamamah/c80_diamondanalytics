@@ -146,4 +146,24 @@ explore: policy {
     sql_on: ${policy_image.policy_id} = ${policy_image_attachment_link.policy_id} AND ${policy_image.policyimage_num} = ${policy_image_attachment_link.policyimage_num} ;;
     relationship: one_to_many
   }
+
+  join: policy_image_address_link {
+    type:  inner
+    sql_on: ${policy_image.policy_id} = ${policy_image_address_link.policy_id} AND ${policy_image.policyimage_num} = ${policy_image_address_link.policyimage_num} ;;
+    relationship: one_to_many
+  }
+
+  join: address {
+    view_label: "Address"
+    type:  inner
+    sql_on:  ${policy_image_address_link.address_id}_id} = ${address.address_id};;
+    relationship: one_to_one
+  }
+
+  join: name_address_source {
+    view_label: "Address"
+    type: inner
+    sql_on: ${address.nameaddresssource_id} = ${name_address_source.nameaddresssource_id} ;;
+    relationship: one_to_one
+  }
 }
