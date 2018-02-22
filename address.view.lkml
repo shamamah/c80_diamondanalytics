@@ -3,6 +3,7 @@ view: address {
 
   dimension: address_id {
     primary_key: yes
+    hidden:  yes
     type: number
     sql: ${TABLE}.address_id ;;
   }
