@@ -147,6 +147,7 @@ explore: policy_cached {
 }
 
 explore: policy_demo {
+  label: "Policy"
   access_filter: {
     field: company_state_lob.commercial_name1
     user_attribute: company_name

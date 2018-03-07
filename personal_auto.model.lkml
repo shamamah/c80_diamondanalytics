@@ -81,6 +81,7 @@ explore: claim_control {
 }
 
 explore: policy_demo {
+  label: "Policy"
   join: policy_image {
     type: inner
     sql_on: ${policy_demo.policy_id} = ${policy_image.policy_id} ;;
