@@ -87,10 +87,25 @@ explore: policy {
     relationship: one_to_many
   }
 
+  join: policy_image_active {
+    view_label: "Policy"
+    type: inner
+    sql_on: ${policy.policy_id} = ${policy_image_active.policy_id} and
+      ${policy.activeimage_num} = ${policy_image_active.policyimage_num};;
+    relationship: one_to_one
+  }
+
   join: current_status {
     view_label: "Policy"
     type: inner
     sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
+    relationship: one_to_one
+  }
+
+  join: billing_invoice {
+    view_label: "Policy"
+    type: inner
+    sql_on: ${policy.policy_id} = ${billing_invoice.policy_id} ;;
     relationship: one_to_one
   }
 
@@ -108,6 +123,37 @@ explore: policy {
     relationship: one_to_one
   }
 
+  join: policy_status_code {
+    view_label: "Policy Image"
+    type: inner
+    sql_on: ${policy_image.policystatuscode_id} = ${policy_status_code.policystatuscode_id} ;;
+    relationship: one_to_one
+  }
+
+  join:  policy_level {
+    view_label: "Policy Image"
+    type:  inner
+    relationship: many_to_many
+    sql_on: ${policy_image.policy_id} = ${policy_level.policy_id}
+      and ${policy_image.policyimage_num} = ${policy_level.policyimage_num};;
+  }
+
+  join: policy_underwriting {
+    view_label: "Policy Image"
+    type:  inner
+    relationship: many_to_many
+    fields: [policy_underwriting.underwriting_response]
+    sql_on: ${policy_image.policy_id} = ${policy_underwriting.policy_id}
+      and ${policy_image.policyimage_num} = ${policy_underwriting.policyimage_num};;
+  }
+  join:  policy_underwriting_code {
+    view_label: "Policy Image"
+    type:  inner
+    fields: [policy_underwriting_code.underwriting_question]
+    relationship: many_to_one
+    sql_on: ${policy_underwriting.policyunderwritingcode_id} = ${policy_underwriting_code.policyunderwritingcode_id};;
+  }
+
   join: version {
     type: inner
     sql_on: ${policy_image.version_id} = ${version.version_id} ;;
@@ -115,6 +161,7 @@ explore: policy {
   }
 
   join: company_state_lob {
+    view_label: "Company"
     type: inner
     sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
     relationship: one_to_one
