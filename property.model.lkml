@@ -139,14 +139,14 @@ explore: claim_control {
 # }
 
 explore: policy_cached {
-  view_name: policy
-  extends: [policy]
+  view_name: policy_demo
+  extends: [policy_demo]
   persist_for: "12 hours"
   hidden: yes
 
 }
 
-explore: policy {
+explore: policy_demo {
   access_filter: {
     field: company_state_lob.commercial_name1
     user_attribute: company_name
@@ -155,29 +155,29 @@ explore: policy {
 
   join: policy_image {
     type: inner
-    sql_on: ${policy.policy_id} = ${policy_image.policy_id} ;;
+    sql_on: ${policy_demo.policy_id} = ${policy_image.policy_id} ;;
     relationship: one_to_many
   }
 
   join: policy_image_active {
     view_label: "Policy"
     type: inner
-    sql_on: ${policy.policy_id} = ${policy_image_active.policy_id} and
-      ${policy.activeimage_num} = ${policy_image_active.policyimage_num};;
+    sql_on: ${policy_demo.policy_id} = ${policy_image_active.policy_id} and
+      ${policy_demo.activeimage_num} = ${policy_image_active.policyimage_num};;
     relationship: one_to_one
   }
 
   join: current_status {
     view_label: "Policy"
     type: inner
-    sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
+    sql_on: ${policy_demo.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
     relationship: one_to_one
   }
 
   join: billing_invoice {
     view_label: "Policy"
     type: inner
-    sql_on: ${policy.policy_id} = ${billing_invoice.policy_id} ;;
+    sql_on: ${policy_demo.policy_id} = ${billing_invoice.policy_id} ;;
     relationship: one_to_one
   }
 
@@ -372,7 +372,7 @@ explore: policy {
     view_label: "Billing"
     type: inner
     relationship: many_to_one
-    sql_on: ${v_billing_cash.policy_id} = ${policy.policy_id} ;;
+    sql_on: ${v_billing_cash.policy_id} = ${policy_demo.policy_id} ;;
   }
 
   join:  billing_cash_type {
@@ -403,7 +403,7 @@ explore: policy {
     view_label: "Policy"
     type: inner
     relationship:one_to_one
-    sql_on: ${v_billing_account_detail.policy_id}  = ${policy.policy_id};;
+    sql_on: ${v_billing_account_detail.policy_id}  = ${policy_demo.policy_id};;
   }
 
   join: billing_payplan_type {
