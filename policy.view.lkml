@@ -61,6 +61,12 @@ view: policy {
     sql: ${TABLE}.first_exp_date ;;
   }
 
+  dimension: inforce {
+    label: "In-Force"
+    type: yesno
+    sql: ${TABLE}.policycurrentstatus_id = 1 ;;
+  }
+
   dimension: legalcancelnotice {
     label: "Legal Cancellation Notice"
     type: yesno
