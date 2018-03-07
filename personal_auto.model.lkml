@@ -11,7 +11,7 @@ explore: claim_control {
     field: company_state_lob.commercial_name1
     user_attribute: company_name
   }
-  label: "Claim"
+  label: "Claims"
   view_label: "Claim"
   join: v_claim_detail_claimant {
     view_label: "Claim Detail Claimant"
