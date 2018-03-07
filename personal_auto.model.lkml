@@ -318,13 +318,6 @@ explore: policy {
       and ${additional_interest_list_name_link.name_id} = ${name.name_id};;
   }
 
-  join: users {
-    view_label: "Users"
-    type: inner
-    sql_on: ${policy_image.trans_users_id} = ${users.users_id} ;;
-    relationship: one_to_one
-  }
-
   join: v_billing_cash {
     view_label: "Billing"
     type: inner
@@ -377,6 +370,13 @@ explore: policy {
     sql_on: ${v_billing_cash.policy_id} = ${v_billing_futures.policy_id}
       AND ${v_billing_futures.renewal_ver} <> ''
        ;;
+  }
+
+  join: users_non_cea {
+    view_label: "Policy Image"
+    type: inner
+    sql_on: ${policy_image.trans_users_id} = ${users_non_cea.users_id} ;;
+    relationship: one_to_one
   }
 
 }
