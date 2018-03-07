@@ -66,6 +66,33 @@ explore: claim_control {
     relationship: many_to_many
   }
 
+  join: policy_image_address_link {
+    type:  inner
+    sql_on: ${policy_image.policy_id} = ${policy_image_address_link.policy_id} AND ${policy_image.policyimage_num} = ${policy_image_address_link.policyimage_num} ;;
+    relationship: one_to_many
+  }
+
+  join: policy_address {
+    view_label: "Address"
+    type:  inner
+    sql_on:  ${policy_image_address_link.address_id} = ${policy_address.address_id};;
+    relationship: one_to_one
+  }
+
+  join: name_address_source {
+    view_label: "Address"
+    type: inner
+    sql_on: ${policy_address.nameaddresssource_id} = ${name_address_source.nameaddresssource_id} ;;
+    relationship: one_to_one
+  }
+
+  join: state {
+    view_label: "Address"
+    type:  inner
+    sql_on: ${policy_address.state_id} = ${state.state_id} ;;
+    relationship:  one_to_one
+  }
+
   join: version {
     type: inner
     sql_on: ${policy_image.version_id} = ${version.version_id} ;;
