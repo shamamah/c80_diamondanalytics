@@ -91,11 +91,11 @@ view: policy_demo {
   #    sql: ${policy_image.premium_chg_written}
 
   set: detail_cancel {
-    fields: [policy.current_policy, policy_holder_name.display_name, policy.legalcancel_date_date, policy.cancel_date_date, billing_invoice.current_outstanding_amount_sum]      # creates named set customers.detail
+    fields: [policy_demo.current_policy, policy_holder_name.display_name, policy_demo.legalcancel_date_date, policy_demo.cancel_date_date, billing_invoice.current_outstanding_amount_sum]      # creates named set customers.detail
   }
 
   set: detail_count {
-    fields: [policy.current_policy, policy_holder_name.display_name, policy_image_active.premium_written_sum]
+    fields: [policy_demo.current_policy, policy_holder_name.display_name, policy_image_active.premium_written_sum]
   }
 
   measure: count {
