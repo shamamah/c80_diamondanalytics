@@ -1,5 +1,6 @@
 view: policy_demo {
   sql_table_name: dbo.Policy ;;
+  view_label: "Policy"
 
   dimension: policy_id {
     hidden: yes
