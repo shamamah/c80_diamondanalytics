@@ -1,4 +1,4 @@
-view: average_severity_for_paid_claim {
+view: c57_average_severity_for_paid_claim {
     view_label: "Average Severity For Paid Claims - By Aging Bucket / By Coverage"
     derived_table: {
       sql:

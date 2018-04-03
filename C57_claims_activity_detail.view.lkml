@@ -1,4 +1,4 @@
-view: claims_activity_detail {
+view: c57_claims_activity_detail {
   view_label: "Claims Activity Detail"
   derived_table: {
     sql:

@@ -1,4 +1,4 @@
-view: in_force_policy_count_information {
+view: c57_in_force_policy_count_information {
   view_label: "In Force Policy Count and Premium information / By State"
   derived_table: {
     sql:

@@ -1,4 +1,4 @@
-view: in_force_vehicle_count_information {
+view: c57_in_force_vehicle_count_information {
   view_label: "In Force Vehicle Count information / By Coverage / By State"
   derived_table: {
     sql:

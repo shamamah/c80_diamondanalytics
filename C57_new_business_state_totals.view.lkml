@@ -1,4 +1,4 @@
-view: new_business_state_totals {
+view: c57_new_business_state_totals {
   view_label: "New Business State Totals – Policy Count and Premium"
   derived_table: {
     sql:
