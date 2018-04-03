@@ -1,4 +1,4 @@
-connection: "c00-demo"
+connection: "falcon"
 
 # include all the views
 include: "*.view"
