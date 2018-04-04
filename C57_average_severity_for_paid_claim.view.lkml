@@ -112,14 +112,14 @@ view: c57_average_severity_for_paid_claim {
   measure: loss_OS {
     type: sum
     value_format_name: usd
-    label: "Loss OS"
+    label: "Loss Outstanding"
     sql: ${TABLE}.loss_OS ;;
   }
 
   measure: loss_OS_allin {
     type: sum
     value_format_name: usd
-    label: "Loss OS All-In"
+    label: "Loss Outstanding All-In"
     sql: ${TABLE}.loss_OS_allin ;;
   }
 
