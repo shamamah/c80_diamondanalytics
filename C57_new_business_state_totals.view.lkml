@@ -1,5 +1,5 @@
 view: c57_new_business_state_totals {
-  view_label: "New Business State Totals – Policy Count and Premium"
+  label: "New Business State Totals"
   derived_table: {
     sql:
       SELECT PIM.policy_id
@@ -50,7 +50,7 @@ view: c57_new_business_state_totals {
 
   dimension: zip {
     type: zipcode
-    sql: ${TABLE}.zip ;;
+    sql: LEFT(${TABLE}.zip,5) ;;
   }
 
   filter: start_date {

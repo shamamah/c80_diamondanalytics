@@ -1,5 +1,5 @@
 view: c57_average_severity_for_paid_claim {
-    view_label: "Average Severity For Paid Claims - By Aging Bucket / By Coverage"
+    label: "Average Severity For Paid Claims"
     derived_table: {
       sql:
         SELECT   sortord
@@ -20,8 +20,8 @@ view: c57_average_severity_for_paid_claim {
                 ,exp_paid
                 ,exp_paid_AllIn
         FROM OPENQUERY([AL-LookerSQL], 'EXEC C57_Diamond.dbo.assp_C57_Looker_AverageSeverityForPaidClaim @start_date = '{% parameter start_date %}', @end_date = '{% parameter start_date %}' WITH RESULT SETS ((
-                                            sortord varchar(250)
-                                            ,GroupName varchar(250)
+                                            sortord integer
+                                            ,GroupName varchar(10)
                                             ,Reported varchar(250)
                                             ,closed varchar(250)
                                             ,claimcontrol_id varchar(250)
@@ -29,14 +29,14 @@ view: c57_average_severity_for_paid_claim {
                                             ,claimfeature_num varchar(250)
                                             ,claimant_num varchar(250)
                                             ,cov varchar(250)
-                                            ,loss_paid varchar(250)
-                                            ,loss_paid_AllIn varchar(250)
-                                            ,loss_OS varchar(250)
-                                            ,loss_OS_AllIn varchar(250)
-                                            ,alae_paid varchar(250)
-                                            ,alae_paid_AllIn varchar(250)
-                                            ,exp_paid varchar(250)
-                                            ,exp_paid_AllIn varchar(250)
+                                            ,loss_paid float
+                                            ,loss_paid_AllIn float
+                                            ,loss_OS float
+                                            ,loss_OS_AllIn float
+                                            ,alae_paid float
+                                            ,alae_paid_AllIn float
+                                            ,exp_paid float
+                                            ,exp_paid_AllIn float
                                           ))')
        ;;
     }
@@ -95,60 +95,64 @@ view: c57_average_severity_for_paid_claim {
     sql: ${TABLE}.cov ;;
   }
 
-  dimension: loss_paid {
-    type: number
+  measure: loss_paid {
+    type: sum
     value_format_name: usd
     label: "Loss Paid"
     sql: ${TABLE}.loss_paid ;;
   }
 
-  dimension: loss_paid_allin {
-    type: number
+  measure: loss_paid_allin {
+    type: sum
     value_format_name: usd
     label: "Loss Paid All-In"
     sql: ${TABLE}.loss_paid_allin ;;
   }
 
-  dimension: loss_OS {
-    type: number
+  measure: loss_OS {
+    type: sum
     value_format_name: usd
     label: "Loss OS"
     sql: ${TABLE}.loss_OS ;;
   }
 
-  dimension: loss_OS_allin {
-    type: number
+  measure: loss_OS_allin {
+    type: sum
     value_format_name: usd
     label: "Loss OS All-In"
     sql: ${TABLE}.loss_OS_allin ;;
   }
 
-  dimension: alae_paid {
-    type: number
+  measure: alae_paid {
+    type: sum
     value_format_name: usd
     label: "ALAE Paid"
     sql: ${TABLE}.alae_paid ;;
   }
 
-  dimension: alae_paid_allin {
-    type: number
+  measure: alae_paid_allin {
+    type: sum
     value_format_name: usd
     label: "ALAE Paid All-In"
     sql: ${TABLE}.alae_paid_allin ;;
   }
 
-  dimension: exp_paid {
-    type: number
+  measure: exp_paid {
+    type: sum
     value_format_name: usd
     label: "Expense Paid"
     sql: ${TABLE}.exp_paid ;;
   }
 
-  dimension: exp_paid_allin {
-    type: number
+  measure: exp_paid_allin {
+    type: sum
     value_format_name: usd
     label: "Expense Paid All-In"
     sql: ${TABLE}.exp_paid_allin ;;
+  }
+
+  measure: count {
+    type: count
   }
 
   filter: start_date {

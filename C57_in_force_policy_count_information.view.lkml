@@ -1,5 +1,5 @@
 view: c57_in_force_policy_count_information {
-  view_label: "In Force Policy Count and Premium information / By State"
+  label: "In Force Policy Count and Premium Information"
   derived_table: {
     sql:
         SELECT
@@ -7,21 +7,21 @@ view: c57_in_force_policy_count_information {
             ,IFVCI.Territory                                      AS Territory
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)                  AS ZipCode
             ,sum(c.premium_written)                               AS InforcePremium
-            ,count(distinct (IFVCI.policyid)                      AS PolicyCount
+            ,count(distinct (IFVCI.policyid))                     AS PolicyCount
         FROM C57_Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFVCI
         INNER JOIN C57_Diamond.dbo.coverage C with(nolock)
           on IFVCI.PolicyID = C.policy_id
             and IFVCI.policyimagenum = c.policyimage_num
         INNER JOIN CoverageCode CC (nolock)
           on CC.coveragecode_id = CC.coveragecode_id
-        LEFT JOIN C57_Diamond..Address            VGA(NOLOCK)
+        LEFT JOIN C57_Diamond.dbo.Address            VGA(NOLOCK)
           ON VGA.policy_id = IFVCI.policyid
             AND VGA.policyimage_num = IFVCI.policyimagenum
             AND VGA.address_num = C.unit_num
             AND VGA.detailstatuscode_id = 1
             AND VGA.zip <> '00000-0000'
             AND VGA.nameaddresssource_id = 17 -- Garage Address
-        LEFT JOIN C57_Diamond..Address            VMA(NOLOCK)
+        LEFT JOIN C57_Diamond.dbo.Address            VMA(NOLOCK)
           ON VMA.policy_id = IFVCI.PolicyId
             AND VMA.policyimage_num = IFVCI.policyimagenum
             AND VMA.detailstatuscode_id = 1
@@ -35,7 +35,6 @@ view: c57_in_force_policy_count_information {
          IFVCI.State
             ,IFVCI.Territory
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)
-            ,CC.dscr
        ;;
   }
 
@@ -58,15 +57,15 @@ view: c57_in_force_policy_count_information {
     sql: ${TABLE}.ZipCode ;;
   }
 
-  dimension: InforcePremium {
-    type: number
+  measure: InforcePremium {
+    type: sum
     value_format_name: usd
     label: "In-Force Premium"
     sql: ${TABLE}.InforcePremium ;;
   }
 
-  dimension: PolicyCount {
-    type: number
+  measure: PolicyCount {
+    type: sum
     label: "Policy Count"
     sql: ${TABLE}.PolicyCount ;;
   }

@@ -1,5 +1,5 @@
 view: c57_claims_activity_detail {
-  view_label: "Claims Activity Detail"
+  label: "Claims Activity Detail"
   derived_table: {
     sql:
       SELECT
@@ -22,7 +22,8 @@ view: c57_claims_activity_detail {
           DATEDIFF(QQ, CC.loss_date, CFA.added_date) + 1                      AS ClaimActivityQuarter,
           CFA.added_date                                                      AS ClaimActivityDate,
           CAC.dscr                                                            AS ClaimActivityDescription,
-          CFA.num                                                             AS ClaimActivityNumber
+          CFA.num                                                             AS ClaimActivityNumber,
+          CC.claimcontrol_id
         FROM
                 C57_Diamond.dbo.ClaimFeatureActivity              CFA   WITH (NOLOCK)
         LEFT OUTER JOIN ( SELECT
@@ -102,6 +103,13 @@ view: c57_claims_activity_detail {
        ;;
   }
 
+  dimension: claimcontrol_id {
+    type: string
+    hidden: yes
+    primary_key: yes
+    sql: ${TABLE}.claimcontrol_id ;;
+  }
+
   dimension: company {
     type: string
     label: "Company"
@@ -164,6 +172,7 @@ view: c57_claims_activity_detail {
   }
 
   dimension: ClaimLossDate {
+    label: "Claim Loss Date"
     type: date
     sql: ${TABLE}.ClaimLossDate ;;
   }
@@ -202,6 +211,10 @@ view: c57_claims_activity_detail {
     type: string
     label: "Claim Actvity Number"
     sql: ${TABLE}.ClaimActivityNumber ;;
+  }
+
+  measure: count {
+    type: count
   }
 
   filter: start_date {

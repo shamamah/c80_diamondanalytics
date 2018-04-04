@@ -1,5 +1,5 @@
 view: c57_in_force_vehicle_count_information {
-  view_label: "In Force Vehicle Count information / By Coverage / By State"
+  label: "In-Force Vehicle Count Information"
   derived_table: {
     sql:
         SELECT
@@ -13,20 +13,21 @@ view: c57_in_force_vehicle_count_information {
                            convert(varchar,IFVCI.policyimagenum) +
                            convert (varchar,c.unit_num)
                            ))                                     AS VehicleCount
+            ,CC.coveragecode_id
         FROM C57_Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFVCI
         INNER JOIN C57_Diamond.dbo.coverage C with(nolock)
           on IFVCI.PolicyID = C.policy_id
             and IFVCI.policyimagenum = c.policyimage_num
         INNER JOIN CoverageCode CC (nolock)
           on CC.coveragecode_id = CC.coveragecode_id
-        LEFT JOIN C57_Diamond..Address            VGA(NOLOCK)
+        LEFT JOIN C57_Diamond.dbo.Address            VGA(NOLOCK)
           ON VGA.policy_id = IFVCI.policyid
             AND VGA.policyimage_num = IFVCI.policyimagenum
             AND VGA.address_num = C.unit_num
             AND VGA.detailstatuscode_id = 1
             AND VGA.zip <> '00000-0000'
             AND VGA.nameaddresssource_id = 17 -- Garage Address
-        LEFT JOIN C57_Diamond..Address            VMA(NOLOCK)
+        LEFT JOIN C57_Diamond.dbo.Address            VMA(NOLOCK)
           ON VMA.policy_id = IFVCI.PolicyId
             AND VMA.policyimage_num = IFVCI.policyimagenum
             AND VMA.detailstatuscode_id = 1
@@ -41,6 +42,7 @@ view: c57_in_force_vehicle_count_information {
             ,IFVCI.Territory
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)
             ,CC.dscr
+            ,CC.coveragecode_id
        ;;
   }
 
@@ -63,21 +65,22 @@ view: c57_in_force_vehicle_count_information {
     sql: ${TABLE}.ZipCode ;;
   }
 
-  dimension: CoverageDescription {
-    type: string
+  dimension: coveragecode_id {
+    type: number
+    hidden: yes
     label: "Coverage Description"
-    sql: ${TABLE}.CoverageDescription ;;
+    sql: ${TABLE}.coveragecode_id ;;
   }
 
-  dimension: InforcePremium {
-    type: number
+  measure: InforcePremium {
+    type: sum
     value_format_name: usd
     label: "In-Force Premium"
     sql: ${TABLE}.InforcePremium ;;
   }
 
-  dimension: VehicleCount {
-    type: number
+  measure: VehicleCount {
+    type: sum
     label: "Vehicle Count"
     sql: ${TABLE}.VehicleCount ;;
   }
