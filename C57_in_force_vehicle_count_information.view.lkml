@@ -14,6 +14,9 @@ view: c57_in_force_vehicle_count_information {
                            convert (varchar,c.unit_num)
                            ))                                     AS VehicleCount
             ,CC.coveragecode_id
+            ,IFVCI.policyid
+            ,IFVCI.policyimagenum
+            ,c.unit_num
         FROM C57_Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFVCI
         INNER JOIN C57_Diamond.dbo.coverage C with(nolock)
           on IFVCI.PolicyID = C.policy_id
@@ -46,6 +49,30 @@ view: c57_in_force_vehicle_count_information {
        ;;
   }
 
+  dimension: compound_primary_key {
+    hidden: yes
+    primary_key: yes
+    sql: CONCAT(${policyid}, '  ', ${policyimagenum},'  ', ${unit_num}) ;;
+  }
+
+  dimension: policyid {
+    type: string
+    hidden:  yes
+    sql: ${TABLE}.policyid ;;
+  }
+
+  dimension: policyimagenum {
+    type: string
+    hidden:  yes
+    sql: ${TABLE}.policyimagenum ;;
+  }
+
+  dimension: unit_num {
+    type: string
+    hidden:  yes
+    sql: ${TABLE}.unit_num ;;
+  }
+
   dimension: state {
     type: string
     label: "State"
@@ -73,7 +100,7 @@ view: c57_in_force_vehicle_count_information {
   }
 
   measure: InforcePremium {
-    type: sum
+    type:  sum_distinct
     value_format_name: usd
     label: "In-Force Premium"
     sql: ${TABLE}.InforcePremium ;;

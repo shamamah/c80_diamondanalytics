@@ -8,6 +8,7 @@ view: c57_in_force_policy_count_information {
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)                  AS ZipCode
             ,sum(c.premium_written)                               AS InforcePremium
             ,count(distinct (IFVCI.policyid))                     AS PolicyCount
+            ,IFVCI.policyid
         FROM C57_Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFVCI
         INNER JOIN C57_Diamond.dbo.coverage C with(nolock)
           on IFVCI.PolicyID = C.policy_id
@@ -36,6 +37,13 @@ view: c57_in_force_policy_count_information {
             ,IFVCI.Territory
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)
        ;;
+  }
+
+  dimension: policyid {
+    type: string
+    primary_key: yes
+    hidden:  yes
+    sql: ${TABLE}.policyid ;;
   }
 
   dimension: state {
