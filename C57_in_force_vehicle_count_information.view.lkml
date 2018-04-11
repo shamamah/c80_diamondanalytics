@@ -41,11 +41,14 @@ view: c57_in_force_vehicle_count_information {
       --and c.coveragecode_id = 3               --  COMP Coverage
       and c.detailstatuscode_id = 1
         GROUP BY
-         IFVCI.State
+             IFVCI.State
             ,IFVCI.Territory
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)
             ,CC.dscr
             ,CC.coveragecode_id
+            ,IFVCI.policyid
+            ,IFVCI.policyimagenum
+            ,c.unit_num
        ;;
   }
 

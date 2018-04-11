@@ -2,8 +2,7 @@ view: c57_average_severity_for_paid_claim {
     label: "Average Severity For Paid Claims"
     derived_table: {
       sql:
-        SELECT   sortord
-                ,GroupName
+        SELECT   Age
                 ,Reported
                 ,closed
                 ,claimcontrol_id
@@ -20,8 +19,7 @@ view: c57_average_severity_for_paid_claim {
                 ,exp_paid
                 ,exp_paid_AllIn
         FROM OPENQUERY([AL-LookerSQL], 'EXEC C57_Diamond.dbo.assp_C57_Looker_AverageSeverityForPaidClaim @start_date = '{% parameter start_date %}', @end_date = '{% parameter start_date %}' WITH RESULT SETS ((
-                                            sortord integer
-                                            ,GroupName varchar(10)
+                                             Age integer
                                             ,Reported varchar(250)
                                             ,closed varchar(250)
                                             ,claimcontrol_id varchar(250)
@@ -41,16 +39,18 @@ view: c57_average_severity_for_paid_claim {
        ;;
     }
 
-  dimension: sortord {
-    type: number
-    label: "Sort Order"
-    sql: ${TABLE}.sortord ;;
+  dimension: compound_primary_key {
+    hidden: yes
+    primary_key: yes
+    sql: CONCAT(${claimcontrol_id}, '  ', ${claimant_num},'  ', ${claimfeature_num}) ;;
   }
 
-  dimension: GroupName {
-    type: string
-    label: "Group Name"
-    sql: ${TABLE}.GroupName ;;
+  dimension: Age {
+    label: "Age"
+    type: tier
+    style: integer
+    tiers: [0, 91, 181, 271, 361]
+    sql: ${TABLE}.Age ;;
   }
 
   dimension: Reported {

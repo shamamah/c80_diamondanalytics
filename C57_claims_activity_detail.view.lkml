@@ -103,10 +103,15 @@ view: c57_claims_activity_detail {
        ;;
   }
 
+  dimension: compound_primary_key {
+    hidden: yes
+    primary_key: yes
+    sql: CONCAT(${claimcontrol_id}, '  ', ${ClaimantNumber},'  ', ${ClaimFeatureNumber}) ;;
+  }
+
   dimension: claimcontrol_id {
     type: string
     hidden: yes
-    primary_key: yes
     sql: ${TABLE}.claimcontrol_id ;;
   }
 

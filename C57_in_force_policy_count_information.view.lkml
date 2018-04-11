@@ -3,28 +3,28 @@ view: c57_in_force_policy_count_information {
   derived_table: {
     sql:
         SELECT
-             IFVCI.State                                          AS State
-            ,IFVCI.Territory                                      AS Territory
+             IFPCI.State                                          AS State
+            ,IFPCI.Territory                                      AS Territory
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)                  AS ZipCode
             ,sum(c.premium_written)                               AS InforcePremium
-            ,count(distinct (IFVCI.policyid))                     AS PolicyCount
-            ,IFVCI.policyid
-        FROM C57_Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFVCI
+            ,count(distinct (IFPCI.policyid))                     AS PolicyCount
+            ,IFPCI.policyid
+        FROM C57_Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFPCI
         INNER JOIN C57_Diamond.dbo.coverage C with(nolock)
-          on IFVCI.PolicyID = C.policy_id
-            and IFVCI.policyimagenum = c.policyimage_num
+          on IFPCI.PolicyID = C.policy_id
+            and IFPCI.policyimagenum = c.policyimage_num
         INNER JOIN CoverageCode CC (nolock)
           on CC.coveragecode_id = CC.coveragecode_id
         LEFT JOIN C57_Diamond.dbo.Address            VGA(NOLOCK)
-          ON VGA.policy_id = IFVCI.policyid
-            AND VGA.policyimage_num = IFVCI.policyimagenum
+          ON VGA.policy_id = IFPCI.policyid
+            AND VGA.policyimage_num = IFPCI.policyimagenum
             AND VGA.address_num = C.unit_num
             AND VGA.detailstatuscode_id = 1
             AND VGA.zip <> '00000-0000'
             AND VGA.nameaddresssource_id = 17 -- Garage Address
         LEFT JOIN C57_Diamond.dbo.Address            VMA(NOLOCK)
-          ON VMA.policy_id = IFVCI.PolicyId
-            AND VMA.policyimage_num = IFVCI.policyimagenum
+          ON VMA.policy_id = IFPCI.PolicyId
+            AND VMA.policyimage_num = IFPCI.policyimagenum
             AND VMA.detailstatuscode_id = 1
             AND VMA.zip <> '00000-0000'
             AND VMA.nameaddresssource_id = 3 -- Policy Holder #1
@@ -33,9 +33,10 @@ view: c57_in_force_policy_count_information {
       --and c.coveragecode_id = 3               --  COMP Coverage
       and c.detailstatuscode_id = 1
         GROUP BY
-         IFVCI.State
-            ,IFVCI.Territory
+             IFPCI.State
+            ,IFPCI.Territory
             ,LEFT(COALESCE(VGA.zip, VMA.zip), 5)
+            ,IFPCI.policyid
        ;;
   }
 
