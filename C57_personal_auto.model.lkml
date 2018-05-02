@@ -1,4 +1,4 @@
-connection: "falcon"
+connection: "falcon-test"
 
 # include all the views
 include: "*.view"
@@ -7,10 +7,6 @@ include: "*.view"
 include: "*.dashboard"
 
 explore: claim_control {
-  access_filter: {
-    field: company_state_lob.commercial_name1
-    user_attribute: company_name
-  }
   label: "Claims"
   view_label: "Claim"
   join: v_claim_detail_claimant {
