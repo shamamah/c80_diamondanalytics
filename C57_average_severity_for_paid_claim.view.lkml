@@ -18,7 +18,7 @@ view: c57_average_severity_for_paid_claim {
                 ,alae_paid_AllIn
                 ,exp_paid
                 ,exp_paid_AllIn
-        FROM OPENQUERY([AL-LookerSQL], 'EXEC C57_Diamond.dbo.assp_C57_Looker_AverageSeverityForPaidClaim @start_date = '{% parameter start_date %}', @end_date = '{% parameter start_date %}' WITH RESULT SETS ((
+        FROM OPENQUERY([C2MSSQL1], 'EXEC C57_Diamond.dbo.assp_C57_Looker_AverageSeverityForPaidClaim @start_date = '{% parameter start_date %}', @end_date = '{% parameter start_date %}' WITH RESULT SETS ((
                                              Age integer
                                             ,Reported varchar(250)
                                             ,closed varchar(250)
