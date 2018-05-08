@@ -7,22 +7,26 @@ view: claim_feature_status {
   }
 
   dimension: dscr {
+    label: "Status"
     type: string
     sql: ${TABLE}.dscr ;;
   }
 
   dimension: enabled {
+    hidden: yes
     type: string
     sql: ${TABLE}.enabled ;;
   }
 
   dimension_group: last_modified {
+    hidden: yes
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.last_modified_date ;;
   }
 
   dimension_group: pcadded {
+    hidden: yes
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.pcadded_date ;;

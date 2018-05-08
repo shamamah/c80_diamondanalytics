@@ -94,6 +94,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: approvedby_user_name {
+    label: "Approved by User Name"
     type: string
     sql: ${TABLE}.approvedby_user_name ;;
   }
@@ -104,6 +105,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: cat_dscr {
+    label: "Catastrophe Description"
     type: string
     sql: ${TABLE}.cat_dscr ;;
   }
@@ -125,6 +127,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: claimfeature_num {
+    label: "Claim Feature Number"
     type: number
     sql: ${TABLE}.claimfeature_num ;;
   }
@@ -142,6 +145,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: claimtransaction_num {
+    label: "Claim Transaction Number"
     type: number
     sql: ${TABLE}.claimtransaction_num ;;
   }
@@ -153,6 +157,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: claimtransactionsplit_num {
+    hidden: yes
     type: number
     sql: ${TABLE}.claimtransactionsplit_num ;;
   }
@@ -176,6 +181,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension_group: eff {
+    label: "Effective Date"
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.eff_date ;;
@@ -213,6 +219,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: type_dscr {
+    label: "Type Description"
     type: string
     sql: ${TABLE}.type_dscr ;;
   }

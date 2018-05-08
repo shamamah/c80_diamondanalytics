@@ -52,6 +52,7 @@ view: v_claim_detail_claimant {
   }
 
   dimension: city_state {
+    label: "City, State"
     type: string
     sql: ${TABLE}.city_state ;;
   }
@@ -122,8 +123,8 @@ view: v_claim_detail_claimant {
   }
 
   dimension: driverexcludetypedscr {
+    label: "Excluded Driver Description"
     type: string
-    hidden: yes
     sql: ${TABLE}.driverexcludetypedscr ;;
   }
 
@@ -146,7 +147,7 @@ view: v_claim_detail_claimant {
   }
 
   dimension: in_litigation {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.in_litigation = 'true' then 'Yes' else 'No' end ;;
   }
 
@@ -163,17 +164,19 @@ view: v_claim_detail_claimant {
   }
 
   dimension: is_insured1 {
-    type: string
+    label: "Is Insured 1"
+    type: yesno
     sql: case when ${TABLE}.is_insured1 = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_insured2 {
-    type: string
+    label: "Is Insured 2"
+    type: yesno
     sql: case when ${TABLE}.is_insured2 = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_represented {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.is_represented = 'true' then 'Yes' else 'No' end ;;
   }
 

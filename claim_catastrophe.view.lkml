@@ -60,7 +60,7 @@ view: claim_catastrophe {
   dimension: user_code {
     label: "Catastrophe Code"
     type: string
-    #hidden: yes
+    hidden: yes
     sql: ${TABLE}.user_code ;;
   }
 

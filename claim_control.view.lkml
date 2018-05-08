@@ -86,6 +86,7 @@ view: claim_control {
   }
 
   dimension_group: claimdenial {
+    label: "Claim Denial"
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.claimdenial_date ;;
@@ -98,6 +99,7 @@ view: claim_control {
   }
 
   dimension: claimdenialreason_remarks {
+    label: "Claim Denial Remarks"
     type: string
     sql: ${TABLE}.claimdenialreason_remarks ;;
   }
@@ -237,11 +239,13 @@ view: claim_control {
   }
 
   dimension: external_policy_version_number {
+    hidden:  yes
     type: number
     sql: ${TABLE}.external_policy_version_number ;;
   }
 
   dimension: external_policysystem_identifier {
+    hidden:  yes
     type: number
     value_format_name: id
     sql: ${TABLE}.external_policysystem_identifier ;;
@@ -253,22 +257,22 @@ view: claim_control {
   }
 
   dimension: has_other_insurance {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.has_other_insurance = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: has_public_adjuster {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.has_public_adjuster = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: has_related_treatments {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.has_related_treatments = 'true' then 'Yes' else 'No' end;;
   }
 
   dimension: hit_and_run_loss {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.hit_and_run_loss = 'true' then 'Yes' else 'No' end ;;
   }
 
@@ -296,44 +300,45 @@ view: claim_control {
   }
 
   dimension: inside_adjuster_id {
+    hidden:  yes
     type: number
     sql: ${TABLE}.inside_adjuster_id ;;
   }
 
   dimension: is_clinic_notified {
-    type: string
+    type: yesno
     sql: case when${TABLE}.is_clinic_notified = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_converted {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.is_converted = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_euthanized {
-    type: string
     hidden: yes
+    type: string
     sql: ${TABLE}.is_euthanized ;;
   }
 
   dimension: is_euthanized_vet_advice {
+    hidden: yes
     type: string
-    hidden:  yes
     sql: ${TABLE}.is_euthanized_vet_advice ;;
   }
 
   dimension: is_external_policy {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.is_external_policy = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_policy_verified {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.is_policy_verified = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: is_shell_policy {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.is_shell_policy = 'true' then 'Yes' else 'No' end ;;
   }
 
@@ -406,6 +411,7 @@ view: claim_control {
   }
 
   dimension: other_insurance_dscr {
+    label: "Other Insurance Description"
     type: string
     sql: ${TABLE}.other_insurance_dscr ;;
   }
@@ -436,7 +442,7 @@ view: claim_control {
   }
 
   dimension: police_notified {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.police_notified = 'true' then 'Yes' else 'No' end ;;
   }
 
@@ -447,6 +453,7 @@ view: claim_control {
   }
 
   dimension: policyimage_num {
+    hidden:  yes
     type: number
     sql: ${TABLE}.policyimage_num ;;
   }
@@ -462,12 +469,12 @@ view: claim_control {
   }
 
   dimension: previously_reported {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.previously_reported = 'true' then 'Yes' else 'No' end ;;
   }
 
   dimension: process_medical_bill {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.process_medical_bill = 'true' then 'Yes' else 'No' end ;;
   }
 
@@ -477,6 +484,7 @@ view: claim_control {
   }
 
   dimension: related_treatment_dscr {
+    label: "Related Treatment Description"
     type: string
     sql: ${TABLE}.related_treatment_dscr ;;
   }
@@ -558,17 +566,19 @@ view: claim_control {
   }
 
   dimension: xref_claimadjuster {
+    hidden:  yes
     type: string
     sql: ${TABLE}.xref_claimadjuster ;;
   }
 
   dimension: xref_claimnumber {
+    hidden: yes
     type: string
     sql: ${TABLE}.xref_claimnumber ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [client.client_id, policy.rewrittenfrom_policy_id]
+
   }
 }

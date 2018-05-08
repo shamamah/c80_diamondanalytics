@@ -41,6 +41,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: claimant_num {
+    label: "Claimant Number"
     type: number
     sql: ${TABLE}.claimant_num ;;
   }
@@ -52,11 +53,13 @@ view: v_claim_detail_feature {
   }
 
   dimension: claimcoverage_num {
+    label: "Claim Coverage Number"
     type: number
     sql: ${TABLE}.claimcoverage_num ;;
   }
 
   dimension_group: claimdenial {
+    label: "Claim Denial"
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.claimdenial_date ;;
@@ -69,6 +72,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: claimdenialreason_remarks {
+    label: "Denial Reason Remarks"
     type: string
     sql: ${TABLE}.claimdenialreason_remarks ;;
   }
@@ -86,6 +90,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: claimfeature_num {
+    label: "Claim Feature Number"
     type: number
     sql: ${TABLE}.claimfeature_num ;;
   }
@@ -103,16 +108,19 @@ view: v_claim_detail_feature {
   }
 
   dimension: claimsubcoverage_num {
+    label: "Claim Subcoverage Number"
     type: number
     sql: ${TABLE}.claimsubcoverage_num ;;
   }
 
   dimension: claimsubexposure_num {
+    label: "Claim Subexposure Number"
     type: number
     sql: ${TABLE}.claimsubexposure_num ;;
   }
 
   dimension: coverage_dscr {
+    label: "Coverage"
     type: string
     sql: ${TABLE}.coverage_dscr ;;
   }
@@ -130,7 +138,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: denied {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.denied = 'true' then 'Yes' else 'No' end ;;
   }
 
@@ -159,12 +167,13 @@ view: v_claim_detail_feature {
   }
 
   dimension: exposure_dscr {
+    label: "Exposure Description"
     type: string
     sql: ${TABLE}.exposure_dscr ;;
   }
 
   dimension: in_suit {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.in_suit = 'true' then 'Yes' else 'No' end;;
   }
 
@@ -226,7 +235,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: record_only {
-    type: string
+    type: yesno
     sql: case when ${TABLE}.record_only = 'true' then 'Yes' else 'No' end ;;
   }
 
@@ -248,6 +257,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: subcoverage_dscr {
+    label: "Subcoverage Description"
     type: string
     sql: ${TABLE}.subcoverage_dscr ;;
   }
@@ -259,6 +269,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: subexposure_dscr {
+    label: "Subexposure Description"
     type: string
     sql: ${TABLE}.subexposure_dscr ;;
   }
