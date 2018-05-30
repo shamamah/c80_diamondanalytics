@@ -25,20 +25,20 @@ view: c57_claims_activity_detail {
           CFA.num                                                             AS ClaimActivityNumber,
           CC.claimcontrol_id
         FROM
-                C57_Diamond.dbo.ClaimFeatureActivity              CFA   WITH (NOLOCK)
+                Diamond.dbo.ClaimFeatureActivity              CFA   WITH (NOLOCK)
         LEFT OUTER JOIN ( SELECT
                   CFA2.claimcontrol_id,
                   CFA2.claimant_num,
                   CFA2.claimfeature_num,
             (SELECT   MIN(CFA3.num)
-            FROM    C57_Diamond.dbo.ClaimFeatureActivity CFA3
+            FROM    Diamond.dbo.ClaimFeatureActivity CFA3
             WHERE   CFA3.claimcontrol_id = CFA2.claimcontrol_id
               AND   CFA3.claimant_num = CFA2.claimant_num
               AND   CFA3.claimfeature_num = CFA2.claimfeature_num
               AND   CFA3.num > CFA2.num
               AND   CFA3.claimactivitycode_id IN (1, 2)
               AND   CFA3.claimactivitycode_id <> CFA2.claimactivitycode_id) AS min_num
-          FROM      C57_Diamond.dbo.ClaimFeatureActivity CFA2
+          FROM      Diamond.dbo.ClaimFeatureActivity CFA2
           WHERE     CFA2.claimactivitycode_id IN (1, 2)
         UNION
           SELECT
@@ -46,7 +46,7 @@ view: c57_claims_activity_detail {
                   CFA2.claimant_num,
                   CFA2.claimfeature_num,
                   MIN(CFA2.num) AS min_num
-          FROM      C57_Diamond.dbo.ClaimFeatureActivity CFA2
+          FROM      Diamond.dbo.ClaimFeatureActivity CFA2
           WHERE     CFA2.claimactivitycode_id IN (1, 2)
           GROUP BY    CFA2.claimcontrol_id,
                   CFA2.claimant_num,
@@ -55,43 +55,43 @@ view: c57_claims_activity_detail {
             AND   CFA2.claimant_num = CFA.claimant_num
             AND   CFA2.claimfeature_num = CFA.claimfeature_num
             AND   CFA2.min_num = CFA.num
-        LEFT OUTER JOIN C57_Diamond.dbo.ClaimActivityCode               CAC   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.ClaimActivityCode               CAC   WITH (NOLOCK)
           ON      CAC.claimactivitycode_id = CFA.claimactivitycode_id
-        LEFT OUTER JOIN C57_Diamond.dbo.ClaimFeature                  CFE   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.ClaimFeature                  CFE   WITH (NOLOCK)
           ON      CFE.claimcontrol_id = CFA.claimcontrol_id
             AND   CFE.claimant_num = CFA.claimant_num
             AND   CFE.claimfeature_num = CFA.claimfeature_num
-        LEFT OUTER JOIN C57_Diamond.dbo.ClaimCoverage                 ClmCov  WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.ClaimCoverage                 ClmCov  WITH (NOLOCK)
           ON      CFE.claimcontrol_id = ClmCov.claimcontrol_id
             AND   CFE.claimexposure_id = ClmCov.claimexposure_id
             AND   CFE.claimsubexposure_num = ClmCov.claimsubexposure_num
             AND   CFE.claimcoverage_num = ClmCov.claimcoverage_num
-        LEFT OUTER JOIN C57_Diamond.dbo.CoverageCode                  CovC  WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.CoverageCode                  CovC  WITH (NOLOCK)
           ON      CovC.coveragecode_id = ClmCov.coveragecode_id
-        LEFT OUTER JOIN C57_Diamond.dbo.ASL                       ASL   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.ASL                       ASL   WITH (NOLOCK)
           ON      ASL.asl_id = ClmCov.asl_id
-        LEFT OUTER JOIN C57_Diamond.dbo.ClaimControl                  CC    WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.ClaimControl                  CC    WITH (NOLOCK)
           ON      CC.claimcontrol_id = CFA.claimcontrol_id
-        LEFT OUTER JOIN C57_Diamond.dbo.PolicyImage                   PIM   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.PolicyImage                   PIM   WITH (NOLOCK)
           ON      CC.policy_id = PIM.policy_id
             AND   CC.policyimage_num = PIM.policyimage_num
-        LEFT OUTER JOIN C57_Diamond.dbo.Version                     V   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.Version                     V   WITH (NOLOCK)
           ON      PIM.version_id = V.version_id
-        LEFT OUTER JOIN C57_Diamond.dbo.CompanyStateLOB                 CSL   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.CompanyStateLOB                 CSL   WITH (NOLOCK)
           ON      V.companystatelob_id = CSL.companystatelob_id
-        LEFT OUTER JOIN C57_Diamond.dbo.CompanyState                  CState  WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.CompanyState                  CState  WITH (NOLOCK)
           ON      CSL.companystate_id = CState.companystate_id
-        LEFT OUTER JOIN C57_Diamond.dbo.State                     S   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.State                     S   WITH (NOLOCK)
           ON      CState.state_id = S.state_id
-        LEFT OUTER JOIN C57_Diamond.dbo.Company                     C   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.Company                     C   WITH (NOLOCK)
           ON      CState.company_id = C.company_id
-        LEFT OUTER JOIN C57_Diamond.dbo.CompanyLOB                    CLOB  WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.CompanyLOB                    CLOB  WITH (NOLOCK)
           ON      CSL.companylob_id = CLOB.companylob_id
-        LEFT OUTER JOIN C57_Diamond.dbo.LOB                       LOB   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.LOB                       LOB   WITH (NOLOCK)
           ON      CLOB.lob_id = LOB.lob_id
-        LEFT OUTER JOIN C57_Diamond.dbo.CompanyNameLink                 CNL   WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.CompanyNameLink                 CNL   WITH (NOLOCK)
           ON      C.company_id = CNL.company_id
-        LEFT OUTER JOIN C57_Diamond.dbo.Name                      CN    WITH (NOLOCK)
+        LEFT OUTER JOIN Diamond.dbo.Name                      CN    WITH (NOLOCK)
           ON      CNL.name_id = CN.name_id
         WHERE
                 CFA.added_date between {% parameter start_date %} AND {% parameter end_date %}
@@ -222,12 +222,28 @@ view: c57_claims_activity_detail {
     type: count
   }
 
-  filter: start_date {
-    type: string
+  measure: open_count {
+    type: count
+    filters: {
+      field: ClaimActivityDescription
+      value: "Open"
+    }
   }
 
-  filter: end_date {
-    type: string
+  measure: closed_count {
+    type: count
+    filters: {
+      field: ClaimActivityDescription
+      value: "Closed"
+    }
+  }
+
+  parameter: start_date {
+    type: date
+  }
+
+  parameter: end_date {
+    type: date
   }
 
 }

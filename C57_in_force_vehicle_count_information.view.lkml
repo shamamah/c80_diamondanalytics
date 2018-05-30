@@ -17,20 +17,20 @@ view: c57_in_force_vehicle_count_information {
             ,IFVCI.policyid
             ,IFVCI.policyimagenum
             ,c.unit_num
-        FROM C57_Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFVCI
-        INNER JOIN C57_Diamond.dbo.coverage C with(nolock)
+        FROM Diamond.dbo.vC57_Looker_InForceVehicleCountInformation({% parameter if_date %}) IFVCI
+        INNER JOIN Diamond.dbo.coverage C with(nolock)
           on IFVCI.PolicyID = C.policy_id
             and IFVCI.policyimagenum = c.policyimage_num
         INNER JOIN CoverageCode CC (nolock)
           on CC.coveragecode_id = CC.coveragecode_id
-        LEFT JOIN C57_Diamond.dbo.Address            VGA(NOLOCK)
+        LEFT JOIN Diamond.dbo.Address            VGA(NOLOCK)
           ON VGA.policy_id = IFVCI.policyid
             AND VGA.policyimage_num = IFVCI.policyimagenum
             AND VGA.address_num = C.unit_num
             AND VGA.detailstatuscode_id = 1
             AND VGA.zip <> '00000-0000'
             AND VGA.nameaddresssource_id = 17 -- Garage Address
-        LEFT JOIN C57_Diamond.dbo.Address            VMA(NOLOCK)
+        LEFT JOIN Diamond.dbo.Address            VMA(NOLOCK)
           ON VMA.policy_id = IFVCI.PolicyId
             AND VMA.policyimage_num = IFVCI.policyimagenum
             AND VMA.detailstatuscode_id = 1
@@ -115,8 +115,8 @@ view: c57_in_force_vehicle_count_information {
     sql: ${TABLE}.VehicleCount ;;
   }
 
-  filter: if_date {
-    type: string
+  parameter: if_date {
+    type: date
     label: "In-Force Date"
   }
 

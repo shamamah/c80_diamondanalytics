@@ -155,14 +155,12 @@ view: c57_average_severity_for_paid_claim {
     type: count
   }
 
-  filter: start_date {
-    type: string
-    label: "Start Date"
+  parameter: start_date {
+    type: date
   }
 
-  filter: end_date {
-    type: string
-    label: "End Date"
+  parameter: end_date {
+    type: date
   }
 
 

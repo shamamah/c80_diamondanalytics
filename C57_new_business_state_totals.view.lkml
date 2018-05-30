@@ -8,11 +8,11 @@ view: c57_new_business_state_totals {
       ,      VEH.territory_num
       ,      S.state
       ,      A.zip
-      FROM       C57_Diamond.dbo.PolicyImage PIM WITH(NOLOCK)
-      INNER JOIN C57_Diamond.dbo.Version     V WITH(NOLOCK)   ON V.version_id = PIM.version_id
-      INNER JOIN C57_Diamond.dbo.Vehicle     VEH WITH(NOLOCK) ON VEH.policy_id = PIM.policy_id
-      INNER JOIN C57_Diamond.dbo.Address     A WITH(NOLOCK)   ON A.policy_id = PIM.policy_id
-      INNER JOIN C57_Diamond.dbo.State       S WITH(NOLOCK)   ON S.state_id = A.state_id
+      FROM       Diamond.dbo.PolicyImage PIM WITH(NOLOCK)
+      INNER JOIN Diamond.dbo.Version     V WITH(NOLOCK)   ON V.version_id = PIM.version_id
+      INNER JOIN Diamond.dbo.Vehicle     VEH WITH(NOLOCK) ON VEH.policy_id = PIM.policy_id
+      INNER JOIN Diamond.dbo.Address     A WITH(NOLOCK)   ON A.policy_id = PIM.policy_id
+      INNER JOIN Diamond.dbo.State       S WITH(NOLOCK)   ON S.state_id = A.state_id
       WHERE PIM.transtype_id IN (2) -- New Business
         AND PIM.policystatuscode_id NOT IN (4,5,8,9,10,11,12,13)
         AND PIM.trans_date BETWEEN {% parameter start_date %} AND {% parameter end_date %}
@@ -53,12 +53,12 @@ view: c57_new_business_state_totals {
     sql: LEFT(${TABLE}.zip,5) ;;
   }
 
-  filter: start_date {
-    type: string
+  parameter: start_date {
+    type: date
   }
 
-  filter: end_date {
-    type: string
+  parameter: end_date {
+    type: date
   }
 
   set: detail_count {
