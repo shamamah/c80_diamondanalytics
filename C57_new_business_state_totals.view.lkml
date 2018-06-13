@@ -10,18 +10,18 @@ view: c57_new_business_state_totals {
       ,      A.zip
       FROM       Diamond.dbo.PolicyImage PIM WITH(NOLOCK)
       INNER JOIN Diamond.dbo.Version     V WITH(NOLOCK)   ON V.version_id = PIM.version_id
-      INNER JOIN Diamond.dbo.Vehicle     VEH WITH(NOLOCK) ON VEH.policy_id = PIM.policy_id
-      INNER JOIN Diamond.dbo.Address     A WITH(NOLOCK)   ON A.policy_id = PIM.policy_id
-      INNER JOIN Diamond.dbo.State       S WITH(NOLOCK)   ON S.state_id = A.state_id
+      INNER JOIN  Diamond.dbo.Vehicle     VEH WITH(NOLOCK) ON VEH.policy_id = PIM.policy_id AND VEH.policyimage_num = PIM.policyimage_num
+      CROSS APPLY ( SELECT TOP 1 *
+                    FROM Diamond.dbo.Address A WITH(NOLOCK)
+                    WHERE A.policy_id = PIM.policy_id
+                    ORDER BY A.address_id DESC)     A
+      INNER JOIN Diamond.dbo.State       S WITH(NOLOCK)   ON S.state_id = V.state_id
       WHERE PIM.transtype_id IN (2) -- New Business
         AND PIM.policystatuscode_id NOT IN (4,5,8,9,10,11,12,13)
         AND PIM.trans_date BETWEEN {% parameter start_date %} AND {% parameter end_date %}
-      GROUP BY PIM.policy_id
-      ,        PIM.policy
-      ,        PIM.premium_fullterm
-      ,        VEH.territory_num
-      ,        S.state
-      ,        A.zip
+        AND VEH.detailstatuscode_id IN (1)
+        AND PIM.policyimage_num IN (1)
+        AND VEH.vehicle_num IN (1)
        ;;
   }
 
