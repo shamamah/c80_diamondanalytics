@@ -42,11 +42,11 @@ explore: c57_claims_activity_detail {
 explore: c57_in_force_vehicle_count_information {
   label: "In-Force Vehicle Count Information"
 
-  join: v_c57_looker_active_coverages {
+  join: active_coverages {
     view_label: ""
     fields: [dscr]
     type: inner
-    sql_on: ${c57_in_force_vehicle_count_information.coveragecode_id} = ${v_c57_looker_active_coverages.coveragecode_id} ;;
+    sql_on: ${c57_in_force_vehicle_count_information.coveragecode_id} = ${active_coverages.coveragecode_id} ;;
     relationship: one_to_one
   }
 

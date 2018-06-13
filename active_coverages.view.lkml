@@ -1,5 +1,10 @@
-view: v_c57_looker_active_coverages {
-  sql_table_name: dbo.vC57_Looker_ActiveCoverages ;;
+view: active_coverages {
+  derived_table: {
+    sql:
+        SELECT DISTINCT [coveragecode_id], [caption] as dscr
+        FROM [Diamond].[dbo].[CoverageCodeVersion]
+       ;;
+  }
 
   dimension: coveragecode_id {
     type: number

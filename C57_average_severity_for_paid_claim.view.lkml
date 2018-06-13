@@ -156,11 +156,11 @@ view: c57_average_severity_for_paid_claim {
   }
 
   parameter: start_date {
-    type: date
+    type: string
   }
 
   parameter: end_date {
-    type: date
+    type: string
   }
 
 
