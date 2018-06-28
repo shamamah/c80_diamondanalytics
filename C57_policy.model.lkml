@@ -8,6 +8,7 @@ include: "*.dashboard"
 
 explore: policy {
   label: "Policy"
+  persist_for: "4 hours"
   join: policy_image {
     type: inner
     sql_on: ${policy.policy_id} = ${policy_image.policy_id} ;;

@@ -8,6 +8,7 @@ include: "*.dashboard"
 
 explore: claim_control {
   label: "Claims"
+  persist_for: "4 hours"
   view_label: "Claim"
   join: v_claim_detail_claimant {
     view_label: "Claim Detail Claimant"

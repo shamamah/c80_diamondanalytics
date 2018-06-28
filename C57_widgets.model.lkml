@@ -7,7 +7,7 @@ explore: c57_new_business_state_totals {label: "New Business State Totals"}
 
 explore: c57_claims_activity_detail {
   label: "Claims Activity Detail"
-
+  persist_for: "4 hours"
   join: claim_control {
     fields: []
     type: inner
@@ -41,7 +41,7 @@ explore: c57_claims_activity_detail {
 
 explore: c57_in_force_vehicle_count_information {
   label: "In-Force Vehicle Count Information"
-
+  persist_for: "4 hours"
   join: active_coverages {
     view_label: ""
     fields: [dscr]
@@ -52,13 +52,17 @@ explore: c57_in_force_vehicle_count_information {
 
   }
 
-explore: c57_in_force_policy_count_information {label: "In-Force Policy Count and Premium Information"}
+explore: c57_in_force_policy_count_information {
+  label: "In-Force Policy Count and Premium Information"
+  persist_for: "4 hours"}
 
-explore: c57_loss_expense_ratio_by_coverage {label: "Loss Expense Ratio by Coverage"}
+explore: c57_loss_expense_ratio_by_coverage {
+  label: "Loss Expense Ratio by Coverage"
+  persist_for: "4 hours"}
 
 explore: c57_average_severity_for_paid_claim {
   label: "Average Severity For Paid Claims"
-
+  persist_for: "4 hours"
   join: claim_control {
     fields: []
     type: inner
