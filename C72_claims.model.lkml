@@ -1,10 +1,7 @@
-connection: "falcon-test"
+connection: "c72-prod"
 
 # include all the views
 include: "*.view"
-
-# include all the dashboards
-include: "*.dashboard"
 
 explore: claim_control {
   label: "Claims"
