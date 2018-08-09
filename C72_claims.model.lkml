@@ -4,7 +4,7 @@ connection: "c72-prod"
 include: "*.view"
 
 explore: claim_control {
-  label: "Claims"
+  label: "C72-Claims"
   persist_for: "4 hours"
   view_label: "Claim"
   join: v_claim_detail_claimant {
