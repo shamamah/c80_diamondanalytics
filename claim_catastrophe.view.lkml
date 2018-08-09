@@ -1,0 +1,91 @@
+view: claim_catastrophe {
+  sql_table_name: dbo.ClaimCatastrophe ;;
+
+  dimension_group: added {
+    type: time
+    timeframes: [time, date, week, month]
+    hidden: yes
+    sql: ${TABLE}.added ;;
+  }
+
+
+  dimension: claimcatastrophe_id {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.claimcatastrophe_id ;;
+  }
+
+  dimension: claimcatastrophetype_id {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.claimcatastrophetype_id ;;
+  }
+
+  dimension: dscr {
+    type: string
+    label: "Catastrophe Description"
+    sql: ${TABLE}.dscr ;;
+  }
+
+  dimension_group: enddate {
+    label: "Catastrophe End"
+    type: time
+    timeframes: [date, week, month]
+    #hidden: yes
+    sql: ${TABLE}.enddate ;;
+  }
+
+  dimension_group: last_modified {
+    type: time
+    timeframes: [time, date, week, month]
+    hidden: yes
+    sql: ${TABLE}.last_modified_date ;;
+  }
+
+  dimension_group: pcadded {
+    type: time
+    timeframes: [time, date, week, month]
+    hidden: yes
+    sql: ${TABLE}.pcadded_date ;;
+  }
+
+  dimension_group: startdate {
+    label: "Catastrophe Start"
+    type: time
+    timeframes: [date, week, month]
+    #hidden: yes
+    sql: ${TABLE}.startdate ;;
+  }
+
+  dimension: user_code {
+    label: "Catastrophe Code"
+    type: string
+    hidden: yes
+    sql: ${TABLE}.user_code ;;
+  }
+
+  dimension: users_id {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.users_id ;;
+  }
+
+  dimension: year {
+    label: "Catastrophe Year"
+    type: number
+    #hidden: yes
+    sql: ${TABLE}.year ;;
+  }
+
+  dimension: year_display_order {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.year_display_order ;;
+  }
+
+  measure: count {
+    type: count
+    hidden: yes
+    drill_fields: [users.users_id, users.login_name]
+  }
+}
