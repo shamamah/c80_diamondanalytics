@@ -20,23 +20,35 @@ view: v_claim_detail_claimant {
     sql: ${TABLE}.alae_reserve ;;
   }
 
-  dimension: anticipated_expense_recovery {
-    type: string
+  dimension: dim_anticipated_expense_recovery {
+    type: number
+    hidden: yes
+    view_label: "Financials"
     sql: ${TABLE}.anticipated_expense_recovery ;;
+  }
+
+  measure: anticipated_expense_recovery {
+    type: sum
+    label: "Anticipated Expense Recovery"
+    sql: ${dim_anticipated_expense_recovery} ;;
+    value_format: "$0.00"
   }
 
   dimension: anticipated_other_recovery {
     type: string
+    view_label: "Financials"
     sql: ${TABLE}.anticipated_other_recovery ;;
   }
 
   dimension: anticipated_salvage {
     type: string
+    view_label: "Financials"
     sql: ${TABLE}.anticipated_salvage ;;
   }
 
   dimension: anticipated_subro {
     type: string
+    view_label: "Financials"
     sql: ${TABLE}.anticipated_subro ;;
   }
 
