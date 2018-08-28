@@ -1,12 +1,12 @@
 view: claim_catastrophe {
   sql_table_name: dbo.ClaimCatastrophe ;;
 
-  dimension_group: added {
-    type: time
-    timeframes: [time, date, week, month]
-    hidden: yes
-    sql: ${TABLE}.added ;;
-  }
+#   dimension_group: added {
+#     type: time
+#     timeframes: [time, date, week, month]
+#     hidden: yes
+#     sql: ${TABLE}.added ;;
+#   }
 
 
   dimension: claimcatastrophe_id {
@@ -15,42 +15,42 @@ view: claim_catastrophe {
     sql: ${TABLE}.claimcatastrophe_id ;;
   }
 
-  dimension: claimcatastrophetype_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimcatastrophetype_id ;;
-  }
+#   dimension: claimcatastrophetype_id {
+#     type: number
+#     hidden: yes
+#     sql: ${TABLE}.claimcatastrophetype_id ;;
+#   }
 
   dimension: dscr {
     type: string
-    label: "Catastrophe Description"
+    label: "Description"
     sql: ${TABLE}.dscr ;;
   }
 
   dimension_group: enddate {
-    label: "Catastrophe End"
+    label: "End"
     type: time
     timeframes: [date, week, month]
     #hidden: yes
     sql: ${TABLE}.enddate ;;
   }
 
-  dimension_group: last_modified {
-    type: time
-    timeframes: [time, date, week, month]
-    hidden: yes
-    sql: ${TABLE}.last_modified_date ;;
-  }
+#   dimension_group: last_modified {
+#     type: time
+#     timeframes: [time, date, week, month]
+#     hidden: yes
+#     sql: ${TABLE}.last_modified_date ;;
+#   }
 
-  dimension_group: pcadded {
-    type: time
-    timeframes: [time, date, week, month]
-    hidden: yes
-    sql: ${TABLE}.pcadded_date ;;
-  }
+#   dimension_group: pcadded {
+#     type: time
+#     timeframes: [time, date, week, month]
+#     hidden: yes
+#     sql: ${TABLE}.pcadded_date ;;
+#   }
 
   dimension_group: startdate {
-    label: "Catastrophe Start"
+    label: "Begin"
     type: time
     timeframes: [date, week, month]
     #hidden: yes
@@ -71,7 +71,7 @@ view: claim_catastrophe {
   }
 
   dimension: year {
-    label: "Catastrophe Year"
+    label: "Year"
     type: number
     #hidden: yes
     sql: ${TABLE}.year ;;

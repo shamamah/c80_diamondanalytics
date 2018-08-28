@@ -1,5 +1,8 @@
 view: v_claim_detail_feature {
+  #Commented Dimensions are not used for SCS
+
   sql_table_name: dbo.vClaimDetail_Feature ;;
+  view_label: "Claimant Coverage"
 
   dimension: compound_primary_key {
     type: string
@@ -8,264 +11,32 @@ view: v_claim_detail_feature {
     sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num}) ;;
   }
 
-  dimension: alae_paid {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.alae_paid ;;
-  }
-
-  dimension: alae_reserve {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.alae_reserve ;;
-  }
-
-  dimension: anticipated_expense_recovery {
-    type: string
-    sql: ${TABLE}.anticipated_expense_recovery ;;
-  }
-
-  dimension: anticipated_other_recovery {
-    type: string
-    sql: ${TABLE}.anticipated_other_recovery ;;
-  }
-
-  dimension: anticipated_salvage {
-    type: string
-    sql: ${TABLE}.anticipated_salvage ;;
-  }
-
-  dimension: anticipated_subro {
-    type: string
-    sql: ${TABLE}.anticipated_subro ;;
-  }
-
-  dimension: claimant_num {
-    label: "Claimant Number"
-    type: number
-    sql: ${TABLE}.claimant_num ;;
-  }
-
+  #---------------------------------------------------------------
   dimension: claimcontrol_id {
     type: number
     hidden: yes
     sql: ${TABLE}.claimcontrol_id ;;
   }
 
-  dimension: claimcoverage_num {
-    label: "Claim Coverage Number"
-    type: number
-    sql: ${TABLE}.claimcoverage_num ;;
-  }
-
-  dimension_group: claimdenial {
-    label: "Claim Denial"
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.claimdenial_date ;;
-  }
-
-  dimension: claimdenialreason_id {
-    type: number
+  dimension: claimant_num {
+    label: "Claimant Number"
     hidden: yes
-    sql: ${TABLE}.claimdenialreason_id ;;
-  }
-
-  dimension: claimdenialreason_remarks {
-    label: "Denial Reason Remarks"
-    type: string
-    sql: ${TABLE}.claimdenialreason_remarks ;;
-  }
-
-  dimension: claimdenialusers_id {
     type: number
-    hidden: yes
-    sql: ${TABLE}.claimdenialusers_id ;;
-  }
-
-  dimension: claimexposure_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimexposure_id ;;
+    sql: ${TABLE}.claimant_num ;;
   }
 
   dimension: claimfeature_num {
     label: "Claim Feature Number"
+    hidden:  yes
     type: number
     sql: ${TABLE}.claimfeature_num ;;
   }
-
-  dimension: claimfeaturestatus_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimfeaturestatus_id ;;
-  }
-
-  dimension: claimpersonnel_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimpersonnel_id ;;
-  }
-
-  dimension: claimsubcoverage_num {
-    label: "Claim Subcoverage Number"
-    type: number
-    sql: ${TABLE}.claimsubcoverage_num ;;
-  }
-
-  dimension: claimsubexposure_num {
-    label: "Claim Subexposure Number"
-    type: number
-    sql: ${TABLE}.claimsubexposure_num ;;
-  }
-
-  dimension: coverage_dscr {
-    label: "Coverage"
-    type: string
-    sql: ${TABLE}.coverage_dscr ;;
-  }
-
-  dimension: coveragecode {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.coveragecode ;;
-  }
-
-  dimension: coveragecode_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.coveragecode_id ;;
-  }
-
-  dimension: denied {
-    type: yesno
-    sql: case when ${TABLE}.denied = 'true' then 'Yes' else 'No' end ;;
-  }
-
-  dimension: display_name {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.display_name ;;
-  }
-
-  dimension: expense_paid {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.expense_paid ;;
-  }
-
-  dimension: expense_recovery {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.expense_recovery ;;
-  }
-
-  dimension: expense_reserve {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.expense_reserve ;;
-  }
+  #---------------------------------------------------------------
 
   dimension: exposure_dscr {
     label: "Exposure Description"
     type: string
     sql: ${TABLE}.exposure_dscr ;;
-  }
-
-  dimension: in_suit {
-    type: yesno
-    sql: case when ${TABLE}.in_suit = 'true' then 'Yes' else 'No' end;;
-  }
-
-  dimension: indemnity_paid {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.indemnity_paid ;;
-  }
-
-  dimension: indemnity_reserve {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.indemnity_reserve ;;
-  }
-
-  dimension: initial_anticipated_expense_recovery {
-    type: string
-    sql: ${TABLE}.initial_anticipated_expense_recovery ;;
-  }
-
-  dimension: initial_anticipated_other_recovery {
-    type: string
-    sql: ${TABLE}.initial_anticipated_other_recovery ;;
-  }
-
-  dimension: initial_anticipated_salvage {
-    type: string
-    sql: ${TABLE}.initial_anticipated_salvage ;;
-  }
-
-  dimension: initial_anticipated_subro {
-    type: string
-    sql: ${TABLE}.initial_anticipated_subro ;;
-  }
-
-  dimension: initial_expense_reserve {
-    type: string
-    sql: ${TABLE}.initial_expense_reserve ;;
-  }
-
-  dimension: initial_indemnity_reserve {
-    type: string
-    sql: ${TABLE}.initial_indemnity_reserve ;;
-  }
-
-  dimension: inside_adjuster {
-    type: string
-    sql: ${TABLE}.inside_adjuster ;;
-  }
-
-  dimension: other_recovery {
-    type: string
-    sql: ${TABLE}.other_recovery ;;
-  }
-
-  dimension: outside_adjuster {
-    type: string
-    sql: ${TABLE}.outside_adjuster ;;
-  }
-
-  dimension: record_only {
-    type: yesno
-    sql: case when ${TABLE}.record_only = 'true' then 'Yes' else 'No' end ;;
-  }
-
-  dimension: salvage {
-    type: string
-    sql: ${TABLE}.salvage ;;
-  }
-
-  dimension: status_dscr {
-    type: string
-    label: "Status"
-    sql: ${TABLE}.status_dscr ;;
-  }
-
-  dimension_group: statute_of_limitations {
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.statute_of_limitations_date ;;
-  }
-
-  dimension: subcoverage_dscr {
-    label: "Subcoverage Description"
-    type: string
-    sql: ${TABLE}.subcoverage_dscr ;;
-  }
-
-  dimension: subcoveragecode_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.subcoveragecode_id ;;
   }
 
   dimension: subexposure_dscr {
@@ -274,68 +45,383 @@ view: v_claim_detail_feature {
     sql: ${TABLE}.subexposure_dscr ;;
   }
 
-  dimension: subro {
+  dimension: coverage_dscr {
+    label: "Coverage"
     type: string
-    sql: ${TABLE}.subro ;;
+    sql: ${TABLE}.coverage_dscr ;;
   }
 
-  dimension: users_id {
+  # dimension: subcoverage_dscr {
+  #   label: "Subcoverage Description"
+  #   type: string
+  #   sql: ${TABLE}.subcoverage_dscr ;;
+  # }
+
+  # dimension: record_only {
+  #   type: string
+  #   sql: case when ${TABLE}.record_only=0 then 'Yes' else 'No' end ;;
+  # }
+
+  # dimension: in_suit {
+  #   type: string
+  #   label: "Is In Suit"
+  #   sql: case when ${TABLE}.in_suit=1 then 'Yes' else 'No' end;;
+  # }
+
+  # dimension_group: statute_of_limitations {
+  #   type: time
+  #   timeframes: [time, date, week, month]
+  #   sql: ${TABLE}.statute_of_limitations_date ;;
+  # }
+
+  dimension: inside_adjuster {
+    type: string
+    sql: ${TABLE}.inside_adjuster ;;
+  }
+
+  dimension: outside_adjuster {
+    type: string
+    sql: ${TABLE}.outside_adjuster ;;
+  }
+
+  dimension: status_dscr {
+    type: string
+    label: "Status (Claimant/Coverage)"
+    sql: ${TABLE}.status_dscr ;;
+  }
+
+  dimension: initial_indemnity_reserve {
+    hidden: yes
+    type: number
+    label: "Indemnity: Initial Reserve"
+    sql: ${TABLE}.initial_indemnity_reserve ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: indemnity_reserve {
+    hidden: yes
+    type: number
+    label: "Indemnity: Reserve"
+    sql: ${TABLE}.indemnity_reserve ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: indemnity_paid {
+    hidden: yes
+    type: number
+    label: "Indemnity: Paid"
+    sql: ${TABLE}.indemnity_paid ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: initial_expense_reserve {
+    hidden: yes
+    type: number
+    label: "Indemnity: Initial Expense"
+    sql: ${TABLE}.initial_expense_reserve ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: expense_reserve {
+    hidden: yes
+    type: number
+    label: "Expense: Reserve"
+    sql: ${TABLE}.expense_reserve ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: expense_paid {
+    hidden: yes
+    type: number
+    label: "Indemnity: Paid"
+    sql: ${TABLE}.expense_paid ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: alae_reserve {
+    hidden: yes
+    type: number
+    label: "ALAE: Reserve"
+    sql: ${TABLE}.alae_reserve ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: alae_paid {
+    hidden: yes
+    type: number
+    label: "ALAE: Paid"
+    sql: ${TABLE}.alae_paid ;;
+    value_format: "$#,##0.00"
+  }
+
+  # dimension: initial_anticipated_expense_recovery {
+  #   type: number
+  #   sql: ${TABLE}.initial_anticipated_expense_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: anticipated_expense_recovery {
+  #   type: number
+  #   sql: ${TABLE}.anticipated_expense_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  dimension: expense_recovery {
+    hidden: yes
+    type: number
+    label: "Expense Recovery"
+    sql: ${TABLE}.expense_recovery ;;
+    value_format: "$#,##0.00"
+  }
+
+  # dimension: initial_anticipated_salvage {
+  #   type: number
+  #   sql: ${TABLE}.initial_anticipated_salvage ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: anticipated_salvage {
+  #   type: number
+  #   sql: ${TABLE}.anticipated_salvage ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  dimension: salvage {
+    type: number
+    sql: ${TABLE}.salvage ;;
+    value_format: "$#,##0.00"
+  }
+
+  # dimension: initial_anticipated_subro {
+  #   type: number
+  #   sql: ${TABLE}.initial_anticipated_subro ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  dimension: subro {
+    type: number
+    sql: ${TABLE}.subro ;;
+    value_format: "$#,##0.00"
+  }
+
+  # dimension: initial_anticipated_other_recovery {
+  #   type: number
+  #   sql: ${TABLE}.initial_anticipated_other_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: anticipated_other_recovery {
+  #   type: number
+  #   sql: ${TABLE}.anticipated_other_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: other_recovery {
+  #   type: number
+  #   sql: ${TABLE}.other_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: claimfeaturestatus_id {
+  #   type: number
+  #   sql: ${TABLE}.claimfeaturestatus_id ;;
+  # }
+
+  # dimension: claimpersonnel_id {
+  #   type: number
+  #   sql: ${TABLE}.claimpersonnel_id ;;
+  # }
+
+  # dimension: display_name {
+  #   type: string
+  #   sql: ${TABLE}.display_name ;;
+  # }
+
+  # dimension: users_id {
+  #   type: number
+  #   sql: ${TABLE}.users_id ;;
+  # }
+
+  # dimension: claimdenialreason_id {
+  #   type: number
+  #   sql: ${TABLE}.claimdenialreason_id ;;
+  # }
+
+  # dimension: claimdenialusers_id {
+  #   type: number
+  #   sql: ${TABLE}.claimdenialusers_id ;;
+  # }
+
+  # dimension: claimdenialreason_remarks {
+  #   label: "Denial Reason Remarks"
+  #   type: string
+  #   sql: ${TABLE}.claimdenialreason_remarks ;;
+  # }
+
+  # dimension: denied {
+  #   type: string
+  #   label: "Is Denied"
+  #   sql: case when ${TABLE}.denied=1 then 'Yes' else 'No' end ;;
+  # }
+
+  # dimension_group: claimdenial_date {
+  #   label: "Claim Denial"
+  #   type: time
+  #   timeframes: [time, date, week, month]
+  #   sql: ${TABLE}.claimdenial_date ;;
+  # }
+
+  # dimension: coveragecode_id {
+  #   type: number
+  #   sql: ${TABLE}.coveragecode_id ;;
+  # }
+
+  # dimension: subcoveragecode_id {
+  #   type: number
+  #   sql: ${TABLE}.subcoveragecode_id ;;
+  # }
+
+  dimension: coveragecode {
+    type: string
+    hidden: yes
+    label: "Coverage Code"
+    sql: ${TABLE}.coveragecode ;;
+  }
+
+  # dimension: claimexposure_id {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.claimexposure_id ;;
+  # }
+
+  # dimension: claimsubexposure_num {
+  #   label: "Claim Subexposure Number"
+  #   type: number
+  #   sql: ${TABLE}.claimsubexposure_num ;;
+  # }
+
+  dimension: claimcoverage_num {
+    label: "Claim Coverage Number"
     type: number
     hidden: yes
-    sql: ${TABLE}.users_id ;;
+    sql: ${TABLE}.claimcoverage_num ;;
   }
+
+  # dimension: claimsubcoverage_num {
+  #   label: "Claim Subcoverage Number"
+  #   type: number
+  #   sql: ${TABLE}.claimsubcoverage_num ;;
+  # }
+
+  #DATA ELEMENTS COMPLETED-------------------------------------------------------
 
   measure: count {
     type: count
-    drill_fields: [display_name, users.users_id, users.login_name]
+    label: "Count"
+    drill_fields: [exposure_dscr,coveragecode,coverage_dscr,inside_adjuster,outside_adjuster,indemnity_reserve,indemnity_paid,expense_reserve,expense_paid]
   }
 
   measure:  sum_indemnity_paid {
+    view_label: "Claim Financials"
     type: sum
-    label: "Total Indemnity Paid"
+    #label: "Total Indemnity Paid"
+    label: "Indemnity: Paid"
     sql: ${indemnity_paid} ;;
-  }
-  measure:  sum_indemnity_reserve {
-    type:  sum
-    label: "Total Indemnity Reserve"
-    sql:  ${indemnity_reserve} ;;
+    value_format: "$#,##0.00"
+    }
 
-  }
+  measure:  sum_indemnity_reserve {
+    view_label: "Claim Financials"
+    type:  sum
+    #label: "Total Indemnity Reserve"
+    label: "Indemnity: Reserve"
+    sql:  ${indemnity_reserve} ;;
+    value_format: "$#,##0.00"
+    }
+
   measure: sum_total_indemnity_incurred{
+    view_label: "Claim Financials"
     type: number
-    label: "Total Indemnity Incurred"
+    #label: "Total Indemnity Incurred"
+    label: "Indemnity: Incurred"
     sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
-  }
+    value_format: "$#,##0.00"
+    }
 
   measure:  sum_expense_paid {
+    view_label: "Claim Financials"
     type: sum
-    label: "Total Expense Paid"
+    #label: "Total Expense Paid"
+    label: "Expense: Paid"
     sql: ${expense_paid} ;;
+    value_format: "$#,##0.00"
   }
 
   measure:  sum_expense_reserve {
+    view_label: "Claim Financials"
     type:  sum
-    label: "Total Expense Reserve"
+    #label: "Total Expense Reserve"
+    label: "Expense: Reserve"
     sql:  ${expense_reserve} ;;
-
+    value_format: "$#,##0.00"
   }
 
   measure:  sum_expense_recovery {
+    view_label: "Claim Financials"
     type:  sum
-    label: "Total Expense Recovery"
+    #label: "Total Expense Recovery"
+    label: "Expense: Recovery"
     sql:  ${expense_recovery} ;;
-
+    value_format: "$#,##0.00"
   }
 
   measure:  sum_alae_paid {
+    view_label: "Claim Financials"
     type: sum
-    label: "Total Alae Paid"
+    #label: "Total Alae Paid"
+    label: "ALAE Paid"
     sql: ${alae_paid} ;;
+    value_format: "$#,##0.00"
   }
 
   measure:  sum_alae_reserve {
+    view_label: "Claim Financials"
     type: sum
-    label: "Total Alae Reserve"
+    #label: "Total Alae Reserve"
+    label: "ALAE Reserve"
     sql: ${alae_reserve} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: sum_initial_indemnity_reserve {
+    view_label: "Claim Financials"
+    type: sum
+    label: "Indemnity: Initial Reserve"
+    sql: ${initial_indemnity_reserve} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: sum_initial_expense_reserve {
+    view_label: "Claim Financials"
+    type: sum
+    label: "Indemnity: Initial Expense"
+    sql: ${initial_expense_reserve} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: sum_salvage {
+    view_label: "Claim Financials"
+    type: sum
+    label: "Salvage"
+    sql: ${salvage} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: sum_subro {
+    view_label: "Claim Financials"
+    type: sum
+    label: "Subro"
+    sql: ${subro} ;;
+    value_format: "$#,##0.00"
   }
 }

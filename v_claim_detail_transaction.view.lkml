@@ -1,5 +1,8 @@
 view: v_claim_detail_transaction {
+  #Commented Dimensions are not used for SCS
+
   sql_table_name: dbo.vClaimDetail_Transaction ;;
+  view_label: "Claim Transactions"
 
   dimension: compound_primary_key {
     type: string
@@ -8,117 +11,7 @@ view: v_claim_detail_transaction {
     sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num},${claimtransaction_num}) ;;
   }
 
-  dimension_group: added {
-    type: time
-    timeframes: [date, week, month]
-    convert_tz: no
-    sql: ${TABLE}.added_date ;;
-  }
-
-  dimension: adjust_alae_paid {
-    type: number
-    value_format_name: id
-    sql: ${TABLE}.adjust_alae_paid ;;
-  }
-
-  dimension: adjust_alae_reserve {
-    type: number
-    sql: ${TABLE}.adjust_alae_reserve ;;
-  }
-
-  dimension: adjust_ant_expense_recovery {
-    type: number
-    sql: ${TABLE}.adjust_ant_expense_recovery ;;
-  }
-
-  dimension: adjust_ant_other_recovery {
-    type: number
-    sql: ${TABLE}.adjust_ant_other_recovery ;;
-  }
-
-  dimension: adjust_ant_salvage {
-    type: number
-    sql: ${TABLE}.adjust_ant_salvage ;;
-  }
-
-  dimension: adjust_ant_subro {
-    type: number
-    sql: ${TABLE}.adjust_ant_subro ;;
-  }
-
-  dimension: adjust_expense_paid {
-    type: number
-    value_format_name: id
-    sql: ${TABLE}.adjust_expense_paid ;;
-  }
-
-  dimension: adjust_expense_recovery {
-    type: number
-    sql: ${TABLE}.adjust_expense_recovery ;;
-  }
-
-  dimension: adjust_expense_reserve {
-    type: number
-    sql: ${TABLE}.adjust_expense_reserve ;;
-  }
-
-  dimension: adjust_indemnity_paid {
-    type: number
-    value_format_name: id
-    sql: ${TABLE}.adjust_indemnity_paid ;;
-  }
-
-  dimension: adjust_indemnity_reserve {
-    type: number
-    sql: ${TABLE}.adjust_indemnity_reserve ;;
-  }
-
-  dimension: adjust_other_recovery {
-    type: number
-    sql: ${TABLE}.adjust_other_recovery ;;
-  }
-
-  dimension: adjust_salvage {
-    type: number
-    sql: ${TABLE}.adjust_salvage ;;
-  }
-
-  dimension: adjust_subro {
-    type: number
-    sql: ${TABLE}.adjust_subro ;;
-  }
-
-  dimension: amount {
-    type: string
-    sql: ${TABLE}.amount ;;
-  }
-
-  dimension: approvedby_user_name {
-    label: "Approved by User Name"
-    type: string
-    sql: ${TABLE}.approvedby_user_name ;;
-  }
-
-  dimension: bulk_check {
-    type: string
-    sql: ${TABLE}.bulk_check ;;
-  }
-
-  dimension: cat_dscr {
-    label: "Catastrophe Description"
-    type: string
-    sql: ${TABLE}.cat_dscr ;;
-  }
-
-  dimension: check_number {
-    type: string
-    sql: ${TABLE}.check_number ;;
-  }
-
-  dimension: claimant_num {
-    type: number
-    sql: ${TABLE}.claimant_num ;;
-  }
+  #---------------------------------------------------------------
 
   dimension: claimcontrol_id {
     type: number
@@ -126,34 +19,211 @@ view: v_claim_detail_transaction {
     sql: ${TABLE}.claimcontrol_id ;;
   }
 
-  dimension: claimfeature_num {
-    label: "Claim Feature Number"
+  dimension: claimant_num {
     type: number
+    hidden: yes
+    sql: ${TABLE}.claimant_num ;;
+  }
+
+  dimension: claimfeature_num {
+    type: number
+    hidden: yes
     sql: ${TABLE}.claimfeature_num ;;
   }
 
-  dimension: claimscheduledpaymentcycle_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimscheduledpaymentcycle_id ;;
-  }
-
-  dimension: claimstoppmt_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimstoppmt_id ;;
-  }
-
   dimension: claimtransaction_num {
-    label: "Claim Transaction Number"
     type: number
+    hidden: yes
     sql: ${TABLE}.claimtransaction_num ;;
   }
 
-  dimension: claimtransactioncategory_id {
-    type: number
+  #---------------------------------------------------------------
+
+  dimension: cat_dscr {
     hidden: yes
+    label: "Catastrophe Description"
+    type: string
+    sql: ${TABLE}.cat_dscr ;;
+  }
+
+  dimension: claimtransactioncategory_id {
+    hidden: yes
+    type: number
     sql: ${TABLE}.claimtransactioncategory_id ;;
+  }
+
+  dimension: claimtransactiontype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimtransactiontype_id ;;
+  }
+
+  dimension: type_dscr {
+    hidden: yes
+    label: "Type Description"
+    type: string
+    sql: ${TABLE}.type_dscr ;;
+  }
+
+  dimension_group: eff {
+    hidden: yes
+    label: "Date &"
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${TABLE}.eff_date ;;
+  }
+
+  # dimension_group: added_date {
+  #   type: time
+  #   timeframes: [date, week, month]
+  #   convert_tz: no
+  #   sql: ${TABLE}.added_date ;;
+  # }
+
+  dimension: amount {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.amount ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: reserve {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.reserve ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: remark {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.remark ;;
+  }
+
+  # dimension: user_name {
+  #   type: string
+  #   sql: ${TABLE}.user_name ;;
+  # }
+
+  # dimension: approvedby_user_name {
+  #   label: "Approved by User Name"
+  #   type: string
+  #   sql: ${TABLE}.approvedby_user_name ;;
+  # }
+
+  # dimension: claimtransactionstatus_id {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.claimtransactionstatus_id ;;
+  # }
+
+  dimension: status {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.status ;;
+  }
+
+  dimension: pay_type {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.pay_type ;;
+  }
+
+  # dimension: adjust_indemnity_reserve {
+  #   type: number
+  #   sql: ${TABLE}.adjust_indemnity_reserve ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_indemnity_paid {
+  #   type: number
+  #   sql: ${TABLE}.adjust_indemnity_paid ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_alae_reserve {
+  #   type: number
+  #   sql: ${TABLE}.adjust_alae_reserve ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_alae_paid {
+  #   type: number
+  #   sql: ${TABLE}.adjust_alae_paid ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_expense_reserve {
+  #   type: number
+  #   sql: ${TABLE}.adjust_expense_reserve ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_expense_paid {
+  #   type: number
+  #   #value_format_name: id
+  #   sql: ${TABLE}.adjust_expense_paid ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_expense_recovery {
+  #   type: number
+  #   sql: ${TABLE}.adjust_expense_recovery ;;
+  # }
+
+  # dimension: adjust_ant_expense_recovery {
+  #   type: number
+  #   sql: ${TABLE}.adjust_ant_expense_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_ant_salvage {
+  #   type: number
+  #   sql: ${TABLE}.adjust_ant_salvage ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_salvage {
+  #   type: number
+  #   sql: ${TABLE}.adjust_salvage ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_ant_subro {
+  #   type: number
+  #   sql: ${TABLE}.adjust_ant_subro ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_subro {
+  #   type: number
+  #   sql: ${TABLE}.adjust_subro ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_ant_other_recovery {
+  #   type: number
+  #   sql: ${TABLE}.adjust_ant_other_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: adjust_other_recovery {
+  #   type: number
+  #   sql: ${TABLE}.adjust_other_recovery ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+  # dimension: claimstoppmt_id {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.claimstoppmt_id ;;
+  # }
+
+  dimension_group: reconcile_date {
+    hidden: yes
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${TABLE}.reconcile_date ;;
   }
 
   dimension: claimtransactionsplit_num {
@@ -162,86 +232,88 @@ view: v_claim_detail_transaction {
     sql: ${TABLE}.claimtransactionsplit_num ;;
   }
 
-  dimension: claimtransactionstatus_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimtransactionstatus_id ;;
-  }
+  # dimension: bulk_check {
+  #   type: string
+  #   sql: ${TABLE}.bulk_check ;;
+  # }
 
-  dimension: claimtransactiontype_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claimtransactiontype_id ;;
-  }
+  # dimension: checkstatus_id {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.checkstatus_id ;;
+  # }
 
-  dimension_group: clearedbank {
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.clearedbank_date ;;
-  }
-
-  dimension_group: eff {
-    label: "Effective Date"
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.eff_date ;;
-  }
+  # dimension: view_only {
+  #   type: string
+  #   sql: ${TABLE}.view_only ;;
+  # }
 
   dimension: pay_to_the_order_of {
+    hidden: yes
     type: string
     sql: ${TABLE}.pay_to_the_order_of ;;
   }
 
-  dimension: pay_type {
+  # dimension: user_code {
+  #   type: string
+  #   sql: ${TABLE}.user_code ;;
+  # }
+
+  # dimension_group: clearedbank_date {
+  #   type: time
+  #   timeframes: [time, date, week, month]
+  #   sql: ${TABLE}.clearedbank_date ;;
+  # }
+
+  # dimension: claimscheduledpaymentcycle_id {
+  #   type: number
+  #   sql: ${TABLE}.claimscheduledpaymentcycle_id ;;
+  # }
+
+  dimension: reissued {
+    hidden: yes
     type: string
-    sql: ${TABLE}.pay_type ;;
+    sql: case when ${TABLE}.reissued=1 then 'Yes' else 'No' end ;;
   }
 
-  dimension_group: reconcile {
+  dimension: check_number {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.check_number ;;
+  }
+
+  dimension_group: check_date {
+    hidden: yes
     type: time
     timeframes: [time, date, week, month]
-    sql: ${TABLE}.reconcile_date ;;
+    sql: ${TABLE}.check_date ;;
   }
 
-  dimension: remark {
-    type: string
-    sql: ${TABLE}.remark ;;
-  }
-
-  dimension: reserve {
-    type: string
-    sql: ${TABLE}.reserve ;;
-  }
-
-  dimension: status {
-    type: string
-    sql: ${TABLE}.status ;;
-  }
-
-  dimension: type_dscr {
-    label: "Type Description"
-    type: string
-    sql: ${TABLE}.type_dscr ;;
-  }
-
-  dimension: user_code {
-    type: string
+  dimension: is_offset_payment {
     hidden: yes
-    sql: ${TABLE}.user_code ;;
+    type: string
+    sql: case when ${TABLE}.reissued=1 then 'Yes' else 'No' end ;;
   }
 
-  dimension: user_name {
-    type: string
-    sql: ${TABLE}.user_name ;;
-  }
+  # dimension_group: print_date {
+  #   type: time
+  #   timeframes: [date]
+  #   sql: ${TABLE}.print_date ;;
+  # }
 
-  dimension: view_only {
-    type: string
-    sql: ${TABLE}.view_only ;;
-  }
+  # dimension_group: export_date {
+  #   type: time
+  #   timeframes: [date]
+  #   sql: ${TABLE}.export_date ;;
+  # }
+
+  # dimension: claimstoppmtstatus_id {
+  #   type: number
+  #   sql: ${TABLE}.claimstoppmtstatus_id ;;
+  # }
 
   measure: count {
     type: count
-    drill_fields: [user_name, approvedby_user_name]
+    drill_fields: [eff_time, type_dscr, remark, amount, reserve, check_number, pay_to_the_order_of, reissued, check_number, check_date_date, reconcile_date_date, status,pay_type, is_offset_payment]
   }
 }

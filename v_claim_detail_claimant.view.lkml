@@ -1,5 +1,8 @@
 view: v_claim_detail_claimant {
+  #Commented Dimensions are not used for SCS
+
   sql_table_name: dbo.vClaimDetail_Claimant ;;
+  view_label: "Claimant"
 
   dimension: compound_primary_key {
     type: string
@@ -8,112 +11,37 @@ view: v_claim_detail_claimant {
     sql: CONCAT(${claimcontrol_id},${claimant_num}) ;;
   }
 
-  dimension: alae_paid {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.alae_paid ;;
-  }
-
-  dimension: alae_reserve {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.alae_reserve ;;
-  }
-
-  dimension: dim_anticipated_expense_recovery {
-    type: number
-    hidden: yes
-    view_label: "Financials"
-    sql: ${TABLE}.anticipated_expense_recovery ;;
-  }
-
-  measure: anticipated_expense_recovery {
-    type: sum
-    label: "Anticipated Expense Recovery"
-    sql: ${dim_anticipated_expense_recovery} ;;
-    value_format: "$0.00"
-  }
-
-  dimension: anticipated_other_recovery {
-    type: string
-    view_label: "Financials"
-    sql: ${TABLE}.anticipated_other_recovery ;;
-  }
-
-  dimension: anticipated_salvage {
-    type: string
-    view_label: "Financials"
-    sql: ${TABLE}.anticipated_salvage ;;
-  }
-
-  dimension: anticipated_subro {
-    type: string
-    view_label: "Financials"
-    sql: ${TABLE}.anticipated_subro ;;
-  }
-
-  dimension: applicant_num {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.applicant_num ;;
-  }
-
-  dimension: city {
-    type: string
-    sql: ${TABLE}.city ;;
-  }
-
-  dimension: city_state {
-    label: "City, State"
-    type: string
-    sql: ${TABLE}.city_state ;;
-  }
-
-  dimension: claimant_num {
-    type: number
-    sql: ${TABLE}.claimant_num ;;
-  }
-
-  dimension: claimantstatus_id {
-    hidden: yes
-    type: number
-    sql: ${TABLE}.claimantstatus_id ;;
-  }
-
-  dimension: claimanttypecode {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.claimanttypecode ;;
-  }
-
-  dimension: claimanttypedscr {
-    type: string
-    label: "Clainmant Type"
-    sql: ${TABLE}.claimanttypedscr ;;
-  }
-
+  #---------------------------------------------------------------
   dimension: claimcontrol_id {
     type: number
     hidden: yes
     sql: ${TABLE}.claimcontrol_id ;;
   }
 
-  dimension: claimcontrolproperty_num {
-    type: number
-    label: "Property Number"
-    sql: ${TABLE}.claimcontrolproperty_num ;;
-  }
-
-  dimension: claimcontrolvehicle_num {
+  dimension: claimant_num {
+    label: "Number"
     type: number
     hidden: yes
-    sql: ${TABLE}.claimcontrolvehicle_num ;;
+    sql: ${TABLE}.claimant_num ;;
   }
+  #---------------------------------------------------------------
 
-  dimension: display_address {
+  # dimension: is_insured1 {
+  #   type: string
+  #   label: "Is Insured 1"
+  #   sql: case when ${TABLE}.is_insured1=1 then 'Yes' else 'No' end ;;
+  # }
+
+  # dimension: is_insured2 {
+  #   type: string
+  #   label: "Is Insured 2"
+  #   sql: case when ${TABLE}.is_insured2=1 then 'Yes' else 'No' end ;;
+  # }
+
+  dimension: name {
     type: string
-    label: "Address"
-    sql: ${TABLE}.display_address ;;
+    hidden: yes
+    sql: ${TABLE}.name ;;
   }
 
   dimension: display_name {
@@ -122,96 +50,48 @@ view: v_claim_detail_claimant {
     sql: ${TABLE}.display_name ;;
   }
 
-  dimension: driver_num {
-    hidden: yes
-    type: number
-    sql: ${TABLE}.driver_num ;;
+  dimension: city_state {
+    label: "City, State"
+    view_label: "Claimant Address"
+    type: string
+    sql: ${TABLE}.city_state ;;
   }
 
-  dimension: driverexcludetypecode {
-    hidden: yes
+  dimension: display_address {
     type: string
-    sql: ${TABLE}.driverexcludetypecode ;;
+    label: "Address"
+    view_label: "Claimant Address"
+    sql: ${TABLE}.display_address ;;
   }
 
-  dimension: driverexcludetypedscr {
-    label: "Excluded Driver Description"
+  dimension: city {
+    view_label: "Claimant Address"
     type: string
-    sql: ${TABLE}.driverexcludetypedscr ;;
+    sql: ${TABLE}.city ;;
   }
 
-  dimension: expense_paid {
+  dimension: state {
+    view_label: "Claimant Address"
     type: string
-    hidden: yes
-    sql: ${TABLE}.expense_paid ;;
-  }
-
-  dimension: expense_recovery {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.expense_recovery ;;
-  }
-
-  dimension: expense_reserve {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.expense_reserve ;;
+    sql: ${TABLE}.state ;;
   }
 
   dimension: in_litigation {
-    type: yesno
-    sql: case when ${TABLE}.in_litigation = 'true' then 'Yes' else 'No' end ;;
+    type: string
+    label: "Is Litigated"
+    sql: case when ${TABLE}.in_litigation=1 then 'Yes' else 'No' end ;;
   }
 
-  dimension: indemnity_paid {
+  dimension: claimanttypedscr {
+    type: string
+    label: "Type"
+    sql: ${TABLE}.claimanttypedscr ;;
+  }
+
+  dimension: claimanttypecode {
     type: string
     hidden: yes
-    sql: ${TABLE}.indemnity_paid ;;
-  }
-
-  dimension: indemnity_reserve {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.indemnity_reserve ;;
-  }
-
-  dimension: is_insured1 {
-    label: "Is Insured 1"
-    type: yesno
-    sql: case when ${TABLE}.is_insured1 = 'true' then 'Yes' else 'No' end ;;
-  }
-
-  dimension: is_insured2 {
-    label: "Is Insured 2"
-    type: yesno
-    sql: case when ${TABLE}.is_insured2 = 'true' then 'Yes' else 'No' end ;;
-  }
-
-  dimension: is_represented {
-    type: yesno
-    sql: case when ${TABLE}.is_represented = 'true' then 'Yes' else 'No' end ;;
-  }
-
-  dimension: name {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.name ;;
-  }
-
-  dimension: other_recovery {
-    type: string
-    sql: ${TABLE}.other_recovery ;;
-  }
-
-  dimension: person {
-    type: number
-    sql: ${TABLE}.person ;;
-  }
-
-  dimension: relationshiptypecode {
-    hidden: yes
-    type: string
-    sql: ${TABLE}.relationshiptypecode ;;
+    sql: ${TABLE}.claimanttypecode ;;
   }
 
   dimension: relationshiptypedscr {
@@ -220,15 +100,22 @@ view: v_claim_detail_claimant {
     sql: ${TABLE}.relationshiptypedscr ;;
   }
 
-  dimension: salvage {
+  dimension: relationshiptypecode {
+    hidden: yes
     type: string
-    sql: ${TABLE}.salvage ;;
+    sql: ${TABLE}.relationshiptypecode ;;
   }
 
-  dimension: state {
-    type: string
-    sql: ${TABLE}.state ;;
-  }
+  # dimension: person {
+  #   type: number
+  #   sql: ${TABLE}.person ;;
+  # }
+
+  # dimension: taxnum {
+  #   hidden: yes
+  #   type: string
+  #   sql: ${TABLE}.taxnum ;;
+  # }
 
   dimension: status_dscr {
     label: "Status"
@@ -236,68 +123,242 @@ view: v_claim_detail_claimant {
     sql: ${TABLE}.status_dscr ;;
   }
 
-  dimension: subro {
-    type: string
-    sql: ${TABLE}.subro ;;
-  }
+  # dimension: indemnity_reserve {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.indemnity_reserve ;;
+  # }
 
-  dimension: taxnum {
-    hidden: yes
-    type: string
-    sql: ${TABLE}.taxnum ;;
-  }
+  # dimension: indemnity_paid {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.indemnity_paid ;;
+  # }
+
+  # dimension: expense_reserve {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.expense_reserve ;;
+  # }
+
+  # dimension: expense_paid {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.expense_paid ;;
+  # }
+
+  # dimension: alae_reserve {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.alae_reserve ;;
+  # }
+
+  # dimension: alae_paid {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.alae_paid ;;
+  # }
+
+  # dimension: anticipated_expense_recovery {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.anticipated_expense_recovery ;;
+  # }
+
+  # dimension: expense_recovery {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.expense_recovery ;;
+  # }
+
+  # dimension: anticipated_salvage {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.anticipated_salvage ;;
+  # }
+
+  # dimension: salvage {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.salvage ;;
+  # }
+
+  # dimension: anticipated_subro {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.anticipated_subro ;;
+  # }
+
+  # dimension: subro {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.subro ;;
+  # }
+
+  # dimension: anticipated_other_recovery {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.anticipated_other_recovery ;;
+  # }
+
+  # dimension: other_recovery {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.other_recovery ;;
+  # }
+
+  # dimension: claimantstatus_id {
+  #   hidden: yes
+  #   type: number
+  #   sql: ${TABLE}.claimantstatus_id ;;
+  # }
+
+  # dimension: claimcontrolproperty_num {
+  #   type: number
+  #   label: "Property Number"
+  #   sql: ${TABLE}.claimcontrolproperty_num ;;
+  # }
+
+  # dimension: claimcontrolvehicle_num {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.claimcontrolvehicle_num ;;
+  # }
+
+  # dimension: driverexcludetypedscr {
+  #   label: "Excluded Driver Description"
+  #   hidden: yes
+  #   type: string
+  #   sql: ${TABLE}.driverexcludetypedscr ;;
+  # }
+
+  # dimension: driverexcludetypecode {
+  #   hidden: yes
+  #   type: string
+  #   sql: ${TABLE}.driverexcludetypecode ;;
+  # }
+
+  # dimension: driver_num {
+  #   hidden: yes
+  #   type: number
+  #   sql: ${TABLE}.driver_num ;;
+  # }
+
+  # dimension: applicant_num {
+  #   type: number
+  #   hidden: yes
+  #   sql: ${TABLE}.applicant_num ;;
+  # }
+
+  # dimension: is_represented {
+  #   type: string
+  #   label: "Is Represented"
+  #   sql: case when ${TABLE}.is_represented=1 then 'Yes' else 'No' end ;;
+  # }
+
+  #DATA ELEMENTS COMPLETED------------------------------------------------------------
 
   measure: count {
     type: count
-    label: "Number of Claimants"
-    drill_fields: [name, display_name]
-  }
-  measure:  sum_indemnity_paid {
-    type: sum
-    label: "Total Claimant Indemnity Paid"
-    sql: ${indemnity_paid} ;;
-  }
-  measure:  sum_indemnity_reserve {
-    type:  sum
-    label: "Total Claimant Indemnity Reserve"
-    sql:  ${indemnity_reserve} ;;
-
-  }
-  measure: sum_total_indemnity_incurred{
-    type: number
-    label: "Total Claimant Indemnity Incurred"
-    sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
+    drill_fields: [claimant_num, name, relationshiptypedscr, status_dscr, claimanttypedscr, display_address, city_state]
   }
 
-  measure:  sum_expense_paid {
-    type: sum
-    label: "Total Claimant Expense Paid"
-    sql: ${expense_paid} ;;
-  }
+  # measure: sum_anticipated_expense_recovery {
+  #   type: sum
+  #   label: "Anticipated Expense Recovery"
+  #   view_label: "Claimant TEST"
+  #   sql: ${anticipated_expense_recovery} ;;
+  #   value_format: "$0.00"
+  # }
 
-  measure:  sum_expense_reserve {
-    type:  sum
-    label: "Total Claimant Expense Reserve"
-    sql:  ${expense_reserve} ;;
+  # measure: sum_anticipated_other_recovery {
+  #   type: sum
+  #   label: "Anticipated Other Recovery"
+  #   view_label: "Claimant TEST"
+  #   sql: ${anticipated_other_recovery} ;;
+  #   value_format: "$0.00"
+  # }
 
-  }
+  # measure: sum_anticipated_salvage {
+  #   type: sum
+  #   label: "Anticipated Salvage"
+  #   view_label: "Claimant TEST"
+  #   sql: ${anticipated_salvage} ;;
+  #   value_format: "$0.00"
+  # }
 
-  measure:  sum_expense_recovery {
-    type:  sum
-    label: "Total Claimant Expense Recovery"
-    sql:  ${expense_recovery} ;;
+  # measure: sum_anticipated_subro {
+  #   type: sum
+  #   label: "Anticipated Subro"
+  #   view_label: "Claimant TEST"
+  #   sql: ${anticipated_subro} ;;
+  #   value_format: "$0.00"
+  # }
 
-  }
+  # measure: sum_other_recovery {
+  #   type: sum
+  #   label: "Other Recovery"
+  #   view_label: "Claimant TEST"
+  #   sql: ${other_recovery} ;;
+  #   value_format: "$0.00"
+  # }
 
-  measure:  sum_alae_paid {
-    type: sum
-    label: "Total Claimant Alae Paid"
-    sql: ${alae_paid} ;;
-  }
+  # measure: sum_salvage {
+  #   type: sum
+  #   label: "salvage"
+  #   view_label: "Claimant TEST"
+  #   sql: ${salvage} ;;
+  #   value_format: "$0.00"
+  # }
 
-  measure:  sum_alae_reserve {
-    type: sum
-    label: "Total Claimant Alae Reserve"
-    sql: ${alae_reserve} ;;
-  }
+  # measure: sum_subro {
+  #   type: sum
+  #   label: "Subro"
+  #   view_label: "Claimant TEST"
+  #   sql: ${subro} ;;
+  #   value_format: "$0.00"
+  # }
+
+  # measure:  sum_indemnity_paid {
+  #   type: sum
+  #   label: "Total Claimant Indemnity Paid"
+  #   view_label: "Claimant TEST"
+  #   sql: ${indemnity_paid} ;;
+  # }
+
+  # measure:  sum_indemnity_reserve {
+  #   type:  sum
+  #   label: "Total Claimant Indemnity Reserve"
+  #   view_label: "Claimant TEST"
+  #   sql:  ${indemnity_reserve} ;;
+  # }
+
+  # measure: sum_total_indemnity_incurred{
+  #   type: number
+  #   label: "Total Claimant Indemnity Incurred"
+  #   view_label: "Claimant TEST"
+  #   sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
+  # }
+
+  # measure:  sum_expense_paid {
+  #   type: sum
+  #   label: "Total Claimant Expense Paid"
+  #   view_label: "Claimant TEST"
+  #   sql: ${expense_paid} ;;
+  # }
+
+  # measure:  sum_expense_reserve {
+  #   type:  sum
+  #   label: "Total Claimant Expense Reserve"
+  #   view_label: "Claimant TEST"
+  #   sql:  ${expense_reserve} ;;
+  # }
+
+  # measure:  sum_expense_recovery {
+  #   type:  sum
+  #   label: "Total Claimant Expense Recovery"
+  #   view_label: "Claimant TEST"
+  #   sql:  ${expense_recovery} ;;
+  # }
+
 }

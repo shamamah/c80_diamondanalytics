@@ -1,5 +1,6 @@
 view: policy_image {
   sql_table_name: dbo.PolicyImage ;;
+  view_label: "Policy"
 
   dimension: compound_primary_key {
     hidden: yes
@@ -58,11 +59,15 @@ view: policy_image {
   }
 
   dimension: days_from_offer_generation_to_policy_issue {
+    #Not applicable to SCS
+    hidden: yes
     type: number
     sql: DATEDIFF(day,${added_raw}, ${trans_raw}) ;;
   }
 
   dimension: days_from_offer_generation_to_policy_issue_tier {
+    #Not applicable to SCS
+    hidden: yes
     type: tier
     tiers: [0, 30, 60, 90]
     sql: ${days_from_offer_generation_to_policy_issue} ;;
@@ -95,18 +100,24 @@ view: policy_image {
   }
 
   dimension: policyimage_num {
+    #Not applicable to SCS
+    hidden: yes
     label: "Image Number"
     type: string
     sql: ${TABLE}.policyimage_num ;;
   }
 
   dimension: pure_newbusiness {
+    #Not applicable to SCS
+    hidden: yes
     label: "Pure New Business"
     type: yesno
     sql: ${TABLE}.pure_newbusiness ;;
   }
 
   dimension: renewal_ver {
+    #Not applicable to SCS
+    hidden: yes
     label: "Renewal Version"
     type: string
     sql: ${TABLE}.renewal_ver ;;
@@ -116,7 +127,7 @@ view: policy_image {
   dimension_group: eff {
     label: "Effective"
     type: time
-    timeframes: [date, month]
+    timeframes: [date]
     sql: ${TABLE}.eff_date ;;
   }
 
@@ -128,6 +139,8 @@ view: policy_image {
   }
 
   dimension_group: teff {
+    #Not applicable to SCS
+    hidden: yes
     label: "Transaction Effective"
     type: time
     timeframes: [date]
@@ -135,6 +148,8 @@ view: policy_image {
   }
 
   dimension_group: texp {
+    #Not applicable to SCS
+    hidden: yes
     label: "Transaction Expiration"
     type: time
     timeframes: [date]
@@ -142,6 +157,8 @@ view: policy_image {
   }
 
   dimension_group: trans_date {
+    #Not applicable to SCS
+    hidden: yes
     label: "Transaction"
     type: time
     timeframes: [date, week]
@@ -149,12 +166,16 @@ view: policy_image {
   }
 
   dimension: trans_remark {
+    #Not applicable to SCS
+    hidden: yes
     label: "Transaction Remark"
     type: string
     sql: ${TABLE}.trans_remark ;;
   }
 
   dimension: premium_written {
+    #Not applicable to SCS
+    hidden: yes
     label: "Written Premium"
     type: number
     value_format_name: usd
@@ -162,6 +183,8 @@ view: policy_image {
   }
 
   dimension: premium_fullterm {
+    #Not applicable to SCS
+    hidden: yes
     label: "Fullterm Premium"
     type: number
     value_format_name: usd
@@ -181,17 +204,22 @@ view: policy_image {
   }
 
   dimension: days_to_convert {
+    #Not applicable to SCS
+    hidden: yes
     label: "Days to Convert"
     type: number
     sql: DateDiff(d,${added_date},${trans_date}) ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [client.client_id]
-  }
+#   measure: count {
+#     type: count
+#     label: "Policy Image Count"
+#     drill_fields: [client.client_id]
+#   }
 
   dimension: days_to_convert_tier {
+    #Not applicable to SCS
+    hidden: yes
     label: "Days to Convert - Tier"
     type: tier
     style: integer
@@ -200,12 +228,16 @@ view: policy_image {
   }
 
   measure: average_days_from_offer_generation_to_policy_issue {
+    #Not applicable to SCS
+    hidden: yes
     type: average
     sql: ${days_from_offer_generation_to_policy_issue} ;;
     value_format_name: decimal_2
   }
 
   measure: premium_chg_written_sum {
+    #Not applicable to SCS
+    hidden: yes
     #hidden: true
     label: "Written Premium"
     type: sum_distinct
@@ -215,6 +247,8 @@ view: policy_image {
   }
 
   measure: avg_days_to_convert {
+    #Not applicable to SCS
+    hidden: yes
     #hidden: true
     label: "Average Days to Convert"
     type: average_distinct
