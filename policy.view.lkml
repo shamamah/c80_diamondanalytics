@@ -39,7 +39,7 @@
       #   icon_url: "http://www.insuresoft.com/favicon.ico"
       # }
       type: string
-      label: "Diamond Policy Number"
+      label: "Number"
       sql: ${TABLE}.current_policy ;;
     }
 

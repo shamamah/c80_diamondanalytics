@@ -17,6 +17,19 @@ explore: claim_control {
 #     sql_on: ${claim_type.claimtype_id} = ${claim_control.claim_type_id} ;;
 #   }
 
+  join: claim_control_activity {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${claim_control_activity.claimcontrol_id}
+      and ${claim_control_activity.num} = 1 ;;
+  }
+
+  join: dt_reopen_count {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_reopen_count.claimcontrol_id} ;;
+  }
+
   join: claim_severity {
     type: inner
     relationship: one_to_many
@@ -50,7 +63,7 @@ explore: claim_control {
   }
 
    join: v_claim_detail_feature {
-     type: inner
+     type: left_outer
      relationship: one_to_many
      sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
        AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
@@ -80,6 +93,13 @@ explore: claim_control {
      relationship: many_to_one
      sql_on: ${policy.policy_id} = ${claim_control.policy_id}  ;;
    }
+
+  join: dt_policy_agency {
+    view_label: "Policy"
+    type: inner
+    relationship: one_to_many
+    sql_on: ${policy.policy_id} = ${dt_policy_agency.policy_id} ;;
+  }
 
   # join: current_status {
   #   view_label: "Policy"

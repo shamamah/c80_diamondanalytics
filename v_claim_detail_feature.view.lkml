@@ -328,7 +328,7 @@ view: v_claim_detail_feature {
     label: "Indemnity: Paid"
     sql: ${indemnity_paid} ;;
     value_format: "$#,##0.00"
-    }
+  }
 
   measure:  sum_indemnity_reserve {
     view_label: "Claim Financials"
@@ -337,7 +337,7 @@ view: v_claim_detail_feature {
     label: "Indemnity: Reserve"
     sql:  ${indemnity_reserve} ;;
     value_format: "$#,##0.00"
-    }
+  }
 
   measure: sum_total_indemnity_incurred{
     view_label: "Claim Financials"
@@ -346,7 +346,15 @@ view: v_claim_detail_feature {
     label: "Indemnity: Incurred"
     sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
     value_format: "$#,##0.00"
-    }
+  }
+
+  measure: ave_total_indemnity_incurred{
+    view_label: "Claim Financials"
+    type: average
+    label: "Indemnity: Average Incurred"
+    sql: ${indemnity_reserve} + ${indemnity_paid}  ;;
+    value_format: "$#,##0.00"
+  }
 
   measure:  sum_expense_paid {
     view_label: "Claim Financials"

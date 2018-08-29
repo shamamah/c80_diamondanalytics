@@ -672,7 +672,21 @@ view: claim_control {
   # }
   # END - CALCULATE DAYS TO CLOSE
 
+
+#   dimension: open {
+#     label: "Open"
+#     type: date
+#     sql: (
+#             select added_date
+#             from claimcontrolactivity
+#             where claimcontrolactivity.claimcontrol_id = ${claimcontrol_id}
+#               and claimcontrolactivity.num = 1
+#           ) ;;
+#   }
+
+
   measure: count {
+    label: "Claim Count"
     type: count
     drill_fields: [claim_number, claim_control_status.dscr, claim_loss_type.dscr, claim_type.dscr, claim_severity.dscr, loss_date_date, reported_date_date]
   }
