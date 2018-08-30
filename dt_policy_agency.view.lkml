@@ -1,9 +1,11 @@
 view: dt_policy_agency {
   derived_table: {
-    sql: select pim.policy_id as 'policy_id', n.display_name as 'agency_name'
+    sql: select pim.policy_id as 'policy_id', n.display_name as 'agency_name', a.display_address as 'agency_address'
       from dbo.policyimage pim
         inner join dbo.AgencyNameLink anl on anl.agency_id = pim.agency_id
         inner join dbo.[Name] n on n.name_id = anl.name_id
+        inner join dbo.AgencyAddressLink aal on aal.agency_id = pim.agency_id
+        inner join dbo.[Address] a on a.address_id = aal.address_id
        ;;
   }
 
@@ -26,7 +28,11 @@ view: dt_policy_agency {
     sql: ${TABLE}.agency_name ;;
   }
 
-#   set: detail {
-#     fields: [policy_id, agency_name]
-#   }
+  dimension: agency_address {
+    label: "Agency Address"
+    view_label: "Policy"
+    type: string
+    sql: ${TABLE}.agency_address ;;
+  }
+
 }

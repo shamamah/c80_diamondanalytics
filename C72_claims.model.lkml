@@ -30,6 +30,19 @@ explore: claim_control {
     sql_on: ${claim_control.claimcontrol_id} = ${dt_reopen_count.claimcontrol_id} ;;
   }
 
+  join: dt_close_count {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_close_count.claimcontrol_id} ;;
+  }
+
+join: dt_loss_location {
+  view_label: "Loss Address"
+  type: inner
+  relationship: one_to_one
+  sql_on: ${claim_control.claimcontrol_id} = ${dt_loss_location.claimcontrol_id} ;;
+}
+
   join: claim_severity {
     type: inner
     relationship: one_to_many
@@ -55,14 +68,20 @@ explore: claim_control {
   }
 
   join: v_claim_detail_claimant {
-    #view_label: "Claim Detail Claimant"
     view_label: "Claimant"
     type: inner
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id} ;;
   }
 
-   join: v_claim_detail_feature {
+  join: claimant {
+    view_label: "Claimant"
+    type: inner
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id} ;;
+  }
+
+  join: v_claim_detail_feature {
      type: left_outer
      relationship: one_to_many
      sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
@@ -141,16 +160,16 @@ explore: claim_control {
   #   relationship:  one_to_one
   # }
 
-  # join: version {
-  #   type: inner
-  #   sql_on: ${policy_image.version_id} = ${version.version_id} ;;
-  #   relationship: many_to_one
-  # }
+  join: version {
+    type: inner
+    sql_on: ${policy_image.version_id} = ${version.version_id} ;;
+    relationship: many_to_one
+  }
 
-  # join: company_state_lob {
-  #   view_label: "Company"
-  #   type: inner
-  #   sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
-  #   relationship: one_to_one
-  # }
+  join: company_state_lob {
+    view_label: "Company"
+    type: inner
+    sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
+    relationship: one_to_one
+  }
 }

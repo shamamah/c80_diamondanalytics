@@ -1,9 +1,8 @@
 view: company_state_lob {
-  label: "Company/State/LOB"
   sql_table_name: dbo.vCompanyStateLOB ;;
 
   dimension: commercial_name1 {
-    label: "Company Name"
+    label: "Name"
     type: string
     sql: ${TABLE}.commercial_name1 ;;
   }

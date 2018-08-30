@@ -85,13 +85,13 @@ view: claim_control_activity {
     sql: ${TABLE}.pcadded_date ;;
   }
 
-  dimension_group: Claim_Close_Date {
-    label: "Close"
-    view_label: "Claim"
-    type: time
-    timeframes: [raw,time,date,week,month,quarter,year]
-    sql: ${TABLE}.pcadded_date ;;
-  }
+#   dimension_group: Claim_Close_Date {
+#     label: "Close"
+#     view_label: "Claim"
+#     type: time
+#     timeframes: [raw,time,date,week,month,quarter,year]
+#     sql: ${TABLE}.pcadded_date ;;
+#   }
 
   #   dimension: transfer_from_users_id {
 #     type: number
