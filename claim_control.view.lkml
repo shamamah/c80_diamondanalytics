@@ -684,10 +684,22 @@ view: claim_control {
 #           ) ;;
 #   }
 
-
   measure: count {
     label: "Claim Count"
     type: count
-    drill_fields: [claim_number, claim_control_status.dscr, claim_loss_type.dscr, claim_type.dscr, claim_severity.dscr, loss_date_date, reported_date_date]
+    drill_fields: [claim_stat*]
   }
+
+  set: claim_stat {
+    fields: [
+      claim_number,
+      claim_control_status.dscr,
+      claim_loss_type.dscr,
+      claim_type.dscr,
+      claim_severity.dscr,
+      loss_date_date,
+      reported_date_date
+      ]
+    }
+
 }

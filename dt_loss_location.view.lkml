@@ -9,10 +9,10 @@ view: dt_loss_location {
        ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
+  # measure: count {
+  #   type: count
+  #   drill_fields: [detail*]
+  # }
 
   dimension: claimcontrol_id {
     primary_key: yes
@@ -29,7 +29,7 @@ view: dt_loss_location {
 
   dimension: loss_address {
     type: string
-    label: "Loss Address"
+    label: "Full Address"
     sql: ${TABLE}."Loss Address" ;;
   }
 
@@ -76,18 +76,18 @@ view: dt_loss_location {
     sql: ${TABLE}."Location Type" ;;
   }
 
-  set: detail {
-    fields: [
-      claimcontrol_id,
-      address_id,
-      location_type,
-      loss_address,
-      house_num,
-      street_name,
-      apt_num,
-      city,
-      state,
-      zip
-    ]
-  }
+  # set: detail {
+  #   fields: [
+  #     claimcontrol_id,
+  #     address_id,
+  #     location_type,
+  #     loss_address,
+  #     house_num,
+  #     street_name,
+  #     apt_num,
+  #     city,
+  #     state,
+  #     zip
+  #   ]
+  # }
 }

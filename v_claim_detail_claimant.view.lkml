@@ -260,7 +260,7 @@ view: v_claim_detail_claimant {
 
   measure: count {
     type: count
-    drill_fields: [claimant_num, name, relationshiptypedscr, status_dscr, claimanttypedscr, display_address, city_state]
+    drill_fields: [claimant_stats*]
   }
 
   # measure: sum_anticipated_expense_recovery {
@@ -360,5 +360,19 @@ view: v_claim_detail_claimant {
   #   view_label: "Claimant TEST"
   #   sql:  ${expense_recovery} ;;
   # }
+
+  set: claimant_stats {
+    fields: [
+        claim_control.claim_number,
+        policy.current_policy,
+        claimant_num,
+        name,
+        relationshiptypedscr,
+        status_dscr,
+        claimanttypedscr,
+        display_address,
+        city_state
+      ]
+    }
 
 }

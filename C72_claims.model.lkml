@@ -36,12 +36,26 @@ explore: claim_control {
     sql_on: ${claim_control.claimcontrol_id} = ${dt_close_count.claimcontrol_id} ;;
   }
 
-join: dt_loss_location {
-  view_label: "Loss Address"
-  type: inner
-  relationship: one_to_one
-  sql_on: ${claim_control.claimcontrol_id} = ${dt_loss_location.claimcontrol_id} ;;
-}
+  join: dt_loss_location {
+    view_label: "Loss Address"
+    type: inner
+    relationship: one_to_one
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_loss_location.claimcontrol_id} ;;
+  }
+
+  join: dt_policy_holder {
+    view_label: "Policy"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${dt_policy_holder.policy_id} = ${claim_control.policy_id};;
+  }
+
+  join: dt_weather_related {
+    view_label: "Claim"
+    type: inner
+    relationship: one_to_many
+    sql_on: ${dt_weather_related.claimcontrol_id} = ${claim_control.claimcontrol_id};;
+  }
 
   join: claim_severity {
     type: inner
@@ -82,12 +96,62 @@ join: dt_loss_location {
   }
 
   join: v_claim_detail_feature {
-     type: left_outer
-     relationship: one_to_many
-     sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
        AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
        ;;
-   }
+  }
+
+  join: dt_coverage_financials_bi {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_bi.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_bi.claimant_num};;
+  }
+
+  join: dt_coverage_financials_pd {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pd.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_pd.claimant_num};;
+  }
+
+  join: dt_coverage_financials_umpd {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_umpd.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_umpd.claimant_num};;
+  }
+
+  # join: dt_coverage_financials_pd {
+  #   view_label: "Coverage Financials"
+  #   type: full_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pd.claimcontrol_id}
+  #     and ${v_claim_detail_feature.claimfeature_num} = ${dt_coverage_financials_pd.claimfeature_num} ;;
+  # }
+
+  # join: coverage_financial_bi {
+  #   view_label: "Coverage Financials - BI"
+  #   type: left_outer
+  #   relationship: many_to_many
+  #   sql_on: ${coverage_financial_bi.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id}
+  #     AND ${coverage_financial_bi.claimant_num} = ${v_claim_detail_claimant.claimant_num};;
+  #   sql_where: ${coverage_financial_bi.coveragecode_id} = 1 ;;
+  # }
+
+  # join: coverage_financial_pd {
+  #   view_label: "Coverage Financials - PD"
+  #   type: inner
+  #   relationship: one_to_many
+  #   sql_on: ${coverage_financial_pd.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id}
+  #     AND ${coverage_financial_pd.claimant_num} = ${v_claim_detail_claimant.claimant_num};;
+  #   sql_where: ${coverage_financial_pd.coveragecode_id} = 4 ;;
+  # }
 
   join: v_claim_detail_transaction {
     type: inner
@@ -98,20 +162,20 @@ join: dt_loss_location {
       ;;
   }
 
-   join: claim_catastrophe {
-     view_label: "Claim CAT"
-     type: left_outer
-     sql_on: ${claim_catastrophe.claimcatastrophe_id} = ${claim_control.claimcatastrophe_id} ;;
+  join: claim_catastrophe {
+    view_label: "Claim CAT"
+    type: left_outer
+    sql_on: ${claim_catastrophe.claimcatastrophe_id} = ${claim_control.claimcatastrophe_id} ;;
     sql_where: ${claim_catastrophe.claimcatastrophe_id} > 0 ;;
-     relationship: one_to_one
-   }
+    relationship: one_to_one
+  }
 
-   join:  policy {
+  join:  policy {
     view_label: "Policy"
     type: left_outer
-     relationship: many_to_one
-     sql_on: ${policy.policy_id} = ${claim_control.policy_id}  ;;
-   }
+    relationship: many_to_one
+    sql_on: ${policy.policy_id} = ${claim_control.policy_id}  ;;
+  }
 
   join: dt_policy_agency {
     view_label: "Policy"
@@ -127,11 +191,11 @@ join: dt_loss_location {
   #   relationship: one_to_one
   # }
 
-   join: policy_image {
-     type: inner
-     sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
-     relationship: many_to_many
-   }
+  join: policy_image {
+    type: inner
+    sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
+    relationship: many_to_many
+  }
 
   # join: policy_image_address_link {
   #   type:  inner
