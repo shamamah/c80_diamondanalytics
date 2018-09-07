@@ -3,13 +3,13 @@ view: claim_control {
 
   sql_table_name: dbo.ClaimControl ;;
 
-  # dimension_group: added {
-  #   hidden: yes
-  #   type: time
-  #   timeframes: [date, week, month]
-  #   convert_tz: no
-  #   sql: ${TABLE}.added_date ;;
-  # }
+  dimension_group: added {
+    label: "Processed"
+    type: time
+    timeframes: [date]
+    convert_tz: no
+    sql: ${TABLE}.added_date ;;
+  }
 
   # dimension: ccr1_yesno_id {
   #   # NOT USED

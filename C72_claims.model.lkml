@@ -119,12 +119,60 @@ explore: claim_control {
       and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_pd.claimant_num};;
   }
 
+  join: dt_coverage_financials_med {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_med.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_med.claimant_num};;
+  }
+
+  join: dt_coverage_financials_umbi {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_umbi.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_umbi.claimant_num};;
+  }
+
   join: dt_coverage_financials_umpd {
     view_label: "Coverage Financials"
     type: left_outer
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_umpd.claimcontrol_id}
       and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_umpd.claimant_num};;
+  }
+
+  join: dt_coverage_financials_pip {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pip.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_pip.claimant_num};;
+  }
+
+  join: dt_coverage_financials_comp {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_comp.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_comp.claimant_num};;
+  }
+
+  join: dt_coverage_financials_coll {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_coll.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_coll.claimant_num};;
+  }
+
+  join: dt_coverage_financials_rr {
+    view_label: "Coverage Financials"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_rr.claimcontrol_id}
+      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_rr.claimant_num};;
   }
 
   # join: dt_coverage_financials_pd {

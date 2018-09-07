@@ -1,4 +1,4 @@
-view: dt_coverage_financials_umpd {
+view: dt_coverage_financials_umbi {
   derived_table: {
     sql: select cfin.claimcontrol_id
         , cf.claimant_num
@@ -19,7 +19,7 @@ view: dt_coverage_financials_umpd {
                 and scs.claimsubexposure_num = cf.claimsubexposure_num
           and scs.claimcoverage_num = cf.claimcoverage_num
                 and scs.claimsubcoverage_num = cf.claimsubcoverage_num
-      where ISNULL(scs.coveragecode_id, ccov.coveragecode_id) = 9
+      where ISNULL(scs.coveragecode_id, ccov.coveragecode_id) = 8
       group by cfin.claimcontrol_id, cf.claimant_num
  ;;
   }
@@ -51,7 +51,7 @@ view: dt_coverage_financials_umpd {
 
   measure: loss_reserves {
     type: sum
-    label: "UM/UIM PD Loss Reserves"
+    label: "UM/UIM BI Loss Reserves"
     sql: ${dim_loss_reserves} ;;
     value_format_name: usd
   }
@@ -64,7 +64,7 @@ view: dt_coverage_financials_umpd {
 
   measure: loss_paid {
     type: sum
-    label: "UM/UIM PD Paids"
+    label: "UM/UIM BI Paids"
     sql: ${dim_loss_paid} ;;
     value_format_name: usd
   }
@@ -77,7 +77,7 @@ view: dt_coverage_financials_umpd {
 
   measure: salvage {
     type: sum
-    label: "UM/UIM PD Salvage"
+    label: "UM/UIM BI Salvage"
     sql: ${dim_salvage} ;;
     value_format_name: usd
   }
@@ -90,7 +90,7 @@ view: dt_coverage_financials_umpd {
 
   measure: subro {
     type: sum
-    label: "UM/UIM PD Subro"
+    label: "UM/UIM BI Subro"
     sql: ${dim_subro} ;;
     value_format_name: usd
   }
