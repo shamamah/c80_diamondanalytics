@@ -128,14 +128,14 @@ view: policy_image {
     label: "Effective"
     type: time
     timeframes: [date]
-    sql: ${TABLE}.eff_date ;;
+    sql: convert(varchar, ${TABLE}.eff_date, 101) ;;
   }
 
   dimension_group: exp {
     label: "Expiration"
     type: time
     timeframes: [date]
-    sql: ${TABLE}.exp_date ;;
+    sql: convert(varchar, ${TABLE}.exp_date, 101) ;;
   }
 
   dimension_group: teff {

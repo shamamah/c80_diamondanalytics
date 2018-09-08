@@ -58,9 +58,9 @@ view: claim_catastrophe {
   }
 
   dimension: user_code {
-    label: "Catastrophe Code"
+    label: "CAT Number"
     type: string
-    hidden: yes
+    hidden: no
     sql: ${TABLE}.user_code ;;
   }
 

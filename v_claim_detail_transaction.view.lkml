@@ -40,7 +40,6 @@ view: v_claim_detail_transaction {
   #---------------------------------------------------------------
 
   dimension: cat_dscr {
-    hidden: yes
     label: "Catastrophe Description"
     type: string
     sql: ${TABLE}.cat_dscr ;;
@@ -59,7 +58,6 @@ view: v_claim_detail_transaction {
   }
 
   dimension: type_dscr {
-    hidden: yes
     label: "Type Description"
     type: string
     sql: ${TABLE}.type_dscr ;;
@@ -80,11 +78,12 @@ view: v_claim_detail_transaction {
   #   sql: ${TABLE}.added_date ;;
   # }
 
-  dimension: amount {
-    hidden: yes
+  dimension: dim_amount {
+    label: "Check Amount"
     type: number
+    hidden: no
     sql: ${TABLE}.amount ;;
-    value_format: "$#,##0.00"
+    value_format_name: usd
   }
 
   dimension: reserve {
@@ -95,7 +94,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: remark {
-    hidden: yes
+    label: "Remark"
     type: string
     sql: ${TABLE}.remark ;;
   }
@@ -118,13 +117,14 @@ view: v_claim_detail_transaction {
   # }
 
   dimension: status {
+    label: "Status"
     hidden: yes
     type: string
     sql: ${TABLE}.status ;;
   }
 
   dimension: pay_type {
-    hidden: yes
+    label: "Pay Type"
     type: string
     sql: ${TABLE}.pay_type ;;
   }
@@ -220,9 +220,10 @@ view: v_claim_detail_transaction {
   # }
 
   dimension_group: reconcile_date {
+    label: "Reconcile"
     hidden: yes
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [date]
     sql: ${TABLE}.reconcile_date ;;
   }
 
@@ -237,11 +238,11 @@ view: v_claim_detail_transaction {
   #   sql: ${TABLE}.bulk_check ;;
   # }
 
-  # dimension: checkstatus_id {
-  #   type: number
-  #   hidden: yes
-  #   sql: ${TABLE}.checkstatus_id ;;
-  # }
+  dimension: checkstatus_id {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.checkstatus_id ;;
+  }
 
   # dimension: view_only {
   #   type: string
@@ -250,6 +251,7 @@ view: v_claim_detail_transaction {
 
   dimension: pay_to_the_order_of {
     hidden: yes
+    label: "Pay To"
     type: string
     sql: ${TABLE}.pay_to_the_order_of ;;
   }
@@ -277,16 +279,17 @@ view: v_claim_detail_transaction {
   }
 
   dimension: check_number {
-    hidden: yes
+    label: "Check Number"
     type: string
     sql: ${TABLE}.check_number ;;
   }
 
   dimension_group: check_date {
-    hidden: yes
+    label: "Check"
     type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.check_date ;;
+    timeframes: [date]
+    sql: convert(varchar, ${TABLE}.check_date, 101) ;;
+    #select convert(varchar, getdate(), 101)
   }
 
   dimension: is_offset_payment {
@@ -295,16 +298,18 @@ view: v_claim_detail_transaction {
     sql: case when ${TABLE}.reissued=1 then 'Yes' else 'No' end ;;
   }
 
-  # dimension_group: print_date {
-  #   type: time
-  #   timeframes: [date]
-  #   sql: ${TABLE}.print_date ;;
-  # }
+  dimension_group: print_date {
+    label: "Check Print"
+    type: time
+    timeframes: [date]
+    sql: ${TABLE}.print_date ;;
+  }
 
   # dimension_group: export_date {
+  #   label: "Written"
   #   type: time
   #   timeframes: [date]
-  #   sql: ${TABLE}.export_date ;;
+  #   sql: case when ${TABLE}.export_date>'1900-01-01' then ${TABLE}.export_date else NULL end;;
   # }
 
   # dimension: claimstoppmtstatus_id {
@@ -314,6 +319,14 @@ view: v_claim_detail_transaction {
 
   measure: count {
     type: count
-    drill_fields: [eff_time, type_dscr, remark, amount, reserve, check_number, pay_to_the_order_of, reissued, check_number, check_date_date, reconcile_date_date, status,pay_type, is_offset_payment]
+    drill_fields: [eff_time, type_dscr, remark, dim_amount, reserve, check_number, pay_to_the_order_of, reissued, check_number, check_date_date, reconcile_date_date, status,pay_type, is_offset_payment]
+  }
+
+  measure: amount {
+    label: "Check Amount"
+    type: number
+    hidden: yes
+    sql: ${dim_amount} ;;
+    value_format_name: usd
   }
 }

@@ -203,6 +203,7 @@ explore: claim_control {
 
   join: v_claim_detail_transaction {
     type: inner
+    view_label: "Checks & Transactions"
     relationship: one_to_many
     sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
       AND ${v_claim_detail_feature.claimant_num} = ${v_claim_detail_transaction.claimant_num}
@@ -210,11 +211,18 @@ explore: claim_control {
       ;;
   }
 
+  join: check_status {
+    type: inner
+    view_label: "Checks & Transactions"
+    relationship: one_to_many
+    sql_on: ${v_claim_detail_transaction.checkstatus_id} = ${check_status.checkstatus_id} ;;
+  }
+
   join: claim_catastrophe {
     view_label: "Claim CAT"
     type: left_outer
     sql_on: ${claim_catastrophe.claimcatastrophe_id} = ${claim_control.claimcatastrophe_id} ;;
-    sql_where: ${claim_catastrophe.claimcatastrophe_id} > 0 ;;
+    #sql_where: ${claim_catastrophe.claimcatastrophe_id} > 0 ;;
     relationship: one_to_one
   }
 
