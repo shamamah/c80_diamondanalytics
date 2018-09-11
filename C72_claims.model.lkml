@@ -175,13 +175,19 @@ explore: claim_control {
       and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_rr.claimant_num};;
   }
 
-  # join: dt_coverage_financials_pd {
-  #   view_label: "Coverage Financials"
-  #   type: full_outer
-  #   relationship: one_to_many
-  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pd.claimcontrol_id}
-  #     and ${v_claim_detail_feature.claimfeature_num} = ${dt_coverage_financials_pd.claimfeature_num} ;;
-  # }
+  join: dt_claim_inside_adjuster {
+    view_label: "Claim"
+    type: inner
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_inside_adjuster.claimcontrol_id} ;;
+  }
+
+  join: dt_all_claimants_per_claim {
+    view_label: "Claim"
+    type: inner
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_all_claimants_per_claim.claimcontrol_id};;
+  }
 
   # join: coverage_financial_bi {
   #   view_label: "Coverage Financials - BI"

@@ -74,15 +74,15 @@ view: v_claim_detail_feature {
   #   sql: ${TABLE}.statute_of_limitations_date ;;
   # }
 
-  dimension: inside_adjuster {
-    type: string
-    sql: ${TABLE}.inside_adjuster ;;
-  }
+#   dimension: inside_adjuster {
+#     type: string
+#     sql: ${TABLE}.inside_adjuster ;;
+#   }
 
-  dimension: outside_adjuster {
-    type: string
-    sql: ${TABLE}.outside_adjuster ;;
-  }
+#   dimension: outside_adjuster {
+#     type: string
+#     sql: ${TABLE}.outside_adjuster ;;
+#   }
 
   dimension: status_dscr {
     type: string
@@ -337,7 +337,7 @@ view: v_claim_detail_feature {
     label: "Indemnity: Reserve"
     sql:  ${indemnity_reserve} ;;
     value_format_name: usd
-    }
+  }
 
   measure: sum_total_indemnity_incurred{
     view_label: "Claim Financials"
@@ -346,7 +346,7 @@ view: v_claim_detail_feature {
     label: "Indemnity: Incurred"
     sql: ${sum_indemnity_paid} + ${sum_indemnity_reserve};;
     value_format_name: usd
-    }
+  }
 
   measure: ave_total_indemnity_incurred{
     view_label: "Claim Financials"
@@ -354,7 +354,7 @@ view: v_claim_detail_feature {
     label: "Indemnity: Average Incurred"
     sql: ${indemnity_reserve} + ${indemnity_paid}  ;;
     value_format_name: usd
-    }
+  }
 
   measure:  sum_expense_paid {
     view_label: "Claim Financials"
@@ -363,7 +363,7 @@ view: v_claim_detail_feature {
     label: "Expense: Paid"
     sql: ${expense_paid} ;;
     value_format_name: usd
-    }
+  }
 
   measure:  sum_expense_reserve {
     view_label: "Claim Financials"
@@ -372,7 +372,7 @@ view: v_claim_detail_feature {
     label: "Expense: Reserve"
     sql:  ${expense_reserve} ;;
     value_format_name: usd
-    }
+  }
 
   measure:  sum_expense_recovery {
     view_label: "Claim Financials"
@@ -381,7 +381,7 @@ view: v_claim_detail_feature {
     label: "Expense: Recovery"
     sql:  ${expense_recovery} ;;
     value_format_name: usd
-    }
+  }
 
   measure:  sum_alae_paid {
     view_label: "Claim Financials"
@@ -390,7 +390,7 @@ view: v_claim_detail_feature {
     label: "ALAE Paid"
     sql: ${alae_paid} ;;
     value_format_name: usd
-    }
+  }
 
   measure:  sum_alae_reserve {
     view_label: "Claim Financials"
@@ -399,7 +399,7 @@ view: v_claim_detail_feature {
     label: "ALAE Reserve"
     sql: ${alae_reserve} ;;
     value_format_name: usd
-    }
+  }
 
   measure: sum_initial_indemnity_reserve {
     view_label: "Claim Financials"
@@ -407,7 +407,7 @@ view: v_claim_detail_feature {
     label: "Indemnity: Initial Reserve"
     sql: ${initial_indemnity_reserve} ;;
     value_format_name: usd
-    }
+  }
 
   measure: sum_initial_expense_reserve {
     view_label: "Claim Financials"
@@ -415,7 +415,7 @@ view: v_claim_detail_feature {
     label: "Indemnity: Initial Expense"
     sql: ${initial_expense_reserve} ;;
     value_format_name: usd
-    }
+  }
 
   measure: sum_salvage {
     view_label: "Claim Financials"
@@ -423,7 +423,7 @@ view: v_claim_detail_feature {
     label: "Salvage"
     sql: ${salvage} ;;
     value_format_name: usd
-    }
+  }
 
   measure: sum_subro {
     view_label: "Claim Financials"
@@ -431,15 +431,13 @@ view: v_claim_detail_feature {
     label: "Subro"
     sql: ${subro} ;;
     value_format_name: usd
-    }
+  }
 
   set: feature_stats {
     fields: [
       exposure_dscr,
       coveragecode,
       coverage_dscr,
-      inside_adjuster,
-      outside_adjuster,
       indemnity_reserve,
       indemnity_paid,
       expense_reserve,
