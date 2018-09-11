@@ -177,7 +177,7 @@ explore: claim_control {
 
   join: dt_claim_inside_adjuster {
     view_label: "Claim"
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_inside_adjuster.claimcontrol_id} ;;
   }
