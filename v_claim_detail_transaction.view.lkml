@@ -250,7 +250,7 @@ view: v_claim_detail_transaction {
   # }
 
   dimension: pay_to_the_order_of {
-    hidden: yes
+    #hidden: yes
     label: "Pay To"
     type: string
     sql: ${TABLE}.pay_to_the_order_of ;;
@@ -280,8 +280,9 @@ view: v_claim_detail_transaction {
 
   dimension: check_number {
     label: "Check Number"
-    type: string
+    type: number
     sql: ${TABLE}.check_number ;;
+    value_format_name: id
   }
 
   dimension_group: check_date {
@@ -289,7 +290,6 @@ view: v_claim_detail_transaction {
     type: time
     timeframes: [date]
     sql: convert(varchar, ${TABLE}.check_date, 101) ;;
-    #select convert(varchar, getdate(), 101)
   }
 
   dimension: is_offset_payment {
@@ -302,7 +302,7 @@ view: v_claim_detail_transaction {
     label: "Check Print"
     type: time
     timeframes: [date]
-    sql: ${TABLE}.print_date ;;
+    sql: convert(varchar, ${TABLE}.print_date, 101) ;;
   }
 
   # dimension_group: export_date {

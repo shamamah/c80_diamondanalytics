@@ -215,6 +215,7 @@ explore: claim_control {
       AND ${v_claim_detail_feature.claimant_num} = ${v_claim_detail_transaction.claimant_num}
       AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
       ;;
+    sql_where: ISNULL(${v_claim_detail_transaction.check_number},'') > '' ;;
   }
 
   join: check_status {
