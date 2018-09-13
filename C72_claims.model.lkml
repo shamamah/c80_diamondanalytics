@@ -30,6 +30,13 @@ explore: claim_control {
     sql_on: ${claim_control.claimcontrol_id} = ${dt_reopen_count.claimcontrol_id} ;;
   }
 
+  join: dt_claim_close_date {
+    view_label: "Claim"
+    type: inner
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_close_date.claimcontrol_id} ;;
+  }
+
   join: dt_close_count {
     type: inner
     relationship: one_to_many
