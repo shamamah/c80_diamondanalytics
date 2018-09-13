@@ -218,6 +218,24 @@ explore: claim_control {
     sql_where: ISNULL(${v_claim_detail_transaction.check_number},'') > '' ;;
   }
 
+  join: claim_transaction {
+    type: inner
+    #view_label: ""
+    relationship: one_to_one
+    sql_on: ${claim_transaction.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
+      and ${claim_transaction.claimtransaction_num} = ${v_claim_detail_transaction.claimtransaction_num}
+      and ${claim_transaction.claimant_num} = ${v_claim_detail_transaction.claimant_num}
+      and ${claim_transaction.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
+      ;;
+  }
+
+  join: claim_pay_type {
+    type: inner
+    view_label: "Checks & Transactions"
+    relationship: one_to_many
+    sql_on: ${claim_pay_type.claimpaytype_id} = ${claim_transaction.claimpaytype_id} ;;
+  }
+
   join: check_status {
     type: inner
     view_label: "Checks & Transactions"

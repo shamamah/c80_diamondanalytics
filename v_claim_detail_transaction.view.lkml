@@ -124,6 +124,8 @@ view: v_claim_detail_transaction {
   }
 
   dimension: pay_type {
+    #using claim_pay_type dscr value
+    hidden: yes
     label: "Pay Type"
     type: string
     sql: ${TABLE}.pay_type ;;
@@ -286,6 +288,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension_group: check_date {
+    hidden: yes
     label: "Check"
     type: time
     timeframes: [date]
@@ -299,6 +302,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension_group: print_date {
+    hidden: yes
     label: "Check Print"
     type: time
     timeframes: [date]
@@ -319,7 +323,7 @@ view: v_claim_detail_transaction {
 
   measure: count {
     type: count
-    drill_fields: [eff_time, type_dscr, remark, dim_amount, reserve, check_number, pay_to_the_order_of, reissued, check_number, check_date_date, reconcile_date_date, status,pay_type, is_offset_payment]
+    drill_fields: [eff_time, type_dscr, remark, dim_amount, reserve, check_number, pay_to_the_order_of, reissued, check_number, check_date_date, status,pay_type, is_offset_payment]
   }
 
   measure: amount {
