@@ -41,6 +41,7 @@ view: v_claim_detail_transaction {
 
   dimension: cat_dscr {
     label: "Catastrophe Description"
+    hidden: yes
     type: string
     sql: ${TABLE}.cat_dscr ;;
   }
@@ -58,7 +59,7 @@ view: v_claim_detail_transaction {
   }
 
   dimension: type_dscr {
-    label: "Type Description"
+    label: "Trans Type Detail"
     type: string
     sql: ${TABLE}.type_dscr ;;
   }
@@ -126,7 +127,7 @@ view: v_claim_detail_transaction {
   dimension: pay_type {
     #using claim_pay_type dscr value
     hidden: yes
-    label: "Pay Type"
+    label: "Payment Type"
     type: string
     sql: ${TABLE}.pay_type ;;
   }

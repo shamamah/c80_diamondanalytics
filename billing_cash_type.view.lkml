@@ -9,7 +9,7 @@ view: billing_cash_type {
 
   dimension: dscr {
     type: string
-    label: "Transaction Type"
+    label: "Trans Type"
     sql: ${TABLE}.dscr ;;
   }
 

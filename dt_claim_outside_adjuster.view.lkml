@@ -1,4 +1,4 @@
-view: dt_claim_inside_adjuster {
+view: dt_claim_outside_adjuster {
   derived_table: {
     sql: select cc.claimcontrol_id, cc.claim_number
         --,'ClaimControlPersonnel' as ClaimControlPersonnel, ccp.*
@@ -19,16 +19,16 @@ view: dt_claim_inside_adjuster {
       where ccp.claimpersonnel_id <> 0
         and cat.[enabled] <> 0
         and cpt.claimpersonneltype_id = 3  --adjusters only
-        and cat.claimadjustertype_id = 1   --inside only
-       ;;
+        and cat.claimadjustertype_id = 2   --inside only
+ ;;
   }
 
-  dimension: claimcontrol_id {
-    primary_key: yes
-    hidden: yes
-    type: number
-    sql: ${TABLE}.claimcontrol_id ;;
-  }
+dimension: claimcontrol_id {
+  primary_key: yes
+  hidden: yes
+  type: number
+  sql: ${TABLE}.claimcontrol_id ;;
+}
 
 #   dimension: claim_number {
 #     type: string
@@ -40,11 +40,12 @@ view: dt_claim_inside_adjuster {
 #     sql: ${TABLE}.Is_Claim_Personnel_Enabled ;;
 #   }
 
-  dimension: initials {
-    label: "Examiner Initials"
-    type: string
-    sql: ${TABLE}.initials ;;
-  }
+dimension: initials {
+  label: "Outside Adjuster Initials"
+  hidden: yes
+  type: string
+  sql: ${TABLE}.initials ;;
+}
 
 #   dimension: claimoffice_id {
 #     type: number
@@ -76,9 +77,9 @@ view: dt_claim_inside_adjuster {
 #     sql: ${TABLE}.Is_Adjuster_Enabled ;;
 #   }
 
-  dimension: adjuster_name {
-    label: "Examiner"
-    type: string
-    sql: ${TABLE}.Adjuster_Name ;;
-  }
+dimension: adjuster_name {
+  label: "Outside Adjuster"
+  type: string
+  sql: ${TABLE}.Adjuster_Name ;;
+}
 }

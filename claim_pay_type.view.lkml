@@ -3,12 +3,13 @@ view: claim_pay_type {
 
   dimension: claimpaytype_id {
     primary_key: yes
+    hidden: yes
     type: number
     sql: ${TABLE}.claimpaytype_id ;;
   }
 
   dimension: dscr {
-    label: "Pay Type"
+    label: "Payment Type"
     type: string
     sql: ${TABLE}.dscr ;;
   }

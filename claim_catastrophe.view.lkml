@@ -27,12 +27,10 @@ view: claim_catastrophe {
     sql: ${TABLE}.dscr ;;
   }
 
-  dimension_group: enddate {
-    label: "End"
-    type: time
-    timeframes: [date, week, month]
-    #hidden: yes
-    sql: ${TABLE}.enddate ;;
+  dimension: enddate {
+    label: "End Date"
+    type: string
+    sql: convert(varchar, ${TABLE}.enddate, 101) ;;
   }
 
 #   dimension_group: last_modified {
@@ -49,12 +47,10 @@ view: claim_catastrophe {
 #     sql: ${TABLE}.pcadded_date ;;
 #   }
 
-  dimension_group: startdate {
-    label: "Begin"
-    type: time
-    timeframes: [date, week, month]
-    #hidden: yes
-    sql: ${TABLE}.startdate ;;
+  dimension: startdate {
+    label: "Begin Date"
+    type: string
+    sql: convert(varchar, ${TABLE}.startdate, 101) ;;
   }
 
   dimension: user_code {

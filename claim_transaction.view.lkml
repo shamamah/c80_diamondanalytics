@@ -123,13 +123,20 @@ view: claim_transaction {
     sql: ${TABLE}.check_author ;;
   }
 
-  dimension_group: check {
+  dimension_group: check_dt {
+    hidden: yes
     view_label: "Checks & Transactions"
     label: "Check"
     type: time
     timeframes: [date,week,month,quarter,year]
     #sql: convert(varchar, ${TABLE}.check_date, 101) ;;
     sql: ${TABLE}.check_date ;;
+  }
+
+  dimension: check_date {
+    view_label: "Checks & Transactions"
+    label: "Check Date"
+    sql: convert(varchar, ${TABLE}.check_date, 101) ;;
   }
 
   dimension: check_number {
@@ -454,18 +461,11 @@ view: claim_transaction {
     sql: ${TABLE}.vendor_claim_type ;;
   }
 
-  dimension_group: voided {
-    hidden: yes
+  dimension_group: void {
+    view_label: "Checks & Transactions"
+    label: "Void"
     type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [date]
     sql: ${TABLE}.voided_date ;;
   }
 

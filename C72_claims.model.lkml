@@ -25,20 +25,20 @@ explore: claim_control {
   }
 
   join: dt_reopen_count {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${dt_reopen_count.claimcontrol_id} ;;
   }
 
   join: dt_claim_close_date {
     view_label: "Claim"
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_close_date.claimcontrol_id} ;;
   }
 
   join: dt_close_count {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${dt_close_count.claimcontrol_id} ;;
   }
@@ -51,7 +51,7 @@ explore: claim_control {
   }
 
   join: dt_policy_holder {
-    view_label: "Policy"
+    view_label: "Policy Holder"
     type: left_outer
     relationship: one_to_many
     sql_on: ${dt_policy_holder.policy_id} = ${claim_control.policy_id};;
@@ -189,6 +189,13 @@ explore: claim_control {
     sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_inside_adjuster.claimcontrol_id} ;;
   }
 
+  join: dt_claim_outside_adjuster {
+    view_label: "Claim"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_outside_adjuster.claimcontrol_id} ;;
+  }
+
   join: dt_all_claimants_per_claim {
     view_label: "Claim"
     type: inner
@@ -236,11 +243,18 @@ explore: claim_control {
       ;;
   }
 
-  join: claim_pay_type {
-    type: inner
+  join: claim_transaction_category {
+    type: left_outer
     view_label: "Checks & Transactions"
     relationship: one_to_many
-    sql_on: ${claim_pay_type.claimpaytype_id} = ${claim_transaction.claimpaytype_id} ;;
+    sql_on: ${v_claim_detail_transaction.claimtransactioncategory_id} = ${claim_transaction_category.claimtransacationcategory_id} ;;
+  }
+
+  join: claim_pay_type {
+    type: left_outer
+    view_label: "Checks & Transactions"
+    relationship: one_to_many
+    sql_on: ${claim_transaction.claimpaytype_id} = ${claim_pay_type.claimpaytype_id} ;;
   }
 
   join: check_status {
