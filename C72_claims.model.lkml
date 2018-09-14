@@ -229,7 +229,7 @@ explore: claim_control {
       AND ${v_claim_detail_feature.claimant_num} = ${v_claim_detail_transaction.claimant_num}
       AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
       ;;
-    sql_where: ISNULL(${v_claim_detail_transaction.check_number},'') > '' ;;
+    #sql_where: ISNULL(${v_claim_detail_transaction.check_number},'') > '' ;;
   }
 
   join: claim_transaction {
@@ -240,6 +240,17 @@ explore: claim_control {
       and ${claim_transaction.claimtransaction_num} = ${v_claim_detail_transaction.claimtransaction_num}
       and ${claim_transaction.claimant_num} = ${v_claim_detail_transaction.claimant_num}
       and ${claim_transaction.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
+      ;;
+  }
+
+  join: dt_claim_transactions_by_date_range {
+    type: full_outer
+    view_label: "Claim Financials (As Of Date)"
+    relationship: one_to_many
+    sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_claim_transactions_by_date_range.claimcontrol_id}
+      and ${v_claim_detail_transaction.claimtransaction_num} = ${dt_claim_transactions_by_date_range.claimtransaction_num}
+      and ${v_claim_detail_transaction.claimant_num} = ${dt_claim_transactions_by_date_range.claimant_num}
+      and ${v_claim_detail_transaction.claimfeature_num} = ${dt_claim_transactions_by_date_range.claimfeature_num}
       ;;
   }
 

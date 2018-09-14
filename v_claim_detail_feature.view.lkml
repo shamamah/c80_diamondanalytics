@@ -322,7 +322,7 @@ view: v_claim_detail_feature {
   }
 
   measure:  sum_indemnity_paid {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     #label: "Total Indemnity Paid"
     label: "Indemnity: Paid"
@@ -331,7 +331,7 @@ view: v_claim_detail_feature {
   }
 
   measure:  sum_indemnity_reserve {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type:  sum
     #label: "Total Indemnity Reserve"
     label: "Indemnity: Reserve"
@@ -340,7 +340,7 @@ view: v_claim_detail_feature {
   }
 
   measure: sum_total_indemnity_incurred{
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: number
     #label: "Total Indemnity Incurred"
     label: "Indemnity: Incurred"
@@ -349,7 +349,7 @@ view: v_claim_detail_feature {
   }
 
   measure: ave_total_indemnity_incurred{
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: average
     label: "Indemnity: Average Incurred"
     sql: ${indemnity_reserve} + ${indemnity_paid}  ;;
@@ -357,7 +357,7 @@ view: v_claim_detail_feature {
   }
 
   measure:  sum_expense_paid {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     #label: "Total Expense Paid"
     label: "Expense: Paid"
@@ -366,7 +366,7 @@ view: v_claim_detail_feature {
   }
 
   measure:  sum_expense_reserve {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type:  sum
     #label: "Total Expense Reserve"
     label: "Expense: Reserve"
@@ -375,7 +375,7 @@ view: v_claim_detail_feature {
   }
 
   measure:  sum_expense_recovery {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type:  sum
     #label: "Total Expense Recovery"
     label: "Expense: Recovery"
@@ -384,7 +384,7 @@ view: v_claim_detail_feature {
   }
 
   measure:  sum_alae_paid {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     #label: "Total Alae Paid"
     label: "ALAE Paid"
@@ -393,7 +393,7 @@ view: v_claim_detail_feature {
   }
 
   measure:  sum_alae_reserve {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     #label: "Total Alae Reserve"
     label: "ALAE Reserve"
@@ -402,7 +402,7 @@ view: v_claim_detail_feature {
   }
 
   measure: sum_initial_indemnity_reserve {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     label: "Indemnity: Initial Reserve"
     sql: ${initial_indemnity_reserve} ;;
@@ -410,7 +410,7 @@ view: v_claim_detail_feature {
   }
 
   measure: sum_initial_expense_reserve {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     label: "Indemnity: Initial Expense"
     sql: ${initial_expense_reserve} ;;
@@ -418,7 +418,7 @@ view: v_claim_detail_feature {
   }
 
   measure: sum_salvage {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     label: "Salvage"
     sql: ${salvage} ;;
@@ -426,7 +426,7 @@ view: v_claim_detail_feature {
   }
 
   measure: sum_subro {
-    view_label: "Claim Financials"
+    view_label: "Claim Financials (Current)"
     type: sum
     label: "Subro"
     sql: ${subro} ;;
