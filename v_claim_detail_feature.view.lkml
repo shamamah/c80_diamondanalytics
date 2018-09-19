@@ -282,8 +282,9 @@ view: v_claim_detail_feature {
   # }
 
   dimension: coveragecode {
+    view_label: "Checks & Transactions"
     type: string
-    hidden: yes
+    hidden: no
     label: "Coverage Code"
     sql: ${TABLE}.coveragecode ;;
   }
