@@ -230,123 +230,130 @@ explore: claim_control {
       AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
       ;;
     #sql_where: ISNULL(${v_claim_detail_transaction.check_number},'') > '' ;;
+    }
+
+    join: claim_transaction {
+      type: inner
+      #view_label: ""
+      relationship: one_to_one
+      sql_on: ${claim_transaction.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
+              and ${claim_transaction.claimtransaction_num} = ${v_claim_detail_transaction.claimtransaction_num}
+              and ${claim_transaction.claimant_num} = ${v_claim_detail_transaction.claimant_num}
+              and ${claim_transaction.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
+              ;;
+    }
+
+    join: dt_claim_transactions_as_of {
+      type: inner
+      view_label: "Claim Financials (As of Date)"
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_id}
+              and ${claim_transaction.claimtransaction_num} = ${dt_claim_transactions_as_of.claimtransaction_num}
+              and ${claim_transaction.claimant_num} = ${dt_claim_transactions_as_of.claimant_num}
+              and ${claim_transaction.claimfeature_num} = ${dt_claim_transactions_as_of.claimfeature_num}
+              ;;
+    }
+
+    join: dt_claim_status_as_of {
+      type: inner
+      view_label: "Claim Financials (As of Date)"
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_status_as_of.claimcontrol_id} ;;
+    }
+
+    join: claim_transaction_category {
+      type: left_outer
+      view_label: "Checks & Transactions"
+      relationship: one_to_many
+      sql_on: ${v_claim_detail_transaction.claimtransactioncategory_id} = ${claim_transaction_category.claimtransacationcategory_id} ;;
+    }
+
+    join: claim_pay_type {
+      type: left_outer
+      view_label: "Checks & Transactions"
+      relationship: one_to_many
+      sql_on: ${claim_transaction.claimpaytype_id} = ${claim_pay_type.claimpaytype_id} ;;
+    }
+
+    join: check_status {
+      type: inner
+      view_label: "Checks & Transactions"
+      relationship: one_to_many
+      sql_on: ${v_claim_detail_transaction.checkstatus_id} = ${check_status.checkstatus_id} ;;
+    }
+
+    join: claim_catastrophe {
+      view_label: "Claim CAT"
+      type: left_outer
+      sql_on: ${claim_catastrophe.claimcatastrophe_id} = ${claim_control.claimcatastrophe_id} ;;
+      #sql_where: ${claim_catastrophe.claimcatastrophe_id} > 0 ;;
+      relationship: one_to_one
+    }
+
+    join:  policy {
+      view_label: "Policy"
+      type: left_outer
+      relationship: many_to_one
+      sql_on: ${policy.policy_id} = ${claim_control.policy_id}  ;;
+    }
+
+    join: dt_policy_agency {
+      view_label: "Policy"
+      type: inner
+      relationship: one_to_many
+      sql_on: ${policy.policy_id} = ${dt_policy_agency.policy_id} ;;
+    }
+
+    # join: current_status {
+    #   view_label: "Policy"
+    #   type: inner
+    #   sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
+    #   relationship: one_to_one
+    # }
+
+    join: policy_image {
+      type: inner
+      sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
+      relationship: many_to_many
+    }
+
+    # join: policy_image_address_link {
+    #   type:  inner
+    #   sql_on: ${policy_image.policy_id} = ${policy_image_address_link.policy_id} AND ${policy_image.policyimage_num} = ${policy_image_address_link.policyimage_num} ;;
+    #   relationship: one_to_many
+    # }
+
+    # join: policy_address {
+    #   view_label: "Address"
+    #   type:  inner
+    #   sql_on:  ${policy_image_address_link.address_id} = ${policy_address.address_id};;
+    #   relationship: one_to_one
+    # }
+
+    # join: name_address_source {
+    #   view_label: "Address"
+    #   type: inner
+    #   sql_on: ${policy_address.nameaddresssource_id} = ${name_address_source.nameaddresssource_id} ;;
+    #   relationship: one_to_one
+    # }
+
+    # join: state {
+    #   view_label: "Address"
+    #   type:  inner
+    #   sql_on: ${policy_address.state_id} = ${state.state_id} ;;
+    #   relationship:  one_to_one
+    # }
+
+    join: version {
+      type: inner
+      sql_on: ${policy_image.version_id} = ${version.version_id} ;;
+      relationship: many_to_one
+    }
+
+    join: company_state_lob {
+      view_label: "Company"
+      type: inner
+      sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
+      relationship: one_to_one
+    }
   }
-
-  join: claim_transaction {
-    type: inner
-    #view_label: ""
-    relationship: one_to_one
-    sql_on: ${claim_transaction.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
-      and ${claim_transaction.claimtransaction_num} = ${v_claim_detail_transaction.claimtransaction_num}
-      and ${claim_transaction.claimant_num} = ${v_claim_detail_transaction.claimant_num}
-      and ${claim_transaction.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
-      ;;
-  }
-
-  join: dt_claim_transactions_by_date_range {
-    type: full_outer
-    view_label: "Claim Financials (As Of Date)"
-    relationship: one_to_many
-    sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_claim_transactions_by_date_range.claimcontrol_id}
-      and ${v_claim_detail_transaction.claimtransaction_num} = ${dt_claim_transactions_by_date_range.claimtransaction_num}
-      and ${v_claim_detail_transaction.claimant_num} = ${dt_claim_transactions_by_date_range.claimant_num}
-      and ${v_claim_detail_transaction.claimfeature_num} = ${dt_claim_transactions_by_date_range.claimfeature_num}
-      ;;
-  }
-
-  join: claim_transaction_category {
-    type: left_outer
-    view_label: "Checks & Transactions"
-    relationship: one_to_many
-    sql_on: ${v_claim_detail_transaction.claimtransactioncategory_id} = ${claim_transaction_category.claimtransacationcategory_id} ;;
-  }
-
-  join: claim_pay_type {
-    type: left_outer
-    view_label: "Checks & Transactions"
-    relationship: one_to_many
-    sql_on: ${claim_transaction.claimpaytype_id} = ${claim_pay_type.claimpaytype_id} ;;
-  }
-
-  join: check_status {
-    type: inner
-    view_label: "Checks & Transactions"
-    relationship: one_to_many
-    sql_on: ${v_claim_detail_transaction.checkstatus_id} = ${check_status.checkstatus_id} ;;
-  }
-
-  join: claim_catastrophe {
-    view_label: "Claim CAT"
-    type: left_outer
-    sql_on: ${claim_catastrophe.claimcatastrophe_id} = ${claim_control.claimcatastrophe_id} ;;
-    #sql_where: ${claim_catastrophe.claimcatastrophe_id} > 0 ;;
-    relationship: one_to_one
-  }
-
-  join:  policy {
-    view_label: "Policy"
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${policy.policy_id} = ${claim_control.policy_id}  ;;
-  }
-
-  join: dt_policy_agency {
-    view_label: "Policy"
-    type: inner
-    relationship: one_to_many
-    sql_on: ${policy.policy_id} = ${dt_policy_agency.policy_id} ;;
-  }
-
-  # join: current_status {
-  #   view_label: "Policy"
-  #   type: inner
-  #   sql_on: ${policy.policycurrentstatus_id} = ${current_status.policycurrentstatus_id} ;;
-  #   relationship: one_to_one
-  # }
-
-  join: policy_image {
-    type: inner
-    sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
-    relationship: many_to_many
-  }
-
-  # join: policy_image_address_link {
-  #   type:  inner
-  #   sql_on: ${policy_image.policy_id} = ${policy_image_address_link.policy_id} AND ${policy_image.policyimage_num} = ${policy_image_address_link.policyimage_num} ;;
-  #   relationship: one_to_many
-  # }
-
-  # join: policy_address {
-  #   view_label: "Address"
-  #   type:  inner
-  #   sql_on:  ${policy_image_address_link.address_id} = ${policy_address.address_id};;
-  #   relationship: one_to_one
-  # }
-
-  # join: name_address_source {
-  #   view_label: "Address"
-  #   type: inner
-  #   sql_on: ${policy_address.nameaddresssource_id} = ${name_address_source.nameaddresssource_id} ;;
-  #   relationship: one_to_one
-  # }
-
-  # join: state {
-  #   view_label: "Address"
-  #   type:  inner
-  #   sql_on: ${policy_address.state_id} = ${state.state_id} ;;
-  #   relationship:  one_to_one
-  # }
-
-  join: version {
-    type: inner
-    sql_on: ${policy_image.version_id} = ${version.version_id} ;;
-    relationship: many_to_one
-  }
-
-  join: company_state_lob {
-    view_label: "Company"
-    type: inner
-    sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
-    relationship: one_to_one
-  }
-}

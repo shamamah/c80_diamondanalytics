@@ -1,17 +1,33 @@
-view: dt_claim_transactions_by_date_range {
+view: dt_claim_transactions_as_of {
   derived_table: {
-    sql: SELECT CTA2.*
-      FROM dbo.vClaimTransaction_Adjust2 CTA2 WITH(NOLOCK)
-      INNER JOIN dbo.ClaimTransaction CT WITH(NOLOCK)
-             ON CTA2.claimcontrol_id = CT.claimcontrol_id
-                    AND CTA2.claimant_num = CT.claimant_num
-                    AND CTA2.claimfeature_num = CT.claimfeature_num
-                    AND CTA2.claimtransaction_num = CT.claimtransaction_num
-      INNER JOIN dbo.ClaimTransactionType CTT WITH(NOLOCK)
-             ON CT.claimtransactiontype_id = CTT.claimtransactiontype_id
-      WHERE CTA2.claimtransactionstatus_id IN (1, 4, 7)
-             AND CTT.adjust_financials = 0
+    sql:
+      SELECT cta2.*
+          FROM dbo.ClaimControl CC (NOLOCK)
+            INNER JOIN  vClaimTransaction_Adjust2 cta2 WITH(NOLOCK)
+              ON cta2.claimcontrol_id = cc.claimcontrol_id
+            INNER JOIN dbo.ClaimTransaction CT WITH(NOLOCK)
+              ON CTA2.claimcontrol_id = CT.claimcontrol_id
+                AND CTA2.claimant_num = CT.claimant_num
+                AND CTA2.claimfeature_num = CT.claimfeature_num
+                AND CTA2.claimtransaction_num = CT.claimtransaction_num
+            INNER JOIN dbo.ClaimTransactionType CTT WITH(NOLOCK)
+              ON CT.claimtransactiontype_id = CTT.claimtransactiontype_id
+            -- if you just want checks include this
+            --INNER JOIN dbo.CheckItem CI (NOLOCK)
+            --       ON CT.checkitem_id = CI.checkitem_id
+            --INNER JOIN dbo.Checks C (NOLOCK) -- you could use the check date as your date as well.  eff_date is when it hits the financials in Diamond check_date is the date on the actual check.
+            --       ON CI.check_id = C.check_id
+          WHERE {% condition as_of_date %} cta2.eff_date {% endcondition %}
+            --CAST(CTA2.eff_date AS DATE) BETWEEN '08/01/2018' AND '08/31/2018' -- you can move the eff_date to the SELECT so that you can add it to your query in looker and have different queries depending on that date.
+            AND CTA2.claimtransactionstatus_id IN (1, 4, 7)
+            AND CTT.adjust_financials = 0
        ;;
+  }
+
+  filter: as_of_date {
+    type: date
+    hidden: no
+    label: "As of Date"
   }
 
   dimension: compound_primary_key {
@@ -326,6 +342,7 @@ view: dt_claim_transactions_by_date_range {
   }
 
   dimension_group: eff_date {
+    hidden: yes
     label: "As Of"
     type: time
     timeframes: [date]

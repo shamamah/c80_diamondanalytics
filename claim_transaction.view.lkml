@@ -129,13 +129,13 @@ view: claim_transaction {
     label: "Check"
     type: time
     timeframes: [date,week,month,quarter,year]
-    #sql: convert(varchar, ${TABLE}.check_date, 101) ;;
     sql: ${TABLE}.check_date ;;
   }
 
   dimension: check_date {
     view_label: "Checks & Transactions"
     label: "Check Date"
+    type: date
     sql: convert(varchar, ${TABLE}.check_date, 101) ;;
   }
 
@@ -250,15 +250,7 @@ view: claim_transaction {
   dimension_group: eff {
     hidden: yes
     type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [date]
     sql: ${TABLE}.eff_date ;;
   }
 
@@ -271,14 +263,7 @@ view: claim_transaction {
   dimension_group: invoice {
     hidden: yes
     type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [date]
     convert_tz: no
     datatype: date
     sql: ${TABLE}.invoice_date ;;
@@ -299,15 +284,7 @@ view: claim_transaction {
   dimension_group: last_modified {
     hidden: yes
     type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [date]
     sql: ${TABLE}.last_modified_date ;;
   }
 
@@ -347,15 +324,7 @@ view: claim_transaction {
   dimension_group: pcadded {
     hidden: yes
     type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [date]
     sql: ${TABLE}.pcadded_date ;;
   }
 
@@ -374,15 +343,7 @@ view: claim_transaction {
   dimension_group: reissued {
     hidden: yes
     type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [date]
     sql: ${TABLE}.reissued_date ;;
   }
 
@@ -395,15 +356,7 @@ view: claim_transaction {
   dimension_group: rejected {
     hidden: yes
     type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [date]
     sql: ${TABLE}.rejected_date ;;
   }
 
@@ -461,12 +414,11 @@ view: claim_transaction {
     sql: ${TABLE}.vendor_claim_type ;;
   }
 
-  dimension_group: void {
+  dimension: void {
     view_label: "Checks & Transactions"
-    label: "Void"
-    type: time
-    timeframes: [date]
-    sql: ${TABLE}.voided_date ;;
+    label: "Void Date"
+    type: date
+    sql: case when ${TABLE}.voided_date < '1900-01-01' then NULL else convert(varchar, ${TABLE}.voided_date, 101) end;;
   }
 
   measure: count {

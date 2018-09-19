@@ -26,6 +26,7 @@ view: dt_policy_holder {
           inner join dbo.[state] s on s.state_id = a.state_id
             --where n.nameaddresssource_id in (3,4)
             where n.nameaddresssource_id in (3)
+              and a.nameaddresssource_id = 3
             --3 is policy holder 1 and 4 is policy holder 2...We will only retrieve policy holder 1
        ;;
   }
