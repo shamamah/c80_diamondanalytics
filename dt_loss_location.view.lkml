@@ -64,9 +64,10 @@ view: dt_loss_location {
   }
 
   dimension: zip {
-    type: string
+    type: zipcode
     label: "Zip"
-    sql: ${TABLE}.zip ;;
+    sql: left(${TABLE}.zip,5) ;;
+    drill_fields: [detail*]
   }
 
   dimension: location_type {
@@ -76,18 +77,10 @@ view: dt_loss_location {
     sql: ${TABLE}."Location Type" ;;
   }
 
-  # set: detail {
-  #   fields: [
-  #     claimcontrol_id,
-  #     address_id,
-  #     location_type,
-  #     loss_address,
-  #     house_num,
-  #     street_name,
-  #     apt_num,
-  #     city,
-  #     state,
-  #     zip
-  #   ]
-  # }
+  set: detail {
+    fields: [
+      claim_control.claim_number,
+      dt_all_claimant_per_claim.claimant_names
+    ]
+  }
 }

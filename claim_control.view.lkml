@@ -569,7 +569,7 @@ view: claim_control {
     type: time
     label: "Reported"
     timeframes: [date]
-    sql: ${TABLE}.reported_date ;;
+    sql: convert(varchar, ${TABLE}.reported_date, 101) ;;
   }
 
   # dimension: reported_to_iso {
