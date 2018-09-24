@@ -698,7 +698,8 @@ view: claim_control {
       claim_type.dscr,
       claim_severity.dscr,
       loss_date_date,
-      reported_date_date
+      reported_date_date,
+      v_claim_detail_feature.sum_indemnity_paid
       ]
     }
 
