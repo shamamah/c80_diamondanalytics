@@ -699,6 +699,8 @@ view: claim_control {
       claim_severity.dscr,
       loss_date_date,
       reported_date_date,
+      dt_claim_days_open.days_open,
+      dt_claim_inside_adjuster.initials,
       v_claim_detail_feature.sum_indemnity_paid
       ]
     }

@@ -17,6 +17,13 @@ explore: claim_control {
 #     sql_on: ${claim_type.claimtype_id} = ${claim_control.claim_type_id} ;;
 #   }
 
+  join: dt_claim_days_open {
+    view_label: "Claim"
+    type: inner
+    relationship: one_to_one
+    sql_on: ${dt_claim_days_open.claimcontrol_id} = ${claim_control.claimcontrol_id} ;;
+  }
+
   join: claim_control_activity {
     type: inner
     relationship: one_to_many
@@ -232,18 +239,18 @@ explore: claim_control {
     #sql_where: ISNULL(${v_claim_detail_transaction.check_number},'') > '' ;;
     }
 
-    join: claim_transaction {
-      type: inner
-      #view_label: ""
-      relationship: one_to_one
-      sql_on: ${claim_transaction.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
+  join: claim_transaction {
+    type: inner
+    #view_label: ""
+    relationship: one_to_one
+    sql_on: ${claim_transaction.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
               and ${claim_transaction.claimtransaction_num} = ${v_claim_detail_transaction.claimtransaction_num}
               and ${claim_transaction.claimant_num} = ${v_claim_detail_transaction.claimant_num}
               and ${claim_transaction.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
               ;;
-    }
+  }
 
-    join: dt_claim_transactions_as_of {
+      join: dt_claim_transactions_as_of {
       type: inner
       view_label: "Claim Financials (As of Date)"
       relationship: one_to_many
