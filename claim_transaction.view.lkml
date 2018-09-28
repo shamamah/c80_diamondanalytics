@@ -124,15 +124,16 @@ view: claim_transaction {
   }
 
   dimension_group: check_dt {
-    hidden: yes
+    hidden: no
     view_label: "Checks & Transactions"
     label: "Check"
     type: time
     timeframes: [date,week,month,quarter,year]
-    sql: ${TABLE}.check_date ;;
+    sql: case when (${TABLE}.check_date > '1900-01-01') then ${TABLE}.check_date else NULL end  ;;
   }
 
   dimension: check_date {
+    hidden: yes
     view_label: "Checks & Transactions"
     label: "Check Date"
     type: date
