@@ -568,7 +568,7 @@ view: claim_control {
   dimension_group: reported_date {
     type: time
     label: "Reported"
-    timeframes: [date]
+    timeframes: [date,month,quarter,year]
     sql: convert(varchar, ${TABLE}.reported_date, 101) ;;
   }
 

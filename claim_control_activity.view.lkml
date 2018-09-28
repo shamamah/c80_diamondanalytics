@@ -77,12 +77,12 @@ view: claim_control_activity {
     sql: ${TABLE}.num ;;
   }
 
-  dimension_group: : Claim_Open_Date {
+  dimension_group: : claim_open_Date {
     label: "Open"
     view_label: "Claim"
     type: time
     timeframes: [date,month,quarter,year]
-    sql: ${TABLE}.pcadded_date ;;
+    sql: convert(varchar, ${TABLE}.pcadded_date, 101) ;;
   }
 
 #   dimension_group: Claim_Close_Date {

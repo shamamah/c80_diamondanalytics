@@ -1,15 +1,15 @@
 view: dt_claim_transactions_as_of {
   derived_table: {
     sql:
-      SELECT cta2.*
+     /* SELECT V.*
           FROM dbo.ClaimControl CC (NOLOCK)
-            INNER JOIN  vClaimTransaction_Adjust2 cta2 WITH(NOLOCK)
-              ON cta2.claimcontrol_id = cc.claimcontrol_id
+            INNER JOIN  vClaimTransactionPostedDateAsEffDate V WITH(NOLOCK)
+              ON V.claimcontrol_id = cc.claimcontrol_id
             INNER JOIN dbo.ClaimTransaction CT WITH(NOLOCK)
-              ON CTA2.claimcontrol_id = CT.claimcontrol_id
-                AND CTA2.claimant_num = CT.claimant_num
-                AND CTA2.claimfeature_num = CT.claimfeature_num
-                AND CTA2.claimtransaction_num = CT.claimtransaction_num
+              ON V.claimcontrol_id = CT.claimcontrol_id
+                AND V.claimant_num = CT.claimant_num
+                AND V.claimfeature_num = CT.claimfeature_num
+                AND V.claimtransaction_num = CT.claimtransaction_num
             INNER JOIN dbo.ClaimTransactionType CTT WITH(NOLOCK)
               ON CT.claimtransactiontype_id = CTT.claimtransactiontype_id
             -- if you just want checks include this
@@ -17,11 +17,35 @@ view: dt_claim_transactions_as_of {
             --       ON CT.checkitem_id = CI.checkitem_id
             --INNER JOIN dbo.Checks C (NOLOCK) -- you could use the check date as your date as well.  eff_date is when it hits the financials in Diamond check_date is the date on the actual check.
             --       ON CI.check_id = C.check_id
-          WHERE {% condition as_of_date %} cta2.eff_date {% endcondition %}
-            --CAST(CTA2.eff_date AS DATE) BETWEEN '08/01/2018' AND '08/31/2018' -- you can move the eff_date to the SELECT so that you can add it to your query in looker and have different queries depending on that date.
-            AND CTA2.claimtransactionstatus_id IN (1, 4, 7)
-            AND CTT.adjust_financials = 0
-       ;;
+          WHERE {% condition as_of_date %} V.eff_date {% endcondition %}
+            --CAST(V.eff_date AS DATE) BETWEEN '08/01/2018' AND '08/31/2018' -- you can move the eff_date to the SELECT so that you can add it to your query in looker and have different queries depending on that date.
+            AND V.claimtransactionstatus_id IN (1, 4, 7)
+            AND CTT.adjust_financials = 0*/
+
+
+
+
+  SELECT cc.claimcontrol_id as claimcontrol_pk, V.*
+      FROM dbo.ClaimControl CC (NOLOCK)
+         LEFT OUTER JOIN dbo.vClaimTransactionPostedDateAsEffDate V (NOLOCK)
+              ON CC.claimcontrol_id = V.claimcontrol_id
+        AND  {% condition as_of_date %} V.eff_date {% endcondition %}
+       LEFT OUTER JOIN dbo.ClaimTransaction CT (NOLOCK)
+             ON V.claimcontrol_id = CT.claimcontrol_id
+                    AND V.claimant_num = CT.claimant_num
+                    AND V.claimfeature_num = CT.claimfeature_num
+                    AND V.claimtransaction_num = CT.claimtransaction_num
+                                  AND  V.claimtransactionstatus_id IN (1, 4, 7)
+
+       LEFT OUTER JOIN dbo.ClaimTransactionType CTT (NOLOCK)
+             ON CT.claimtransactiontype_id = CTT.claimtransactiontype_id
+                     AND CTT.adjust_financials = 0
+WHERE claimcontrolstatus_id IN (1, 2)
+--order by cc.claimcontrol_id
+
+
+
+      ;;
   }
 
   filter: as_of_date {
@@ -34,7 +58,7 @@ view: dt_claim_transactions_as_of {
     type: string
     primary_key: yes
     hidden: yes
-    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num},${claimtransaction_num}) ;;
+    sql: CONCAT(${claimcontrol_pk},${claimant_num},${claimfeature_num},${claimtransaction_num}) ;;
   }
 
   dimension: policy_id {
@@ -49,7 +73,7 @@ view: dt_claim_transactions_as_of {
     sql: ${TABLE}.policyimage_num ;;
   }
 
-  dimension: claimcontrol_id {
+  dimension: claimcontrol_pk {
     hidden: yes
     type: number
     sql: ${TABLE}.claimcontrol_id ;;
@@ -380,7 +404,6 @@ view: dt_claim_transactions_as_of {
   }
 
   set: detail {
-
     fields: [
       claim_control.claim_number,
       claimant_num,

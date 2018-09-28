@@ -9,7 +9,9 @@ explore: claim_control {
   view_label: "Claim"
 
   #Exclude records without claim number
-  sql_always_where: ${claim_number} > '' ;;
+  sql_always_where: ${claim_number} > ''
+    AND {% condition dt_claim_transactions_as_of.as_of_date %} claim_control.reported_date {% endcondition %}
+    ;;
 
 #   join: claim_type {
 #     type: inner
@@ -107,14 +109,6 @@ explore: claim_control {
     type: inner
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id} ;;
-  }
-
-  join: v_claim_detail_feature {
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
-       AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
-       ;;
   }
 
   join: dt_coverage_financials_bi {
@@ -228,8 +222,16 @@ explore: claim_control {
   #   sql_where: ${coverage_financial_pd.coveragecode_id} = 4 ;;
   # }
 
+  join: v_claim_detail_feature {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
+       AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
+       ;;
+  }
+  #STOP ZZZ
   join: v_claim_detail_transaction {
-    type: inner
+    type: left_outer
     view_label: "Checks & Transactions"
     relationship: one_to_many
     sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
@@ -251,10 +253,10 @@ explore: claim_control {
   }
 
       join: dt_claim_transactions_as_of {
-      type: inner
+      type: left_outer
       view_label: "Claim Financials (As of Date)"
-      relationship: one_to_many
-      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_id}
+      relationship: many_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_pk}
               and ${claim_transaction.claimtransaction_num} = ${dt_claim_transactions_as_of.claimtransaction_num}
               and ${claim_transaction.claimant_num} = ${dt_claim_transactions_as_of.claimant_num}
               and ${claim_transaction.claimfeature_num} = ${dt_claim_transactions_as_of.claimfeature_num}
