@@ -137,7 +137,7 @@ view: claim_transaction {
     view_label: "Checks & Transactions"
     label: "Check Date"
     type: date
-    sql: convert(varchar, ${TABLE}.check_date, 101) ;;
+    sql: ${TABLE}.check_date ;;
   }
 
   dimension: check_number {
@@ -419,7 +419,7 @@ view: claim_transaction {
     view_label: "Checks & Transactions"
     label: "Void Date"
     type: date
-    sql: case when ${TABLE}.voided_date < '1900-01-01' then NULL else convert(varchar, ${TABLE}.voided_date, 101) end;;
+    sql: case when ${TABLE}.voided_date < '1900-01-01' then NULL else ${TABLE}.voided_date end ;;
   }
 
   measure: count {

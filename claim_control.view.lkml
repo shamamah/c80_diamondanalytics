@@ -437,7 +437,7 @@ view: claim_control {
     type: time
     label: "Loss"
     timeframes: [date]
-    sql: convert(varchar, ${TABLE}.loss_date, 101) ;;
+    sql: ${TABLE}.loss_date ;;
   }
 
   # dimension: loss_location {
@@ -569,7 +569,7 @@ view: claim_control {
     type: time
     label: "Reported"
     timeframes: [date,month,quarter,year]
-    sql: convert(varchar, ${TABLE}.reported_date, 101) ;;
+    sql: ${TABLE}.reported_date ;;
   }
 
   # dimension: reported_to_iso {

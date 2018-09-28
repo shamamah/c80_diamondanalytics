@@ -293,7 +293,7 @@ view: v_claim_detail_transaction {
     label: "Check"
     type: time
     timeframes: [date]
-    sql: convert(varchar, ${TABLE}.check_date, 101) ;;
+    sql: ${TABLE}.check_date ;;
   }
 
   dimension: is_offset_payment {
@@ -307,7 +307,7 @@ view: v_claim_detail_transaction {
     label: "Check Print"
     type: time
     timeframes: [date]
-    sql: convert(varchar, ${TABLE}.print_date, 101) ;;
+    sql: ${TABLE}.print_date ;;
   }
 
   # dimension_group: export_date {

@@ -82,7 +82,7 @@ view: claim_control_activity {
     view_label: "Claim"
     type: time
     timeframes: [date,month,quarter,year]
-    sql: convert(varchar, ${TABLE}.pcadded_date, 101) ;;
+    sql: ${TABLE}.pcadded_date ;;
   }
 
 #   dimension_group: Claim_Close_Date {
