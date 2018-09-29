@@ -436,7 +436,7 @@ view: claim_control {
   dimension_group: loss_date {
     type: time
     label: "Loss"
-    timeframes: [date]
+    timeframes: [date,week,quarter,year,month]
     sql: ${TABLE}.loss_date ;;
   }
 

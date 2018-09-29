@@ -266,13 +266,12 @@ explore: claim_control {
         type: left_outer
         view_label: "Claim Financials (As of Date)"
         relationship: many_to_many
-        sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_pk}
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_id}
               and ${claim_transaction.claimtransaction_num} = ${dt_claim_transactions_as_of.claimtransaction_num}
               and ${claim_transaction.claimant_num} = ${dt_claim_transactions_as_of.claimant_num}
               and ${claim_transaction.claimfeature_num} = ${dt_claim_transactions_as_of.claimfeature_num}
+              and ${dt_claim_transactions_as_of.calc} = 1
               ;;
-        sql_where: ${dt_claim_transactions_as_of.calc} = 1 ;;
-        #sql_where: ${dt_claim_transactions_as_of.claimtransactiontype_id} <> '1102' ;;
       }
 
       join: dt_claim_status_as_of {
