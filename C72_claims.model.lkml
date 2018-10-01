@@ -259,6 +259,7 @@ explore: claim_control {
         sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${claim_transaction.claimcontrol_id}
               and ${v_claim_detail_feature.claimant_num} = ${claim_transaction.claimant_num}
               and ${v_claim_detail_feature.claimfeature_num} = ${claim_transaction.claimfeature_num}
+              and ${v_claim_detail_transaction.claimtransaction_num} = ${claim_transaction.claimtransaction_num}
               ;;
       }
 

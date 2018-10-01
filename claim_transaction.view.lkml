@@ -415,10 +415,11 @@ view: claim_transaction {
     sql: ${TABLE}.vendor_claim_type ;;
   }
 
-  dimension: void {
+  dimension_group: void {
     view_label: "Checks & Transactions"
-    label: "Void Date"
-    type: date
+    label: "Void"
+    type: time
+    timeframes: [date,week,month,quarter,year]
     sql: case when ${TABLE}.voided_date < '1900-01-01' then NULL else ${TABLE}.voided_date end ;;
   }
 
