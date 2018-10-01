@@ -24,6 +24,7 @@ view: dt_claim_transactions_as_of {
             FROM dbo.ClaimControl CC (NOLOCK)
                LEFT OUTER JOIN dbo.vClaimTransactionPostedDateAsEffDate V (NOLOCK)
                     ON CC.claimcontrol_id = V.claimcontrol_id
+              AND  V.eff_date > '1900-01-01'
               AND  {% condition as_of_date %} V.eff_date {% endcondition %}
              LEFT OUTER JOIN dbo.ClaimTransaction CT (NOLOCK)
                    ON V.claimcontrol_id = CT.claimcontrol_id
