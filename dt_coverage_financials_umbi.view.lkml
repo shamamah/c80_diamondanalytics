@@ -1,34 +1,46 @@
 view: dt_coverage_financials_umbi {
   derived_table: {
-    sql: select cfin.claimcontrol_id
-        , cf.claimant_num
-        , SUM(cfin.indemnity_reserve) as 'loss_reserves'
-        , SUM(cfin.indemnity_paid) as 'loss_paid'
-        , SUM(cfin.salvage) as 'salvage'
-        , SUM(cfin.subro) as 'subro'
-      from claimcontrol cc with(nolock)
-        inner join ClaimFeature cf on cf.claimcontrol_id = cc.claimcontrol_id
-        inner join ClaimFinancials cfin with(nolock) on cfin.claimcontrol_id = cf.claimcontrol_id
-          and cfin.claimfinancials_num = cf.claimfinancials_num
-        inner join ClaimCoverage ccov with(nolock) on ccov.claimcontrol_id = cf.claimcontrol_id
-                and ccov.claimexposure_id = cf.claimexposure_id
-                and ccov.claimsubexposure_num = cf.claimsubexposure_num
-          and ccov.claimcoverage_num = cf.claimcoverage_num
-        left outer join ClaimSubCoverage scs with(nolock) on ccov.claimcontrol_id = cf.claimcontrol_id
-                and scs.claimexposure_id = cf.claimexposure_id
-                and scs.claimsubexposure_num = cf.claimsubexposure_num
-          and scs.claimcoverage_num = cf.claimcoverage_num
-                and scs.claimsubcoverage_num = cf.claimsubcoverage_num
-      where ISNULL(scs.coveragecode_id, ccov.coveragecode_id) = 8
-      group by cfin.claimcontrol_id, cf.claimant_num
- ;;
+    sql:
+
+      SELECT CF.claimcontrol_id
+            ,CF.claimant_num
+            ,CF.claimfeature_num
+            ,SUM(V.indemnity_reserve) as 'loss_reserves'
+            ,SUM(V.indemnity_paid) as 'loss_paid'
+            ,SUM(V.salvage) as 'salvage'
+            ,SUM(V.subro) as 'subro'
+
+      FROM ClaimFeature CF
+          INNER JOIN dbo.vClaimTransactionPostedDateAsEffDate V WITH(NOLOCK)
+            ON CF.claimcontrol_id = V.claimcontrol_id
+              AND CF.claimant_num = V.claimant_num
+              AND CF.claimfeature_num = V.claimfeature_num
+              AND V.claimtransactionstatus_id IN (1, 4, 7)
+          INNER JOIN ClaimCoverage CCOV WITH(NOLOCK)
+            ON ccov.claimcontrol_id = CF.claimcontrol_id
+              AND CCOV.claimexposure_id = CF.claimexposure_id
+              AND CCOV.claimsubexposure_num = CF.claimsubexposure_num
+              AND CCOV.claimcoverage_num = CF.claimcoverage_num
+          LEFT OUTER JOIN ClaimSubCoverage SCS WITH(NOLOCK)
+            ON CCOV.claimcontrol_id = CF.claimcontrol_id
+              AND SCS.claimexposure_id = CF.claimexposure_id
+              AND SCS.claimsubexposure_num = CF.claimsubexposure_num
+              AND SCS.claimcoverage_num = CF.claimcoverage_num
+              AND SCS.claimsubcoverage_num = CF.claimsubcoverage_num
+
+      WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) = 8
+              AND {% condition dt_claim_transactions_as_of.as_of_date %} V.eff_date {% endcondition %}
+
+      GROUP BY CF.claimcontrol_id, CF.claimant_num, CF.claimfeature_num
+    ;;
   }
+
 
   dimension: compound_primary_key {
     type: string
     primary_key: yes
     hidden: yes
-    sql: CONCAT(${claimcontrol_id},${claimant_num}) ;;
+    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num}) ;;
   }
 
   dimension: claimcontrol_id {
@@ -43,6 +55,12 @@ view: dt_coverage_financials_umbi {
     sql: ${TABLE}.claimant_num ;;
   }
 
+  dimension: claimfeature_num {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimfeature_num ;;
+  }
+
   dimension: dim_loss_reserves {
     hidden: yes
     type: string
@@ -51,7 +69,7 @@ view: dt_coverage_financials_umbi {
 
   measure: loss_reserves {
     type: sum
-    label: "UM/UIM BI Loss Reserves"
+    label: "UMBI Loss Reserves"
     sql: ${dim_loss_reserves} ;;
     value_format_name: usd
   }
@@ -64,7 +82,7 @@ view: dt_coverage_financials_umbi {
 
   measure: loss_paid {
     type: sum
-    label: "UM/UIM BI Paids"
+    label: "UMBI Paids"
     sql: ${dim_loss_paid} ;;
     value_format_name: usd
   }
@@ -77,7 +95,7 @@ view: dt_coverage_financials_umbi {
 
   measure: salvage {
     type: sum
-    label: "UM/UIM BI Salvage"
+    label: "UMBI Salvage"
     sql: ${dim_salvage} ;;
     value_format_name: usd
   }
@@ -90,7 +108,7 @@ view: dt_coverage_financials_umbi {
 
   measure: subro {
     type: sum
-    label: "UM/UIM BI Subro"
+    label: "UMBI Subro"
     sql: ${dim_subro} ;;
     value_format_name: usd
   }
