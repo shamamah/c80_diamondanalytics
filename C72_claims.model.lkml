@@ -3,10 +3,18 @@ connection: "c72-prod"
 # include all the views
 include: "*.view"
 
+fiscal_month_offset: 0
+week_start_day: sunday
+
 explore: claim_control {
   label: "C72-Claims"
   #persist_for: "4 hours"
   view_label: "Claim"
+
+  access_filter: {
+    field:company_state_lob.commercial_name1
+    user_attribute:company_name
+  }
 
   #Exclude records without claim number
   sql_always_where: ${claim_number} > ''
