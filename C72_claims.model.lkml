@@ -204,24 +204,6 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_all_claimants_per_claim.claimcontrol_id};;
     }
 
-    # join: coverage_financial_bi {
-    #   view_label: "Coverage Financials - BI"
-    #   type: left_outer
-    #   relationship: many_to_many
-    #   sql_on: ${coverage_financial_bi.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id}
-    #     AND ${coverage_financial_bi.claimant_num} = ${v_claim_detail_claimant.claimant_num};;
-    #   sql_where: ${coverage_financial_bi.coveragecode_id} = 1 ;;
-    # }
-
-    # join: coverage_financial_pd {
-    #   view_label: "Coverage Financials - PD"
-    #   type: inner
-    #   relationship: one_to_many
-    #   sql_on: ${coverage_financial_pd.claimcontrol_id} = ${v_claim_detail_claimant.claimcontrol_id}
-    #     AND ${coverage_financial_pd.claimant_num} = ${v_claim_detail_claimant.claimant_num};;
-    #   sql_where: ${coverage_financial_pd.coveragecode_id} = 4 ;;
-    # }
-
     join: v_claim_detail_feature {
       type: left_outer
       relationship: one_to_many
@@ -229,7 +211,6 @@ explore: claim_control {
                AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
                ;;
     }
-    #STOP ZZZ
     join: v_claim_detail_transaction {
       type: left_outer
       view_label: "Checks & Transactions"
@@ -238,27 +219,16 @@ explore: claim_control {
               AND ${v_claim_detail_feature.claimant_num} = ${v_claim_detail_transaction.claimant_num}
               AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
               ;;
-            #sql_where: ISNULL(${v_claim_detail_transaction.check_number},'') > '' ;;
+      #sql_where: ${v_claim_detail_transaction.check_number} between 1 and 99999999 ;;
       }
 
-      # REPLACED WITH NEXT BLOCK 2018-09-28
-      # join: claim_transaction {
-      #   type: inner
-      #   #view_label: ""
-      #   relationship: one_to_one
-      #   sql_on: ${claim_transaction.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
-      #         and ${claim_transaction.claimtransaction_num} = ${v_claim_detail_transaction.claimtransaction_num}
-      #         and ${claim_transaction.claimant_num} = ${v_claim_detail_transaction.claimant_num}
-      #         and ${claim_transaction.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
-      #         ;;
-      # }
-
       join: claim_transaction {
-        type: left_outer
-        relationship: one_to_many
-        sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${claim_transaction.claimcontrol_id}
-              and ${v_claim_detail_feature.claimant_num} = ${claim_transaction.claimant_num}
-              and ${v_claim_detail_feature.claimfeature_num} = ${claim_transaction.claimfeature_num}
+        type: inner
+        view_label: "Checks & Transactions"
+        relationship: one_to_one
+        sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${claim_transaction.claimcontrol_id}
+              and ${v_claim_detail_transaction.claimant_num} = ${claim_transaction.claimant_num}
+              and ${v_claim_detail_transaction.claimfeature_num} = ${claim_transaction.claimfeature_num}
               and ${v_claim_detail_transaction.claimtransaction_num} = ${claim_transaction.claimtransaction_num}
               ;;
       }
@@ -267,10 +237,10 @@ explore: claim_control {
         type: left_outer
         view_label: "Claim Financials (As of Date)"
         relationship: many_to_many
-        sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_id}
-              and ${claim_transaction.claimtransaction_num} = ${dt_claim_transactions_as_of.claimtransaction_num}
-              and ${claim_transaction.claimant_num} = ${dt_claim_transactions_as_of.claimant_num}
-              and ${claim_transaction.claimfeature_num} = ${dt_claim_transactions_as_of.claimfeature_num}
+        sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_id}
+              and ${v_claim_detail_transaction.claimant_num} = ${dt_claim_transactions_as_of.claimant_num}
+              and ${v_claim_detail_transaction.claimfeature_num} = ${dt_claim_transactions_as_of.claimfeature_num}
+              and ${v_claim_detail_transaction.claimtransaction_num} = ${dt_claim_transactions_as_of.claimtransaction_num}
               and ${dt_claim_transactions_as_of.calc} = 1
               ;;
       }

@@ -236,10 +236,11 @@ view: v_claim_detail_transaction {
     sql: ${TABLE}.claimtransactionsplit_num ;;
   }
 
-  # dimension: bulk_check {
-  #   type: string
-  #   sql: ${TABLE}.bulk_check ;;
-  # }
+  dimension: bulk_check {
+    label: "Is Bulk Check"
+    type: string
+    sql: case when ${TABLE}.bulk_check=1 then 'Yes' else 'No' end ;;
+  }
 
   dimension: checkstatus_id {
     type: number
@@ -284,31 +285,30 @@ view: v_claim_detail_transaction {
   dimension: check_number {
     label: "Check Number"
     type: number
-    sql: ${TABLE}.check_number ;;
+    #sql: case when ${TABLE}.check_number between ;;
+    sql: (case when (${TABLE}.check_number between 1 and 99999999) then ${TABLE}.check_number else null end) ;;
     value_format_name: id
   }
 
   dimension_group: check_date {
-    hidden: yes
     label: "Check"
     type: time
     timeframes: [date]
-    sql: ${TABLE}.check_date ;;
+    sql: case when (${TABLE}.check_date > '1900-01-01') then ${TABLE}.check_date else NULL end  ;;
   }
 
-  dimension: is_offset_payment {
-    hidden: yes
-    type: string
-    sql: case when ${TABLE}.reissued=1 then 'Yes' else 'No' end ;;
-  }
+  # dimension: is_offset_payment {
+  #   hidden: yes
+  #   type: string
+  #   sql: case when ${TABLE}.reissued=1 then 'Yes' else 'No' end ;;
+  # }
 
-  dimension_group: print_date {
-    hidden: yes
-    label: "Check Print"
-    type: time
-    timeframes: [date]
-    sql: ${TABLE}.print_date ;;
-  }
+  # dimension_group: print_date {
+  #   label: "Check Print"
+  #   type: time
+  #   timeframes: [date]
+  #   sql: ${TABLE}.print_date ;;
+  # }
 
   # dimension_group: export_date {
   #   label: "Written"
@@ -324,7 +324,7 @@ view: v_claim_detail_transaction {
 
   measure: count {
     type: count
-    drill_fields: [eff_time, type_dscr, remark, dim_amount, reserve, check_number, pay_to_the_order_of, reissued, check_number, check_date_date, status,pay_type, is_offset_payment]
+    drill_fields: [check_number, check_date_date, dim_amount, claim_control.claim_number, type_dscr, remark, pay_to_the_order_of, reissued, status, pay_type, bulk_check]
   }
 
   measure: amount {
