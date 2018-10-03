@@ -331,6 +331,15 @@ view: v_claim_detail_feature {
     value_format_name: usd
   }
 
+  measure:  percent_indemnity_paid {
+    view_label: "Claim Financials (Current)"
+    type: percent_of_total
+    label: "% Loss Paid"
+    direction: "column"
+    sql: ${sum_indemnity_paid} ;;
+    value_format_name: decimal_1
+  }
+
   measure:  sum_indemnity_reserve {
     view_label: "Claim Financials (Current)"
     type:  sum
