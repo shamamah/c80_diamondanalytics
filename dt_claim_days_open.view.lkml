@@ -54,7 +54,7 @@ LEFT OUTER JOIN dbo.ClaimControlActivity CCA_Closed(NOLOCK)
 
   dimension : closed_within {
     type: tier
-    label: "Closed Within (days)"
+    label: "Closed Within (Tiers)"
     tiers: [5,10,15,25,30,35,40]
     style: integer
     sql: ${days_open} ;;
@@ -63,7 +63,7 @@ LEFT OUTER JOIN dbo.ClaimControlActivity CCA_Closed(NOLOCK)
 
   dimension : days_open_tier {
     type: tier
-    label: "Open Days"
+    label: "Days Open (Tiers)"
     tiers: [5,10,15,25,30,35,40]
     style: integer
     sql: ${days_open} ;;
@@ -75,11 +75,36 @@ LEFT OUTER JOIN dbo.ClaimControlActivity CCA_Closed(NOLOCK)
     type: count
   }
 
-  measure: total_days_open {
+  measure: sum_days_open {
     hidden:yes
     type: sum
     label: "Total Days Open"
     sql:  ${days_open}  ;;
     value_format: "0"
   }
+
+  measure: average_days_to_close {
+    type: average
+    label: "Average Days To Close"
+    sql:  ${days_open}  ;;
+    value_format: "0"
+    drill_fields: [claim_stat*]
+  }
+
+  set: claim_stat {
+    fields: [
+      claim_number,
+      claim_control_status.dscr,
+      claim_loss_type.dscr,
+      claim_type.dscr,
+      claim_severity.dscr,
+      claim_control.loss_date_date,
+      claim_control.reported_date_date,
+      dt_claim_days_open.days_open,
+      dt_claim_close_date.claim_close_date_date,
+      dt_claim_inside_adjuster.initials,
+      v_claim_detail_feature.sum_indemnity_paid
+    ]
+  }
+
 }
