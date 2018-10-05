@@ -5,7 +5,7 @@ view: claim_control_activity {
     type: string
     primary_key: yes
     hidden: yes
-    sql: CONCAT(${claimactivitycode_id},${num}) ;;
+    sql: CONCAT(${claimcontrol_id},${num}) ;;
   }
 
 #   dimension_group: added {
