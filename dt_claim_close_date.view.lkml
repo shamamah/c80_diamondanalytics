@@ -8,6 +8,7 @@ view: dt_claim_close_date {
   }
 
   dimension: claimcontrol_id {
+    primary_key: yes
     hidden: yes
     type: number
     sql: ${TABLE}.claimcontrol_id ;;

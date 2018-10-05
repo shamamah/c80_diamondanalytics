@@ -42,6 +42,7 @@ explore: claim_control {
     }
 
     join: dt_reopen_count {
+      view_label: "Claim"
       type: left_outer
       relationship: one_to_many
       sql_on: ${claim_control.claimcontrol_id} = ${dt_reopen_count.claimcontrol_id} ;;

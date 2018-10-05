@@ -55,7 +55,7 @@ LEFT OUTER JOIN dbo.ClaimControlActivity CCA_Closed(NOLOCK)
   dimension : closed_within {
     type: tier
     label: "Closed Within (Tiers)"
-    tiers: [5,10,15,25,30,35,40]
+    tiers: [31,61,91]
     style: integer
     sql: ${days_open} ;;
     value_format: "0"
@@ -64,7 +64,7 @@ LEFT OUTER JOIN dbo.ClaimControlActivity CCA_Closed(NOLOCK)
   dimension : days_open_tier {
     type: tier
     label: "Days Open (Tiers)"
-    tiers: [5,10,15,25,30,35,40]
+    tiers: [31,61,91]
     style: integer
     sql: ${days_open} ;;
     value_format: "0"
