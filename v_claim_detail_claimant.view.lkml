@@ -77,6 +77,7 @@ view: v_claim_detail_claimant {
   }
 
   dimension: in_litigation {
+    hidden: yes
     type: string
     label: "Is Litigated"
     sql: case when ${TABLE}.in_litigation=1 then 'Yes' else 'No' end ;;
@@ -250,17 +251,34 @@ view: v_claim_detail_claimant {
   #   sql: ${TABLE}.applicant_num ;;
   # }
 
-  # dimension: is_represented {
-  #   type: string
-  #   label: "Is Represented"
-  #   sql: case when ${TABLE}.is_represented=1 then 'Yes' else 'No' end ;;
-  # }
+  dimension: is_represented {
+    hidden: yes
+    type: string
+    label: "Is Represented"
+    sql: case when ${TABLE}.is_represented=1 then 'Yes' else 'No' end ;;
+  }
+
+  dimension: is_litigated_represented {
+    type: string
+    label: "Is Litigated/Represented"
+    sql: case when (${is_represented} = 'Yes' OR ${in_litigation} = 'Yes') then 'Yes' else 'No' end ;;
+  }
 
   #DATA ELEMENTS COMPLETED------------------------------------------------------------
 
   measure: count {
     type: count
     drill_fields: [claimant_stats*]
+  }
+
+  measure: litigated_represented_count {
+    label: "Represented Count"
+    type: count
+    drill_fields: [claimant_stats*]
+    filters: {
+      field: is_litigated_represented
+      value: "Yes"
+    }
   }
 
   # measure: sum_anticipated_expense_recovery {
@@ -363,16 +381,16 @@ view: v_claim_detail_claimant {
 
   set: claimant_stats {
     fields: [
-        claim_control.claim_number,
-        policy.current_policy,
-        claimant_num,
-        name,
-        relationshiptypedscr,
-        status_dscr,
-        claimanttypedscr,
-        display_address,
-        city_state
-      ]
-    }
+      claim_control.claim_number,
+      policy.current_policy,
+      claimant_num,
+      name,
+      relationshiptypedscr,
+      status_dscr,
+      claimanttypedscr,
+      display_address,
+      city_state
+    ]
+  }
 
 }

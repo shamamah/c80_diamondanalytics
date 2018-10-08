@@ -41,7 +41,23 @@ explore: claim_control {
         and ${claim_control_activity.num} = 1 ;;
     }
 
-    join: dt_reopen_count {
+    join: dt_claims_first_activity {
+      view_label: "Claim Acitivity"
+      type: inner
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claims_first_activity.claimcontrol_id}
+        and ${dt_claims_first_activity.num} = 1 ;;
+    }
+
+  join: dt_claims_reopen_activity {
+    view_label: "Claim Acitivity"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claims_reopen_activity.claimcontrol_id}
+      and ${dt_claims_reopen_activity.num} > 1 ;;
+  }
+
+  join: dt_reopen_count {
       view_label: "Claim"
       type: left_outer
       relationship: one_to_many

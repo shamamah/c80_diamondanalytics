@@ -20,10 +20,11 @@ view: dt_claim_close_date {
     timeframes: [date,month,quarter,year]
     sql: ${TABLE}.claim_close_date ;;
   }
-  dimension_group: claim_initial_close_date {
-    label: "Initial Close"
-    type: time
-    timeframes: [date,month,quarter,year]
-    sql: ${TABLE}.claim_initial_close_date ;;
-  }
+
+#   dimension_group: claim_initial_close_date {
+#     label: "Initial Close"
+#     type: time
+#     timeframes: [date,month,quarter,year]
+#     sql: ${TABLE}.claim_initial_close_date ;;
+#   }
 }

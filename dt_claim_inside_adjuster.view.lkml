@@ -43,7 +43,7 @@ view: dt_claim_inside_adjuster {
   dimension: initials {
     label: "Examiner Initials"
     type: string
-    sql: ${TABLE}.initials ;;
+    sql: case when ${TABLE}.initials IS NULL then '--' else ${TABLE}.initials end ;;
   }
 
 #   dimension: claimoffice_id {
@@ -79,6 +79,6 @@ view: dt_claim_inside_adjuster {
   dimension: adjuster_name {
     label: "Examiner"
     type: string
-    sql: ${TABLE}.Adjuster_Name ;;
+    sql: case when ${TABLE}.Adjuster_Name IS NULL then 'Unassigned' else ${TABLE}.Adjuster_Name end ;;
   }
 }

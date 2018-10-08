@@ -46,50 +46,50 @@ LEFT OUTER JOIN dbo.ClaimControlActivity CCA_Closed(NOLOCK)
     sql: ${TABLE}.close_date ;;
   }
 
-  dimension: days_open {
-    label: "Days Open"
-    type: number
-    sql: ${TABLE}.days_open ;;
-  }
-
-  dimension : closed_within {
-    type: tier
-    label: "Closed Within (Tiers)"
-    tiers: [31,61,91]
-    style: integer
-    sql: ${days_open} ;;
-    value_format: "0"
-  }
-
-  dimension : days_open_tier {
-    type: tier
-    label: "Days Open (Tiers)"
-    tiers: [31,61,91]
-    style: integer
-    sql: ${days_open} ;;
-    value_format: "0"
-  }
+#   dimension: days_open {
+#     label: "Days Open"
+#     type: number
+#     sql: ${TABLE}.days_open ;;
+#   }
+#
+#   dimension : closed_within {
+#     type: tier
+#     label: "Closed Within (Tiers)"
+#     tiers: [31,61,91]
+#     style: integer
+#     sql: ${days_open} ;;
+#     value_format: "0"
+#   }
+#
+#   dimension : days_open_tier {
+#     type: tier
+#     label: "Days Open (Tiers)"
+#     tiers: [31,61,91]
+#     style: integer
+#     sql: ${days_open} ;;
+#     value_format: "0"
+#   }
 
   measure: count {
     hidden:yes
     type: count
   }
 
-  measure: sum_days_open {
-    hidden:yes
-    type: sum
-    label: "Total Days Open"
-    sql:  ${days_open}  ;;
-    value_format: "0"
-  }
-
-  measure: average_days_to_close {
-    type: average
-    label: "Average Days To Close"
-    sql:  ${days_open}  ;;
-    value_format: "0"
-    drill_fields: [claim_stat*]
-  }
+#   measure: sum_days_open {
+#     hidden:yes
+#     type: sum
+#     label: "Total Days Open"
+#     sql:  ${days_open}  ;;
+#     value_format: "0"
+#   }
+#
+#   measure: average_days_to_close {
+#     type: average
+#     label: "Average Days To Close"
+#     sql:  ${days_open}  ;;
+#     value_format: "0"
+#     drill_fields: [claim_stat*]
+#   }
 
   set: claim_stat {
     fields: [
