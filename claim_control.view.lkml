@@ -31,10 +31,25 @@ view: claim_control {
   # }
 
   dimension: claim_number {
+    link: {
+      label: "Open in Diamond"
+      url: "https://c72-prod.diamondasaservice.com/DiamondWeb/Employee/Claim/{{ value }}"
+      icon_url: "http://www.insuresoft.com/favicon.ico"
+    }
     type: string
     label: "Number"
     sql: ${TABLE}.claim_number ;;
   }
+
+  # dimension: current_policy {
+  #   link: {
+  #     label: "Open in Diamond"
+  #     url: "https://demo.diamondasaservice.com/DiamondWeb/Employee/Policy/{{ value }}"
+  #     icon_url: "http://www.insuresoft.com/favicon.ico"
+  #   }
+  #   type: string
+  #   sql: ${TABLE}.current_policy ;;
+  # }
 
   dimension: claim_type_id {
     type: number
@@ -703,7 +718,7 @@ view: claim_control {
       dt_claim_close_date.claim_close_date_date,
       dt_claim_inside_adjuster.initials,
       v_claim_detail_feature.sum_indemnity_paid
-      ]
-    }
+    ]
+  }
 
 }
