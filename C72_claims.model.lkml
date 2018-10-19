@@ -233,9 +233,10 @@ explore: claim_control {
       type: left_outer
       relationship: one_to_many
       sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
-               AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
-               ;;
+              AND ${v_claim_detail_claimant.claimant_num} = ${v_claim_detail_feature.claimant_num}
+              ;;
     }
+
     join: v_claim_detail_transaction {
       type: left_outer
       view_label: "Checks & Transactions"

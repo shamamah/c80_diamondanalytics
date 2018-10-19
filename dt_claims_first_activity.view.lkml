@@ -90,6 +90,7 @@ view: dt_claims_first_activity {
     hidden: no
     label: "Reported Claims Count"
     type: count
+    drill_fields: [claim_stat*]
   }
 
   measure: first_close_count {

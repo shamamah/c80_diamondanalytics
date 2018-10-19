@@ -338,7 +338,8 @@ view: v_claim_detail_feature {
     direction: "column"
     sql: ${sum_indemnity_paid} ;;
     value_format_name: decimal_1
-  }
+    drill_fields: [percent_indemnity_paid*]
+    }
 
   measure:  sum_indemnity_reserve {
     view_label: "Claim Financials (Current)"
@@ -454,4 +455,27 @@ view: v_claim_detail_feature {
       expense_paid
     ]
   }
+
+set: percent_indemnity_paid {
+  fields: [
+    claim_control.claim_number,
+    claim_control.dscr,
+    #claimant_num,
+    #claimfeature_num,
+    #claimcoverage_num,
+    claim_loss_type.dscr,
+    claim_type.dscr,
+    claim_severity.dscr,
+    claim_control.loss_date_date,
+    claim_control.reported_date_date,
+    status_dscr,
+    #exposure_dscr,
+    #subexposure_dscr,
+    coveragecode,
+    coverage_dscr,
+    indemnity_paid,
+    expense_paid,
+    alae_paid
+  ]
+}
 }
