@@ -1,6 +1,8 @@
 view: dt_claims_reopen_activity {
   derived_table: {
-    sql: SELECT O.claimcontrol_id, ROW_NUMBER() OVER (PARTITION BY O.claimcontrol_id ORDER BY O.num) AS num, O.added_date AS opened, C.added_date AS closed, C.dscr
+    sql:
+
+    SELECT O.claimcontrol_id, ROW_NUMBER() OVER (PARTITION BY O.claimcontrol_id ORDER BY O.num) AS num, O.added_date AS opened, C.added_date AS closed, C.dscr
       FROM
       (
         SELECT claimcontrol_id, num, added_date, ROW_NUMBER() OVER (PARTITION BY claimcontrol_id ORDER BY num) AS RN

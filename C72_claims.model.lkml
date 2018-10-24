@@ -49,15 +49,15 @@ explore: claim_control {
         and ${dt_claims_first_activity.num} = 1 ;;
     }
 
-  join: dt_claims_reopen_activity {
-    view_label: "Claim Acitivity"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_claims_reopen_activity.claimcontrol_id}
-      and ${dt_claims_reopen_activity.num} > 1 ;;
-  }
+    join: dt_claims_reopen_activity {
+      view_label: "Claim Acitivity"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claims_reopen_activity.claimcontrol_id}
+        and ${dt_claims_reopen_activity.num} > 1 ;;
+    }
 
-  join: dt_reopen_count {
+    join: dt_reopen_count {
       view_label: "Claim"
       type: left_outer
       relationship: one_to_many
@@ -143,6 +143,23 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_bi.claimcontrol_id}
         and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_bi.claimant_num};;
     }
+
+    join: dt_coverage_financials {
+      view_label: "Feature Financials"
+      type: inner
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials.claimcontrol_id}
+        and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials.claimant_num};;
+    }
+
+#     join: dt_claim_feature_activity {
+#       view_label: "Feature Financials"
+#       type: left_outer
+#       relationship: one_to_many
+#       sql_on: ${dt_coverage_financials.claimcontrol_id} = ${dt_claim_feature_activity.claimcontrol_id}
+#         and ${dt_coverage_financials.claimant_num} = ${dt_claim_feature_activity.claimant_num}
+#         and ${dt_coverage_financials_bi.claimfeature_num} = ${dt_claim_feature_activity.claimfeature_num};;
+#     }
 
     join: dt_coverage_financials_pd {
       view_label: "Coverage Financials"

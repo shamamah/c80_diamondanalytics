@@ -87,6 +87,22 @@ view: dt_coverage_financials_rr {
     value_format_name: usd
   }
 
+  measure: loss_incurred {
+    type: number
+    label: "RR Incurred $"
+    sql: ${loss_reserves} + ${loss_paid}  ;;
+    value_format_name: usd
+    drill_fields: [open_claims_incurred_stat*]
+  }
+
+  measure:  percent_loss_incurred {
+    type: number
+    label: "RR Incurred %"
+    sql:  case when ${dt_coverage_financials_bi.total_incurred} = 0 then 0 else ${loss_incurred} / ${dt_coverage_financials_bi.total_incurred} end ;;
+    value_format_name: percent_1
+    drill_fields: [open_claims_incurred_stat*]
+  }
+
   dimension: dim_salvage {
     hidden: yes
     type: string
@@ -111,5 +127,28 @@ view: dt_coverage_financials_rr {
     label: "RR Subro"
     sql: ${dim_subro} ;;
     value_format_name: usd
+  }
+
+  set: open_claims_incurred_stat {
+    fields: [
+      claim_control.claim_number,
+      claim_loss_type.dscr,
+      claim_type.dscr,
+      claim_severity.dscr,
+      claim_control.loss_date_date,
+      claim_control.reported_date_date,
+      dt_claim_days_open.days_open,
+      dt_claim_close_date.claim_close_date_date,
+      dt_claim_inside_adjuster.initials,
+      dt_coverage_financials_bi.loss_incurred,
+      dt_coverage_financials_pd.loss_incurred,
+      dt_coverage_financials_med.loss_incurred,
+      dt_coverage_financials_pip.loss_incurred,
+      dt_coverage_financials_comp.loss_incurred,
+      dt_coverage_financials_coll.loss_incurred,
+      dt_coverage_financials_umbi.loss_incurred,
+      dt_coverage_financials_umpd.loss_incurred,
+      dt_coverage_financials_rr.loss_incurred
+    ]
   }
 }
