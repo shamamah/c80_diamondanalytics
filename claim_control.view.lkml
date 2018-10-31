@@ -52,9 +52,9 @@ view: claim_control {
   # }
 
   dimension: claim_type_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.claim_type_id ;;
+    label: "Is Record-Only"
+    type: string
+    sql: CASE WHEN  ${TABLE}.claim_type_id=3 THEN 'Yes' ELSE 'No' END ;;
   }
 
   # dimension: claimadministrator_id {
@@ -708,6 +708,7 @@ view: claim_control {
   set: claim_stat {
     fields: [
       claim_number,
+      policy.current_policy,
       claim_control_status.dscr,
       claim_loss_type.dscr,
       claim_type.dscr,
