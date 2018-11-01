@@ -27,6 +27,13 @@ explore: claim_control {
 #     sql_on: ${claim_type.claimtype_id} = ${claim_control.claim_type_id} ;;
 #   }
 
+    join: dt_is_claim_litigated_represented {
+      view_label: "Claim"
+      type: inner
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_is_claim_litigated_represented.claimcontrol_id} ;;
+    }
+
     join: dt_claim_days_open {
       view_label: "Claim"
       type: inner
