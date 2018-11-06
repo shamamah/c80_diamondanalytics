@@ -143,6 +143,22 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id} ;;
     }
 
+    join: dt_claimant_phone_home {
+      view_label: "Claimant"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${dt_claimant_phone_home.claimcontrol_id} = ${claimant.claimcontrol_id}
+        and ${dt_claimant_phone_home.claimant_num} = ${claimant.claimant_num} ;;
+    }
+
+    join: dt_claimant_phone_cellular {
+      view_label: "Claimant"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${dt_claimant_phone_cellular.claimcontrol_id} = ${claimant.claimcontrol_id}
+        and ${dt_claimant_phone_cellular.claimant_num} = ${claimant.claimant_num} ;;
+    }
+
     join: dt_coverage_financials_bi {
       view_label: "Coverage Financials"
       type: left_outer
@@ -246,21 +262,21 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_outside_adjuster.claimcontrol_id} ;;
     }
 
-  join: dt_all_claimants_per_claim {
-    view_label: "Claim"
-    type: inner
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_all_claimants_per_claim.claimcontrol_id};;
-  }
+    join: dt_all_claimants_per_claim {
+      view_label: "Claim"
+      type: inner
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_all_claimants_per_claim.claimcontrol_id};;
+    }
 
-  join: dt_insured_vehicle_driver {
-    view_label: "Claim"
-    type: inner
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_insured_vehicle_driver.claimcontrol_id};;
-  }
+    join: dt_insured_vehicle_driver {
+      view_label: "Claim"
+      type: inner
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_insured_vehicle_driver.claimcontrol_id};;
+    }
 
-  join: v_claim_detail_feature {
+    join: v_claim_detail_feature {
       type: left_outer
       relationship: one_to_many
       sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
