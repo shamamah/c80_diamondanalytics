@@ -15,6 +15,7 @@ view: dt_is_claim_litigated_represented {
 
   dimension: claimcontrol_id {
     primary_key: yes
+    hidden: yes
     type: number
     sql: ${TABLE}.claimcontrol_id ;;
   }

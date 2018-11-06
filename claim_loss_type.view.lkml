@@ -7,8 +7,10 @@ view: claim_loss_type {
 #   }
 
   dimension: claimlosstype_id {
+    label: "Loss Type Code"
+    view_label: "Claim"
     primary_key: yes
-    hidden: yes
+    hidden: no
     type: number
     sql: ${TABLE}.claimlosstype_id ;;
   }

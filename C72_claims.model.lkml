@@ -148,7 +148,7 @@ explore: claim_control {
       type: left_outer
       relationship: one_to_many
       sql_on: ${dt_claimant_phone_home.claimcontrol_id} = ${claimant.claimcontrol_id}
-        and ${dt_claimant_phone_home.claimant_num} = ${claimant.claimant_num} ;;
+        and ${dt_claimant_phone_home.claimant_num} = 1 ;;
     }
 
     join: dt_claimant_phone_cellular {
@@ -156,7 +156,7 @@ explore: claim_control {
       type: left_outer
       relationship: one_to_many
       sql_on: ${dt_claimant_phone_cellular.claimcontrol_id} = ${claimant.claimcontrol_id}
-        and ${dt_claimant_phone_cellular.claimant_num} = ${claimant.claimant_num} ;;
+        and ${dt_claimant_phone_cellular.claimant_num} = 1 ;;
     }
 
     join: dt_coverage_financials_bi {

@@ -76,9 +76,9 @@ view: claim_control {
   }
 
   dimension: claimclosereason_id {
+    label: "Close Reason Code"
     type: number
-    hidden: yes
-    sql: ${TABLE}.claimclosereason_id ;;
+    sql: case when ISNULL(${TABLE}.claimclosereason_id,-1)>=0 then ${TABLE}.claimclosereason_id else NULL end  ;;
   }
 
   # dimension: claimcluedisp_id {
@@ -101,8 +101,9 @@ view: claim_control {
   }
 
   dimension: claimcontrolstatus_id {
+    label: "Status Code"
     type: number
-    hidden: yes
+    hidden: no
     sql: ${TABLE}.claimcontrolstatus_id ;;
   }
 
@@ -245,8 +246,9 @@ view: claim_control {
   # }
 
   dimension: claimseverity_id {
+    label: "Severity Code"
     type: number
-    hidden: yes
+    hidden: no
     sql: ${TABLE}.claimseverity_id ;;
   }
 

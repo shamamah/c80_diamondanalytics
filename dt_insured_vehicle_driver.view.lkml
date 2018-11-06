@@ -15,6 +15,7 @@ view: dt_insured_vehicle_driver {
 
   dimension: claimcontrol_id {
     primary_key: yes
+    hidden: yes
     type: number
     sql: ${TABLE}.claimcontrol_id ;;
   }
