@@ -318,6 +318,17 @@ explore: claim_control {
               ;;
       }
 
+      join: dt_transaction_payee_type {
+        type: left_outer
+        view_label: "Checks & Transactions"
+        relationship: one_to_many
+        sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_transaction_payee_type.claimcontrol_id}
+              and ${v_claim_detail_transaction.claimant_num} = ${dt_transaction_payee_type.claimant_num}
+              and ${v_claim_detail_transaction.claimfeature_num} = ${dt_transaction_payee_type.claimfeature_num}
+              and ${v_claim_detail_transaction.claimtransaction_num} = ${dt_transaction_payee_type.claimtransaction_num}
+              ;;
+      }
+
       join: dt_claim_status_as_of {
         type: inner
         view_label: "Claim Financials (As of Date)"
