@@ -707,6 +707,26 @@ view: claim_control {
     drill_fields: [claim_stat*]
   }
 
+  measure: count_with_indemnity_paid {
+    label: "Claim Count with Paid Loss"
+    type: count
+    drill_fields: [claim_stat*]
+    filters: {
+      field: v_claim_detail_feature.indemnity_paid
+      value: ">0"
+    }
+  }
+
+  measure: count_with_expense_paid {
+    label: "Claim Count with Paid Expense"
+    type: count
+    drill_fields: [claim_stat*]
+    filters: {
+      field: v_claim_detail_feature.expense_paid
+      value: ">0"
+    }
+  }
+
   set: claim_stat {
     fields: [
       claim_number,
@@ -720,7 +740,8 @@ view: claim_control {
       dt_claim_days_open.days_open,
       dt_claim_close_date.claim_close_date_date,
       dt_claim_inside_adjuster.initials,
-      v_claim_detail_feature.sum_indemnity_paid
+      v_claim_detail_feature.sum_indemnity_paid,
+      v_claim_detail_feature.sum_expense_paid
     ]
   }
 
