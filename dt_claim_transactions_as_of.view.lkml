@@ -37,7 +37,6 @@ view: dt_claim_transactions_as_of {
                    ON CT.claimtransactiontype_id = CTT.claimtransactiontype_id
                            AND CTT.adjust_financials = 0
       WHERE claimcontrolstatus_id IN (1, 2)
-      --order by cc.claimcontrol_id
           ;;
   }
 
@@ -51,7 +50,7 @@ view: dt_claim_transactions_as_of {
     type: string
     primary_key: yes
     hidden: yes
-    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num},${claimtransaction_num}) ;;
+    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num},${claimtransaction_num},${policy_id},${policyimage_num}) ;;
   }
 
   dimension: policy_id {

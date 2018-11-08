@@ -80,6 +80,6 @@ view: dt_transaction_payee_type {
   dimension: is_lender {
     label: "Is Lender"
     type: string
-    sql: case when ${TABLE}.is_lender=1 then 'Yes' else 'No' end  ;;
+    sql: case when ${TABLE}.is_lender=1 then 'Y' else 'N' end  ;;
   }
 }

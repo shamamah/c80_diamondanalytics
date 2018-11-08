@@ -9,7 +9,7 @@ view: claim_transaction_category {
   }
 
   dimension: claimfinancialcategory_id {
-    hidden: yes
+    label: "Trans Type Code"
     type: number
     sql: ${TABLE}.claimfinancialcategory_id ;;
   }
