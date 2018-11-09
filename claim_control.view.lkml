@@ -711,9 +711,16 @@ view: claim_control {
       #url: "{{ link }}&sorts=order_items.sale_price+desc&limit=20"
     }
     link: {
+      label: "Sort by Date Reported"
+      url: "{{ link }}&sorts=claim_control.reported_date_date"
+    }
+    link: {
       label: "Sort by Loss Paid"
       url: "{{ link }}&sorts=v_claim_detail_feature.sum_indemnity_paid"
-      #url: "{{ link }}&sorts=order_items.sale_price+desc&limit=20"
+    }
+    link: {
+      label: "Sort by Reserve Amount"
+      url: "{{ link }}&sorts=v_claim_detail_feature.sum_indemnity_reserve"
     }
   }
 
@@ -739,14 +746,14 @@ view: claim_control {
 
   set: claim_stat {
     fields: [
-      claim_number,
+      claim_control.claim_number,
       policy.current_policy,
       claim_control_status.dscr,
       claim_loss_type.dscr,
       claim_type.dscr,
       claim_severity.dscr,
-      loss_date_date,
-      reported_date_date,
+      claim_control.loss_date_date,
+      claim_control.reported_date_date,
       dt_claim_days_open.days_open,
       dt_claim_close_date.claim_close_date_date,
       dt_claim_inside_adjuster.initials,
