@@ -705,6 +705,16 @@ view: claim_control {
     label: "Claim Count"
     type: count
     drill_fields: [claim_stat*]
+    link: {
+      label: "Sort by Claim Number"
+      url: "{{ link }}&sorts=claim_control.claim_number"
+      #url: "{{ link }}&sorts=order_items.sale_price+desc&limit=20"
+    }
+    link: {
+      label: "Sort by Loss Paid"
+      url: "{{ link }}&sorts=v_claim_detail_feature.sum_indemnity_paid"
+      #url: "{{ link }}&sorts=order_items.sale_price+desc&limit=20"
+    }
   }
 
   measure: count_with_indemnity_paid {
@@ -741,6 +751,7 @@ view: claim_control {
       dt_claim_close_date.claim_close_date_date,
       dt_claim_inside_adjuster.initials,
       v_claim_detail_feature.sum_indemnity_paid,
+      v_claim_detail_feature.sum_indemnity_reserve,
       v_claim_detail_feature.sum_expense_paid
     ]
   }

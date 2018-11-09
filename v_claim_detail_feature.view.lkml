@@ -331,6 +331,20 @@ view: v_claim_detail_feature {
     value_format_name: usd
   }
 
+  measure:  ave_indemnity_paid {
+    view_label: "Claim Financials (Current)"
+    type: average
+    #label: "Average Indemnity Paid"
+    label: "Average Loss Paid"
+    sql: ${indemnity_paid} ;;
+    value_format_name: usd
+    drill_fields: [percent_indemnity_paid*]
+    filters: {
+      field: indemnity_paid
+      value: ">0.00"
+    }
+  }
+
   measure:  percent_indemnity_paid {
     view_label: "Claim Financials (Current)"
     type: percent_of_total
@@ -339,7 +353,7 @@ view: v_claim_detail_feature {
     sql: ${sum_indemnity_paid} ;;
     value_format_name: decimal_1
     drill_fields: [percent_indemnity_paid*]
-    }
+  }
 
   measure:  sum_indemnity_reserve {
     view_label: "Claim Financials (Current)"
@@ -456,26 +470,26 @@ view: v_claim_detail_feature {
     ]
   }
 
-set: percent_indemnity_paid {
-  fields: [
-    claim_control.claim_number,
-    claim_control.dscr,
-    #claimant_num,
-    #claimfeature_num,
-    #claimcoverage_num,
-    claim_loss_type.dscr,
-    claim_type.dscr,
-    claim_severity.dscr,
-    claim_control.loss_date_date,
-    claim_control.reported_date_date,
-    status_dscr,
-    #exposure_dscr,
-    #subexposure_dscr,
-    coveragecode,
-    coverage_dscr,
-    indemnity_paid,
-    expense_paid,
-    alae_paid
-  ]
-}
+  set: percent_indemnity_paid {
+    fields: [
+      claim_control.claim_number,
+      claim_control.dscr,
+      #claimant_num,
+      #claimfeature_num,
+      #claimcoverage_num,
+      claim_loss_type.dscr,
+      claim_type.dscr,
+      claim_severity.dscr,
+      claim_control.loss_date_date,
+      claim_control.reported_date_date,
+      status_dscr,
+      #exposure_dscr,
+      #subexposure_dscr,
+      coveragecode,
+      coverage_dscr,
+      indemnity_paid,
+      expense_paid,
+      alae_paid
+    ]
+  }
 }

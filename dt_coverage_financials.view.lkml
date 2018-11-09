@@ -82,6 +82,10 @@ view: dt_coverage_financials {
     sql: ${dim_loss_reserves} ;;
     value_format_name: usd
     drill_fields: [reserves_details*]
+    filters: {
+      field: dim_loss_reserves
+      value: ">0.00"
+    }
   }
 
   measure: loss_reserves {
@@ -116,6 +120,10 @@ view: dt_coverage_financials {
     sql: ${dim_loss_paid} ;;
     value_format_name: usd
     drill_fields: [paid_details*]
+    filters: {
+      field: dim_loss_paid
+      value: ">0.00"
+    }
   }
 
   measure: loss_paid {
@@ -151,6 +159,10 @@ view: dt_coverage_financials {
     sql: ${dim_loss_incurred} ;;
     value_format_name: usd
     drill_fields: [incurred_details*]
+    filters: {
+      field: dim_loss_incurred
+      value: ">0.00"
+    }
   }
 
   measure: loss_incurred {
@@ -185,6 +197,10 @@ view: dt_coverage_financials {
     sql: ${dim_salvage} ;;
     value_format_name: usd
     drill_fields: [salvage_details*]
+    filters: {
+      field: dim_salvage
+      value: ">0.00"
+    }
   }
 
   measure: salvage {
@@ -218,6 +234,10 @@ view: dt_coverage_financials {
     sql: ${dim_subro} ;;
     value_format_name: usd
     drill_fields: [subro_details*]
+    filters: {
+      field: dim_subro
+      value: ">0.00"
+    }
   }
 
   measure: subro {

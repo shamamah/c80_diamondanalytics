@@ -27,6 +27,13 @@ explore: claim_control {
 #     sql_on: ${claim_type.claimtype_id} = ${claim_control.claim_type_id} ;;
 #   }
 
+    join: dt_summarized_claim_level_financials {
+      view_label: "Summarized Financials (Claim Level)"
+      type: left_outer
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_summarized_claim_level_financials.claimcontrol_id} ;;
+    }
+
     join: dt_is_claim_litigated_represented {
       view_label: "Claim"
       type: inner
@@ -285,8 +292,8 @@ explore: claim_control {
     }
 
     join: v_claim_detail_transaction {
-      type: left_outer
       view_label: "Checks & Transactions"
+      type: left_outer
       relationship: one_to_many
       sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
               AND ${v_claim_detail_feature.claimant_num} = ${v_claim_detail_transaction.claimant_num}
