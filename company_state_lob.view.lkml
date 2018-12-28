@@ -32,7 +32,8 @@ view: company_state_lob {
   }
 
   dimension: lob_id {
-    hidden: yes
+    hidden: no
+    label: "LOB ID"
     type: number
     sql: ${TABLE}.lob_id ;;
   }
