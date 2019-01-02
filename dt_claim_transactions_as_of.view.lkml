@@ -13,6 +13,7 @@ view: dt_claim_transactions_as_of {
           ,V.indemnity_paid
           ,V.expense_reserve
           ,V.expense_paid
+          ,V.expense_recovery
           ,V.alae_reserve
           ,V.alae_paid
           ,V.salvage
@@ -163,6 +164,20 @@ view: dt_claim_transactions_as_of {
     drill_fields: [detail*]
   }
 
+  dimension: dim_expense_recovery {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.expense_recovery ;;
+  }
+
+  measure:  expense_recovery {
+    label: "Rein Expense Recovery"
+    type: sum
+    sql: ${dim_expense_recovery} ;;
+    value_format_name: usd
+    drill_fields: [detail*]
+  }
+
   dimension: dim_alae_reserve {
     hidden: yes
     type: string
@@ -250,6 +265,7 @@ view: dt_claim_transactions_as_of {
       indemnity_paid,
       expense_reserve,
       expense_paid,
+      expense_recovery,
       alae_reserve,
       alae_paid,
       salvage,
