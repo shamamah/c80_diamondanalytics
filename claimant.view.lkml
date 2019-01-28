@@ -152,12 +152,13 @@ view: claimant {
 #     type: number
 #     sql: ${TABLE}.claimfirmattorney_claimfirm_id ;;
 #   }
-#
-#   dimension: claimpayee_id {
-#     type: number
-#     sql: ${TABLE}.claimpayee_id ;;
-#   }
-#
+
+  dimension: claimpayee_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimpayee_id ;;
+  }
+
   dimension: contacted {
     label: "Is Contacted"
     type: string

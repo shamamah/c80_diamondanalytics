@@ -150,6 +150,14 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id} ;;
     }
 
+#     join: v1099_payee_list {
+#       view_label: "Claimant - 1099 Reportable"
+#       type: left_outer
+#       relationship: one_to_many
+#       sql_on: ${claimant.claimpayee_id} = ${v1099_payee_list.claimpayee_id}
+#         and ${v1099_payee_list.reportable} = 'Yes' ;;
+#     }
+
     join: dt_claimant_phone_home {
       view_label: "Claimant"
       type: left_outer
@@ -312,6 +320,25 @@ explore: claim_control {
               and ${v_claim_detail_transaction.claimtransaction_num} = ${claim_transaction.claimtransaction_num}
               ;;
       }
+
+      join: claim_transaction_payee {
+        type: inner
+        view_label: "Checks & Transactions Payee"
+        relationship: one_to_many
+        sql_on: ${claim_transaction_payee.claimcontrol_id} = ${claim_transaction.claimcontrol_id}
+              and ${claim_transaction_payee.claimant_num} = ${claim_transaction.claimant_num}
+              and ${claim_transaction_payee.claimfeature_num} = ${claim_transaction.claimfeature_num}
+              and ${claim_transaction_payee.claimtransaction_num} = ${claim_transaction.claimtransaction_num}
+              ;;
+      }
+
+      join: v1099_payee_list {
+        view_label: "Checks & Transactions Payee"
+        type: inner
+        relationship: one_to_many
+        sql_on: ${v1099_payee_list.claimpayee_id} = ${claim_transaction_payee.claimpayee_id} ;;
+      }
+
 
       join: dt_claim_transactions_as_of {
         type: left_outer
