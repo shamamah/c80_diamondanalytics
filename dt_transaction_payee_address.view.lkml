@@ -103,7 +103,8 @@ view: dt_transaction_payee_address {
   dimension: payee_address {
     label: "Payee Address"
     type: string
-    sql: case when ISNULL(${pobox},0)>0
+    #sql: trim(${house_num} + ' ' + ${street_name} + ' ' + ${apt_num}) ;;
+    sql: case when ISNULL(${pobox},'zzz')<>'zzz'
       then 'PO Box ' +  ${pobox}
       else trim(${house_num} + ' ' + ${street_name} + ' ' + ${apt_num})
       end ;;

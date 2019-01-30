@@ -427,13 +427,13 @@ view: claim_control {
   #   sql: ${TABLE}.last_known_location ;;
   # }
 
-  # dimension_group: last_modified {
-  #   # NOT USED
-  #   hidden: yes
-  #   type: time
-  #   timeframes: [time, date, week, month]
-  #   sql: ${TABLE}.last_modified_date ;;
-  # }
+  dimension_group: last_modified {
+    # USED for WaterStreet data delivery
+    hidden: no
+    type: time
+    timeframes: [date]
+    sql: ${TABLE}.last_modified_date ;;
+  }
 
   # dimension_group: last_transaction {
   #   # NOT USED

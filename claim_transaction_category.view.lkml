@@ -10,7 +10,7 @@ view: claim_transaction_category {
   }
 
   dimension: claimfinancialcategory_id {
-    hidden: yes
+    hidden: no
     type: number
     sql: ${TABLE}.claimfinancialcategory_id ;;
   }
