@@ -27,6 +27,27 @@ explore: claim_control {
 #     sql_on: ${claim_type.claimtype_id} = ${claim_control.claim_type_id} ;;
 #   }
 
+    join: dt_reserves_loss {
+      view_label: "Claim Financials (Totals)"
+      type: inner
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_reserves_loss.claimcontrol_id} ;;
+    }
+
+    join: dt_reserves_ao {
+      view_label: "Claim Financials (Totals)"
+      type: inner
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_reserves_ao.claimcontrol_id} ;;
+    }
+
+    join: dt_reserves_dcc {
+      view_label: "Claim Financials (Totals)"
+      type: inner
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_reserves_dcc.claimcontrol_id} ;;
+    }
+
     join: dt_summarized_claim_level_financials {
       view_label: "Summarized Financials (Claim Level)"
       type: left_outer
