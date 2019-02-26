@@ -2,37 +2,52 @@ view: dt_coverage_financials_umpd {
   derived_table: {
     sql:
 
-      SELECT CF.claimcontrol_id
-            ,CF.claimant_num
-            ,CF.claimfeature_num
-            ,SUM(V.indemnity_reserve) as 'loss_reserves'
-            ,SUM(V.indemnity_paid) as 'loss_paid'
-            ,SUM(V.salvage) as 'salvage'
-            ,SUM(V.subro) as 'subro'
+    SELECT CF.claimcontrol_id
+                ,CF.claimant_num
+                ,CF.claimfeature_num
+                ,SUM(V.indemnity_reserve) as 'loss_reserves'
+                ,SUM(V.indemnity_paid) as 'loss_paid'
+                ,SUM(V.salvage) as 'salvage'
+                ,SUM(V.subro) as 'subro'
+                ,MAX(COALESCE(CT.reserve_set, 'No')) AS 'reserve_set'
+                ,SUM(CT.amount) AS 'total_set_reserve'
 
-      FROM ClaimFeature CF
-          INNER JOIN dbo.vClaimTransactionPostedDateAsEffDate V WITH(NOLOCK)
-            ON CF.claimcontrol_id = V.claimcontrol_id
-              AND CF.claimant_num = V.claimant_num
-              AND CF.claimfeature_num = V.claimfeature_num
-              AND V.claimtransactionstatus_id IN (1, 4, 7)
-          INNER JOIN ClaimCoverage CCOV WITH(NOLOCK)
-            ON ccov.claimcontrol_id = CF.claimcontrol_id
-              AND CCOV.claimexposure_id = CF.claimexposure_id
-              AND CCOV.claimsubexposure_num = CF.claimsubexposure_num
-              AND CCOV.claimcoverage_num = CF.claimcoverage_num
-          LEFT OUTER JOIN ClaimSubCoverage SCS WITH(NOLOCK)
-            ON CCOV.claimcontrol_id = CF.claimcontrol_id
-              AND SCS.claimexposure_id = CF.claimexposure_id
-              AND SCS.claimsubexposure_num = CF.claimsubexposure_num
-              AND SCS.claimcoverage_num = CF.claimcoverage_num
-              AND SCS.claimsubcoverage_num = CF.claimsubcoverage_num
+    FROM dbo.ClaimFeature CF
+    INNER JOIN dbo.vClaimTransactionPostedDateAsEffDate V WITH (NOLOCK)
+           ON CF.claimcontrol_id = V.claimcontrol_id
+                  AND CF.claimant_num = V.claimant_num
+                  AND CF.claimfeature_num = V.claimfeature_num
+                  AND V.claimtransactionstatus_id IN (1, 4, 7)
+    INNER JOIN dbo.ClaimCoverage CCOV WITH (NOLOCK)
+           ON ccov.claimcontrol_id = CF.claimcontrol_id
+                  AND CCOV.claimexposure_id = CF.claimexposure_id
+                  AND CCOV.claimsubexposure_num = CF.claimsubexposure_num
+                  AND CCOV.claimcoverage_num = CF.claimcoverage_num
+    LEFT OUTER JOIN dbo.ClaimSubCoverage SCS WITH (NOLOCK)
+           ON CCOV.claimcontrol_id = CF.claimcontrol_id
+                  AND SCS.claimexposure_id = CF.claimexposure_id
+                  AND SCS.claimsubexposure_num = CF.claimsubexposure_num
+                  AND SCS.claimcoverage_num = CF.claimcoverage_num
+                  AND SCS.claimsubcoverage_num = CF.claimsubcoverage_num
+    LEFT OUTER JOIN
+      (
+             SELECT claimcontrol_id, claimant_num, claimfeature_num, amount, claimtransaction_num, 'Yes' AS reserve_set
+             FROM dbo.ClaimTransaction WITH (NOLOCK)
+             --WHERE claimtransactioncategory_id IN (1, 3, 13) /*reserve changes*/
+            WHERE claimtransactioncategory_id IN (1) /*reserve changes 1=Loss, 3=AO, 13=DCC*/
+                    AND amount > 0.00 /*only reserve changes > 0*/
+      ) CT
+           ON CT.claimant_num = V.claimant_num
+                  AND CT.claimcontrol_id = V.claimcontrol_id
+                  AND CT.claimfeature_num = V.claimfeature_num
+                  AND CT.claimtransaction_num = V.claimtransaction_num
 
-      WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) = 9
-              AND {% condition dt_claim_transactions_as_of.as_of_date %} V.eff_date {% endcondition %}
+    WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) = 9
+                  AND {% condition dt_claim_transactions_as_of.as_of_date %} V.eff_date {% endcondition %}
 
-      GROUP BY CF.claimcontrol_id, CF.claimant_num, CF.claimfeature_num
-    ;;
+    GROUP BY CF.claimcontrol_id, CF.claimant_num, CF.claimfeature_num
+
+        ;;
   }
 
 
@@ -78,6 +93,25 @@ view: dt_coverage_financials_umpd {
     hidden: yes
     type: string
     sql: ${TABLE}.loss_paid ;;
+  }
+
+  dimension: reserve_set {
+    label: "UMPD Reserve (Yes/No)"
+    type: string
+    sql: ${TABLE}.reserve_set  ;;
+  }
+
+  dimension: dim_total_set_reserve {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.total_set_reserve ;;
+  }
+
+  measure: total_set_reserve {
+    label: "UMPD Reserve (Set)"
+    type: sum
+    sql: ${dim_total_set_reserve} ;;
+    value_format_name: usd
   }
 
   measure: loss_paid {
