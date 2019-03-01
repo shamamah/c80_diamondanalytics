@@ -7,8 +7,10 @@ view: dt_transaction_payee_address {
         ,cp.claimpayee_id
         ,ctp.added_date
         ,a.display_address
-        ,a.pobox
-        ,house_num
+        --,a.pobox
+        ,case when trim(a.pobox) = '' then null else a.pobox end as pobox           --2019-02-28  SH Replace the previous line
+        --,house_num
+        ,case when trim(house_num) = '' then null else house_num end as house_num   --2019-02-28  SH Replace the previous line
         ,a.street_name
         ,a.apt_num
         ,a.city

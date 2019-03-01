@@ -271,10 +271,12 @@ view: v_claim_detail_feature {
   #   sql: ${TABLE}.claimdenial_date ;;
   # }
 
-  # dimension: coveragecode_id {
-  #   type: number
-  #   sql: ${TABLE}.coveragecode_id ;;
-  # }
+  dimension: coveragecode_id {
+    view_label: "Claimant Coverage"
+    label: "CoverageCode ID"
+    type: number
+    sql: ${TABLE}.coveragecode_id ;;
+  }
 
   # dimension: subcoveragecode_id {
   #   type: number
