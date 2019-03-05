@@ -10,6 +10,7 @@ view: dt_claim_inside_adjuster {
         ,cat.claimadjustertype_id as claim_adjuster_type_id, cat.dscr as ClaimAdjusterType_dscr, cat.[enabled] as Is_Adjuster_Enabled
         --,'vUsers' as vUsers
         ,u.display_name as Adjuster_Name
+        ,u.active as Active
       from ClaimControlPersonnel ccp
         inner join ClaimControl cc on cc.claimcontrol_id = ccp.claimcontrol_id
         inner join ClaimPersonnel cp on cp.claimpersonnel_id = ccp.claimpersonnel_id
@@ -80,5 +81,11 @@ view: dt_claim_inside_adjuster {
     label: "Examiner"
     type: string
     sql: case when ${TABLE}.Adjuster_Name IS NULL then 'Unassigned' else ${TABLE}.Adjuster_Name end ;;
+  }
+
+  dimension: active {
+    label: "Examiner Active (Yes/No)"
+    type: string
+    sql: case when ${TABLE}.Active=1 then 'Yes' else (case when ${TABLE}.Active=0 then 'No' else 'N/A' end) end ;;
   }
 }
