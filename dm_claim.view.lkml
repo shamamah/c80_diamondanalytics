@@ -280,6 +280,7 @@ view: dm_claim {
       loss_date_date,
       loss_type,
       loss_unit,
+      dm_claim_activity.received_date_date,
       current_claim_status,
       in_litigation,
       BillingRecordOnly,

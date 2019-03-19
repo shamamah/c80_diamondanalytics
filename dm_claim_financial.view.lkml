@@ -48,7 +48,7 @@ view: dm_claim_financial {
   }
 
   measure: claim_amount {
-    label: "Claim Amount"
+    label: "xClaim Amount"
     type: sum
     sql: ${dim_claim_amount} ;;
     value_format_name: usd

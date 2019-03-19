@@ -118,7 +118,7 @@ view: dm_claim_coverage {
   }
 
   measure: premium {
-    label: "Premium"
+    label: "xPremium"
     type: sum
     sql: ${dim_premium} ;;
     value_format_name: usd
