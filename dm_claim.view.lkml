@@ -19,14 +19,10 @@ view: dm_claim {
     type: string
     sql: ${TABLE}.FileTracClaimNumber ;;
     link: {
-      label: "WTA - Open in FileTrac"
-      url: "https://cms11.filetrac.net/system/login.asp?adjCoID=36302"
-      icon_url: "https://nebula.wsimg.com/16687cb1633052c29f20253d5d9fa127?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
-    }
-    link: {
-      label: "SCS - Open in FileTrac"
-      url: "https://claims.filetrac.net/system/login.asp?adjCoID=47148"
-      icon_url: "https://nebula.wsimg.com/2709d29fe4874461ab934e380e4a3465?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
+      label: "FileTrac"
+      url: "{{ claim_url }}"
+      #icon_url: "https://nebula.wsimg.com/16687cb1633052c29f20253d5d9fa127?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
+      #icon_url: "https://nebula.wsimg.com/2709d29fe4874461ab934e380e4a3465?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
     }
   }
 
@@ -57,9 +53,6 @@ view: dm_claim {
     sql: ${TABLE}.ClaimURL ;;
   }
 
-set: claim_url_link {
-
-}
   dimension: file_number {
     label: "File Number (FT)"
     type: string
@@ -67,7 +60,8 @@ set: claim_url_link {
     link: {
       label: "FileTrac"
       url: "{{ claim_url }}"
-      icon_url: "https://nebula.wsimg.com/16687cb1633052c29f20253d5d9fa127?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
+      #icon_url: "https://nebula.wsimg.com/16687cb1633052c29f20253d5d9fa127?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
+      #icon_url: "https://nebula.wsimg.com/2709d29fe4874461ab934e380e4a3465?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
     }
   }
 
