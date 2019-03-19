@@ -44,14 +44,14 @@ view: dm_claim_policy {
 
   dimension: client_contact_name {
     view_label: "Client"
-    label: "Contact Name"
+    label: "Contact"
     type: string
     sql: ${TABLE}.ClientContactName ;;
   }
 
   dimension: client_company_bdx {
     view_label: "Client"
-    label: "BDX"
+    label: "xBDX"
     type: string
     sql: ${TABLE}.ClientCompanyBDX ;;
   }

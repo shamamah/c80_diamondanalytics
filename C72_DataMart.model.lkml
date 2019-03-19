@@ -22,6 +22,9 @@ explore: dm_claim {
   #   AND {% condition dt_claim_transactions_as_of.as_of_date %} claim_control.reported_date {% endcondition %}
   #   ;;
 
+  #Exclude records with status of 'Cancelled'
+  sql_always_where: ISNULL(dm_claim.CurrentClaimStatus,'') <> 'Cancelled' ;;
+
   #join: claim_type {
   #  type: inner
   #  relationship: one_to_many

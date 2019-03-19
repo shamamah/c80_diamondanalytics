@@ -55,26 +55,26 @@ view: dm_claim_financial {
   }
 
   dimension: refer_to_underwriters {
-    label: "Is Referred to Underwriter"
+    label: "xIs Referred to U/w"
     type: string
     sql: ${TABLE}.ReferToUnderwriters ;;
   }
 
   dimension_group: refer_to_underwriters_date {
-    label: "Referred to Underwriter"
+    label: "xReferred to U/w"
     type: time
     timeframes: [date]
     sql: ${TABLE}.ReferToUnderwritersDate ;;
   }
 
   dimension: ror {
-    label: "Is ROR"
+    label: "xIs ROR"
     type: string
     sql: ${TABLE}.ROR ;;
   }
 
   dimension_group: rordate {
-    label: "ROR"
+    label: "xROR"
     type: time
     timeframes: [date]
     sql: ${TABLE}.RORDate ;;
@@ -87,33 +87,33 @@ view: dm_claim_financial {
   }
 
   dimension_group: subrogation_possible_date {
-    label: "Subro Possible"
+    label: "xSubro Possible"
     type: time
     timeframes: [date]
     sql: ${TABLE}.SubrogationPossibleDate ;;
   }
 
   dimension: denied {
-    label: "Is Denied"
+    label: "xIs Denied"
     type: string
     sql: ${TABLE}.Denied ;;
   }
 
   dimension_group: denied_date {
-    label: "Denied"
+    label: "xDenied"
     type: time
     timeframes: [date]
     sql: ${TABLE}.DeniedDate ;;
   }
 
   dimension: exceeds_authority {
-    label: "Is Exceeds Authority"
+    label: "xIs Exceeds Authority"
     type: string
     sql: ${TABLE}.ExceedsAuthority ;;
   }
 
   dimension: loss_form_written_under {
-    label: "Loss Form Written Under"
+    label: "xLoss Form Written Under"
     type: string
     sql: ${TABLE}.LossFormWrittenUnder ;;
   }

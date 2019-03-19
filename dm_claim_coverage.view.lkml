@@ -125,7 +125,7 @@ view: dm_claim_coverage {
   }
 
   dimension: occurrence_limit {
-    label: "Occurrence Limit"
+    label: "xOccurrence Limit"
     type: number
     sql: ${TABLE}.OccurrenceLimit ;;
     value_format_name: usd
@@ -138,45 +138,45 @@ view: dm_claim_coverage {
   }
 
   measure:  total_insured_value {
-    label: "Total Insured Value"
+    label: "xTotal Insured Value"
     type: sum
     sql: ${dim_total_insured_value} ;;
     value_format_name: usd
   }
 
   dimension: medicare_bodily_injury {
-    label: "Is Medicare BI"
+    label: "xIs Medicare BI"
     type: string
     sql: ${TABLE}.MedicareBodilyInjury ;;
   }
 
   dimension: medicare_eligible {
-    label: "Is Medicare Eligible"
+    label: "xIs Medicare Eligible"
     type: string
     sql: ${TABLE}.MedicareEligible ;;
   }
 
   dimension: medicare_hicn {
-    label: "Medicare HICN"
+    label: "xMedicare HICN"
     type: string
     sql: ${TABLE}.MedicareHICN ;;
   }
 
   dimension: medicare_request {
-    label: "Is Medicare Requested"
+    label: "xIs Medicare Requested"
     type: string
     sql: ${TABLE}.MedicareRequest ;;
   }
 
   dimension_group: medicare_request_date {
-    label: "Medical Request"
+    label: "xMedical Request"
     type: time
     timeframes: [date]
     sql: ${TABLE}.MedicareRequestDate ;;
   }
 
   dimension: medicare_refused {
-    label: "Is Medicare Refused"
+    label: "xIs Medicare Refused"
     type: string
     sql: ${TABLE}.MedicareRefused ;;
   }

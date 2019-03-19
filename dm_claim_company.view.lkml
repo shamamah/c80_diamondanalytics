@@ -21,51 +21,55 @@ view: dm_claim_company {
   }
 
   dimension: lob {
-    label: "LOB"
+    label: "xLOB"
     type: string
     sql: ${TABLE}.LOB ;;
   }
 
-  dimension: catcode {
-    hidden: yes
-    label: "CAT Code"
-    type: string
-    sql: ${TABLE}.CATCode ;;
-  }
+  # dimension: catcode {
+  #   hidden: yes
+  #   label: "CAT Code"
+  #   type: string
+  #   sql: ${TABLE}.CATCode ;;
+  # }
 
   dimension: cl_cat_code {
+    view_label: "Claim"
     label: "CAT Code"
     type: string
-    sql: ${TABLE}.ClCATCode ;;
+    sql: case when ${TABLE}.ClCATCode IS NULL then ${TABLE}.CATCode else ${TABLE}.ClCATCode end ;;
   }
 
-  dimension: adjustment_type {
-    hidden: yes
-    label: "Adjustment Type"
-    type: string
-    sql: ${TABLE}.AdjustmentType ;;
-  }
+  # dimension: adjustment_type {
+  #   hidden: yes
+  #   label: "Adjustment Type"
+  #   type: string
+  #   sql: ${TABLE}.AdjustmentType ;;
+  # }
 
   dimension: cl_adjustment_type {
+    view_label: "Claim"
     label: "Adjustment Type"
     type: string
-    sql: ${TABLE}.ClAdjustmentType ;;
+    sql: case when ${TABLE}.ClAdjustmentType IS NULL then ${TABLE}.AdjustmentType else ${TABLE}.ClAdjustmentType end  ;;
   }
 
   dimension: lobcode {
-    label: "LOB Code"
+    label: "xLOB Code"
     type: string
     sql: ${TABLE}.LOBCode ;;
   }
 
   dimension: isocode {
-    label: "ISO Code"
+    view_label: "Claim"
+    label: "xISO Code"
     type: string
     sql: ${TABLE}.ISOCode ;;
   }
 
   dimension: cause_code {
-    label: "Cause Code"
+    view_label: "Claim"
+    label: "xCause Code"
     type: string
     sql: ${TABLE}.CauseCode ;;
   }

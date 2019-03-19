@@ -28,7 +28,7 @@ view: dm_invoice {
 
   dimension: invoice_id {
     label: "Invoice ID"
-    hidden: no
+    hidden: yes
     type: number
     sql: ${TABLE}.InvoiceId ;;
   }
@@ -47,7 +47,7 @@ view: dm_invoice {
   }
 
   dimension: invoice_status {
-    label: "Status"
+    label: "xStatus"
     type: string
     sql: ${TABLE}.InvoiceStatus ;;
   }
@@ -60,14 +60,14 @@ view: dm_invoice {
   }
 
   dimension_group: received {
-    label: "Received"
+    label: "xReceived"
     type: time
     timeframes: [date,month,quarter,year]
     sql: ${TABLE}.ReceivedDate ;;
   }
 
   dimension_group: void {
-    label: "Void"
+    label: "xVoid"
     type: time
     timeframes: [date,month,quarter,year]
     sql: ${TABLE}.VoidDate ;;
@@ -92,7 +92,7 @@ view: dm_invoice {
   }
 
   measure: service_amt {
-    label: "Service Amount"
+    label: "xService Amount"
     type: sum
     sql: ${dim_service_amt} ;;
     value_format_name: usd
@@ -105,7 +105,7 @@ view: dm_invoice {
   }
 
   measure: expense_amount {
-    label: "Expense Amount"
+    label: "xExpense Amount"
     type: sum
     sql: ${dim_expense_amount} ;;
     value_format_name: usd

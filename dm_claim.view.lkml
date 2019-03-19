@@ -3,7 +3,7 @@ view: dm_claim {
 
   dimension: id {
     primary_key: yes
-    hidden: no
+    hidden: yes
     type: number
     sql: ${TABLE}.Id ;;
   }
@@ -15,58 +15,92 @@ view: dm_claim {
   }
 
   dimension: file_trac_claim_number {
-    label: "FT Claim Number"
+    label: "Claim Number (FT)"
     type: string
     sql: ${TABLE}.FileTracClaimNumber ;;
+    link: {
+      label: "WTA - Open in FileTrac"
+      url: "https://cms11.filetrac.net/system/login.asp?adjCoID=36302"
+      icon_url: "https://nebula.wsimg.com/16687cb1633052c29f20253d5d9fa127?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
+    }
+    link: {
+      label: "SCS - Open in FileTrac"
+      url: "https://claims.filetrac.net/system/login.asp?adjCoID=47148"
+      icon_url: "https://nebula.wsimg.com/2709d29fe4874461ab934e380e4a3465?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
+    }
   }
 
   dimension: file_trac_file_number {
-    label: "FT File Number"
+    label: "File Number (Internal)"
+    hidden: yes
     type: string
     sql: ${TABLE}.FileTracFileNumber ;;
   }
 
   dimension: file_trac_claim_id {
     label: "FT Claim ID"
+    hidden: yes
     type: number
     sql: ${TABLE}.FileTracClaimID ;;
   }
 
   dimension: internal_claim_id {
-    label: "Internal Claim ID"
+    label: "Claim ID (Internal)"
+    hidden: yes
     type: number
     sql: ${TABLE}.InternalClaimID ;;
   }
 
+  dimension: claim_url {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.ClaimURL ;;
+  }
+
+set: claim_url_link {
+
+}
   dimension: file_number {
-    label: "File Number"
+    label: "File Number (FT)"
     type: string
     sql: ${TABLE}.FileNumber ;;
+    link: {
+      label: "FileTrac"
+      url: "{{ claim_url }}"
+      icon_url: "https://nebula.wsimg.com/16687cb1633052c29f20253d5d9fa127?AccessKeyId=48ECF6173621CE416A90&disposition=0&alloworigin=1"
+    }
   }
 
   dimension: secondary_file_number {
-    label: "Secondary File Number"
+    label: "File Number (Secondary)"
+    hidden: yes
     type: string
     sql: ${TABLE}.SecondaryFileNumber ;;
   }
 
-  dimension_group: date_of_loss {
+  dimension_group: loss_date {
     label: "Loss"
     type: time
     timeframes: [date,month,quarter,year]
-    sql: ${TABLE}.DateOfLoss ;;
+    sql: ${TABLE}.LossDate ;;
+  }
+
+  dimension: loss_date_est {
+    label: "Is Loss Date Estimated"
+    type: string
+    sql: case when ${TABLE}.LossDateEst=1 then 'Yes' else 'No' end ;;
   }
 
   dimension: serious_claim {
-    label: "Is Serious"
+    label: "xIs Serious"
     type: string
-    sql: case when ${TABLE}.SeriousClaim=0 then 'No' else 'Yes' end ;;
+    sql: case when ${TABLE}.SeriousClaim=1 then 'YEs' else 'No' end ;;
   }
 
   dimension: in_litigation {
     label: "Is Litigated"
     type: string
-    sql: case when ${TABLE}.InLitigation=0 then 'No' else 'Yes' end ;;
+    sql: case when ${TABLE}.InLitigation=1 then 'Yes' else 'No' end ;;
   }
 
   dimension: loss_type {
@@ -91,6 +125,42 @@ view: dm_claim {
     label: "Special Instructions"
     type: string
     sql: ${TABLE}.SpecialInstructions ;;
+  }
+
+  dimension: loaned_examiner{
+    label: "Is Loaned Examiner"
+    type: string
+    sql: case when ${TABLE}.LoanedExaminer=1 then 'Yes' else 'No' end ;;
+  }
+
+  dimension: desk_adjustment {
+    label: "xIs Desk Adjustment"
+    type: string
+    sql: case when ${TABLE}.DeskAdjustment=1 then 'Yes' else 'No' end ;;
+  }
+
+  dimension: BillingRecordOnly {
+    label: "Is Billing Record"
+    type: string
+    sql: case when ${TABLE}.BillingRecordOnly=1 then 'Yes' else 'No' end ;;
+  }
+
+  dimension: claim_closed {
+    label: "Is Closed"
+    type: string
+    sql: case when ${TABLE}.ClaimClosed=1 then 'Yes' else 'No' end ;;
+  }
+
+  dimension: re_open_count {
+    label: "Re-Open Count"
+    type: number
+    sql: ${TABLE}.ReOpenCount ;;
+  }
+
+  dimension: current_claim_status{
+    label: "Status (Current)"
+    type: string
+    sql: ${TABLE}.CurrentClaimStatus ;;
   }
 
   dimension_group: _inserted {
@@ -205,6 +275,23 @@ view: dm_claim {
 
   measure: count {
     type: count
-    #drill_fields: [loss_addr1]
+    drill_fields: [detail*]
+  }
+
+  set: detail {
+    fields: [
+      source_system,
+      file_trac_claim_number,
+      file_number,
+      loss_date_date,
+      loss_type,
+      loss_unit,
+      current_claim_status,
+      in_litigation,
+      BillingRecordOnly,
+      desk_adjustment,
+      loaned_examiner
+    ]
+
   }
 }
