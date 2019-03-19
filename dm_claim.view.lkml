@@ -92,7 +92,7 @@ view: dm_claim {
   }
 
   dimension: in_litigation {
-    label: "Is Litigated"
+    label: "Is Represented"
     type: string
     sql: case when ${TABLE}.InLitigation=1 then 'Yes' else 'No' end ;;
   }

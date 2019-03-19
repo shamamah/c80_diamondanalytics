@@ -42,7 +42,7 @@ view: dm_claim_status {
   }
 
   dimension: in_litigation {
-    label: "Is Litigated"
+    label: "Is Represented"
     type: string
     sql: ${TABLE}.InLitigation ;;
   }
