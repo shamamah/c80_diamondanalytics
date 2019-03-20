@@ -285,7 +285,9 @@ view: dm_claim {
       in_litigation,
       BillingRecordOnly,
       desk_adjustment,
-      loaned_examiner
+      loaned_examiner,
+      dm_claim_financial.claim_acv,
+      dm_claim_financial.claim_rcv
     ]
 
   }
