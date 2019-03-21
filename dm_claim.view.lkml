@@ -97,6 +97,12 @@ view: dm_claim {
     sql: case when ${TABLE}.InLitigation=1 then 'Yes' else 'No' end ;;
   }
 
+  dimension: loss_category {
+    label: "Loss Category"
+    type: string
+    sql: ${TABLE}.LossCategory ;;
+  }
+
   dimension: loss_type {
     label: "Loss Type"
     type: string
@@ -272,6 +278,12 @@ view: dm_claim {
     drill_fields: [detail*]
   }
 
+  measure: count_dates_drill {
+    label: "Volume"
+    type: count
+    drill_fields: [dates_drill*]
+  }
+
   set: detail {
     fields: [
       source_system,
@@ -289,6 +301,26 @@ view: dm_claim {
       dm_claim_financial.claim_acv,
       dm_claim_financial.claim_rcv
     ]
+  }
 
+  set: dates_drill {
+    fields: [
+      file_trac_claim_number,
+      file_number,
+      current_claim_status,
+      loss_category,
+      loss_date_date,
+      dm_claim_activity.due_date_date,
+      dm_claim_activity.received_date_date,
+      dm_claim_activity.assigned_date_date,
+      dm_claim_activity.accepted_date_date,
+      dm_claim_activity.contact_date_date,
+      dm_claim_activity.inspection_date_date,
+      dm_claim_activity.first_report_date_date,
+      dm_claim_activity.first_close_date_date,
+      dm_claim_activity.re_open_date_date,
+      dm_claim_activity.closed_date_date,
+      dm_claim_activity.days_open
+    ]
   }
 }

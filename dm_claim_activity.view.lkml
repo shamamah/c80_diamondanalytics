@@ -29,7 +29,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "01 Received"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.ReceivedDate ;;
   }
 
@@ -37,7 +37,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "02 Assigned"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.AssignedDate ;;
   }
 
@@ -122,7 +122,7 @@ view: dm_claim_activity {
     label: "20 Received to Assigned"
     type: number
     sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
-    value_format_name: decimal_4
+    value_format_name: decimal_0
   }
 
   dimension: datediff_assigned_to_accepted {
@@ -130,7 +130,7 @@ view: dm_claim_activity {
     label: "21 Assigned to Accepted"
     type: number
     sql: datediff(day, ${assigned_date_date}, ${accepted_date_date}) ;;
-    value_format_name: decimal_4
+    value_format_name: decimal_0
   }
 
   dimension: datediff_accepted_to_contact {
@@ -138,7 +138,7 @@ view: dm_claim_activity {
     label: "22 Accepted to Contact"
     type: number
     sql: datediff(day, ${accepted_date_date}, ${contact_date_date}) ;;
-    value_format_name: decimal_4
+    value_format_name: decimal_0
   }
 
   dimension: datediff_contact_to_inspection {
@@ -203,7 +203,7 @@ view: dm_claim_activity {
     }
   }
 
-#   dimension: datediff_assigned_to_accepted {
+  #   dimension: datediff_assigned_to_accepted {
 #     view_label: "Claim Dates"
 #     label: "21 Assigned to Accepted"
 #     type: number
@@ -265,56 +265,56 @@ view: dm_claim_activity {
   ################
 
   dimension: duration_to_assign {
-    label: "Duration to Assign"
+    label: "1 Duration to Assign"
     type: number
     sql: ${TABLE}.DurationToAssign ;;
     value_format_name: decimal_4
   }
 
   dimension: duration_to_accept {
-    label: "Duration to Accept"
+    label: "2 Duration to Accept"
     type: number
     sql: ${TABLE}.DurationToAccept ;;
     value_format_name: decimal_4
   }
 
   dimension: duration_to_contact {
-    label: "Duration to Contact"
+    label: "3 Duration to Contact"
     type: number
     sql: ${TABLE}.DurationToContact ;;
     value_format_name: decimal_4
   }
 
   dimension: duration_to_inspect {
-    label: "Duration to Inspect"
+    label: "4 Duration to Inspect"
     type: number
     sql: ${TABLE}.DurationToInspect ;;
     value_format_name: decimal_4
   }
 
   dimension: duration_to_first_report {
-    label: "Duration to First Report"
+    label: "5 Duration to First Report"
     type: number
     sql: ${TABLE}.DurationToFirstReport ;;
     value_format_name: decimal_4
   }
 
   dimension: duration_to_adjust {
-    label: "Duration to Adjust"
+    label: "6 Duration to Adjust"
     type: number
     sql: ${TABLE}.DurationToAdjust ;;
     value_format_name: decimal_4
   }
 
   dimension: duration_allocated {
-    label: "Duration Allocated"
+    label: "9 Duration Allocated"
     type: number
     sql: ${TABLE}.DurationAllocated ;;
     value_format_name: decimal_4
   }
 
   dimension: duration_to_first_close {
-    label: "Duration to First Close"
+    label: "7 Duration to First Close"
     type: number
     sql: ${TABLE}.DurationToFirstClose ;;
     value_format_name: decimal_4
@@ -327,8 +327,78 @@ view: dm_claim_activity {
     value_format_name: decimal_4
   }
 
-  #   measure: count {
+  ########################
+  ##  AVERAGE DURATION  ##
+  ########################
+
+  measure: ave_durationr_recevied_to_assigned {
+    view_label: "Claim Dates"
+    label: "1 Ave Duration Received to Assigned"
+    type: average
+    sql: ${duration_to_assign} ;;
+    value_format_name: decimal_1
+#     filters: {
+#       field: assigned_date_date
+#       value: "-NULL"
+#     }
+#     filters: {
+#       field: received_date_date
+#       value: "-NULL"
+#     }
+    drill_fields: [dates_drill*]
+  }
+
+  ########################
+  ##                    ##
+  ########################
+
+  dimension: days_open {
+    hidden: yes
+#     view_label: "Claim"
+#     label: "First Days Open"
+    type: number
+    sql: case when trim(${dm_claim.claim_closed})='No'
+          then DATEDIFF(dd, ${received_date_date}, GetDate())
+          else DATEDIFF(dd, ${received_date_date}, ${closed_date_date}) end  ;;
+      #--case when ${first_close_date_date} IS NULL
+    }
+
+    dimension : days_open_tier {
+      view_label: "Claim"
+      label: "Days Open (Tiers)"
+      type: tier
+      tiers: [31,61,91]
+      style: integer
+      sql: ${days_open} ;;
+      value_format: "0"
+    }
+
+
+    ##################
+    ##  DRILL SETS  ##
+    ##################
+
+    set: dates_drill {
+      fields: [dm_claim.file_trac_file_number,
+        received_date_date,
+        duration_to_assign,
+        assigned_date_date,
+        duration_to_accept,
+        accepted_date_date,
+        duration_to_contact,
+        contact_date_date,
+        duration_to_contact,
+        duration_to_inspect,
+        inspection_date_date,
+        first_report_date_date,
+        first_close_date_date,
+        re_open_date_date,
+        closed_date_date]
+    }
+
+
+#   measure: count {
 #     type: count
 #     drill_fields: [id]
 #   }
-}
+  }

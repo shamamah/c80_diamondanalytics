@@ -107,4 +107,11 @@ explore: dm_claim {
     relationship: one_to_many
     sql_on: ${dm_claim.id} = ${dm_invoice.claim_id} ;;
   }
+
+  join: dm_claim_re_open {
+    view_label: "Claim Re-Open"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${dm_claim.internal_claim_id} = ${dm_claim_re_open.internal_claim_id} ;;
+  }
 }

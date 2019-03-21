@@ -40,6 +40,13 @@ view: dm_claim_company {
     sql: case when ${TABLE}.ClCATCode IS NULL then ${TABLE}.CATCode else ${TABLE}.ClCATCode end ;;
   }
 
+  dimension: is_cat {
+    view_label: "Claim"
+    label: "Is CAT"
+    type: string
+    sql: case when ${TABLE}.ClCATCode = 'noncat' then 'No' else 'Yes' end ;;
+  }
+
   # dimension: adjustment_type {
   #   hidden: yes
   #   label: "Adjustment Type"
