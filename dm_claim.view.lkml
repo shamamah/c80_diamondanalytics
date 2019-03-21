@@ -284,6 +284,16 @@ view: dm_claim {
     drill_fields: [dates_drill*]
   }
 
+  measure: count_open {
+    label: "Open Count"
+    type: count
+    drill_fields: [dates_drill*]
+    filters: {
+      field: dm_claim.claim_closed
+      value: "No"
+    }
+  }
+
   set: detail {
     fields: [
       source_system,
