@@ -101,6 +101,15 @@ view: dt_claims_first_activity {
       field: first_close_date_date
       value: "-NULL"
     }
+    link: {
+      label: "Sort by Claim Number"
+      url: "{{ link }}&sorts=claim_control.claim_number"
+    }
+    link: {
+      label: "Sort by Date Closed"
+      url: "{{ link }}&sorts=dt_claims_first_activity.first_close_date_date"
+    }
+    drill_fields: [claim_stat*]
   }
 
   measure: sum_days_open {
@@ -131,9 +140,13 @@ view: dt_claims_first_activity {
       claim_control.loss_date_date,
       claim_control.reported_date_date,
       dt_claim_days_open.days_open,
+      dt_claims_first_activity.first_close_date_date,
       dt_claim_close_date.claim_close_date_date,
       dt_claim_inside_adjuster.initials,
-      v_claim_detail_feature.sum_indemnity_paid
+      v_claim_detail_feature.sum_indemnity_paid,
+      v_claim_detail_feature.sum_indemnity_reserve,
+      v_claim_detail_feature.sum_expense_paid
+
     ]
   }
 }

@@ -54,6 +54,12 @@ view: dm_personnel_supervisor {
     sql: ${TABLE}."Supervisor Last Name" ;;
   }
 
+  dimension: supervisor_full_name {
+    type: string
+    label: "Name, Full"
+    sql: ${supervisor_first_name} + ' ' + ${supervisor_last_name} ;;
+  }
+
   dimension: supervisor_city {
     type: string
     label: "Address, City"

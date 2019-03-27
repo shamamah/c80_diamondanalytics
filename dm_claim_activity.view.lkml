@@ -45,7 +45,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "03 Accepted"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.AcceptedDate ;;
   }
 
@@ -53,7 +53,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "04 Contact"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.ContactDate ;;
   }
 
@@ -61,7 +61,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "05 Inspection"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.InspectionDate ;;
   }
 
@@ -69,7 +69,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "06 First Report"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.FirstReportDate ;;
   }
 
@@ -77,7 +77,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "07 Adjustment Completion"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.AdjCompleteDate ;;
   }
 
@@ -85,7 +85,7 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "08 Close (First)"
     type: time
-    timeframes: [date,month,quarter,year]
+    timeframes: [date,time,month,quarter,year]
     sql: ${TABLE}.FirstCloseDate ;;
   }
 
@@ -121,8 +121,12 @@ view: dm_claim_activity {
     view_label: "Claim Dates"
     label: "20 Received to Assigned"
     type: number
-    sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
-    value_format_name: decimal_0
+    #sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
+    sql: case when isnull(${accepted_date_time}, '1900-01-01') != '1900-01-01'
+            then  (cast((datediff(minute,${received_date_time},${assigned_date_time})/60.) as decimal(12,2))/24)
+            else 0
+          end;;
+    value_format_name: decimal_4
   }
 
   dimension: datediff_assigned_to_accepted {
@@ -372,6 +376,22 @@ view: dm_claim_activity {
       sql: ${days_open} ;;
       value_format: "0"
     }
+
+
+    ####################
+    ##  TYPE DURATION ##
+    ####################
+
+    # dimension_group: duration_recevied_to_assigned {
+    #   view_label: "Type Duratoin"
+    #   label: "20 Received to Assigned"
+    #   type: duration
+    #   timeframes: [hour,date,week]
+    #   sql_start: ${TABLE}.AssignedDate ;;
+    #   sql_end: ${TABLE}.AcceptedDate ;;
+    # }
+
+
 
 
     ##################

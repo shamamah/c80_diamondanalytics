@@ -54,6 +54,12 @@ view: dm_personnel_adjuster {
     sql: ${TABLE}."Adjuster Last Name" ;;
   }
 
+  dimension: adjuster_full_name {
+    type: string
+    label: "Name, Full"
+    sql: ${adjuster_first_name} + ' ' + ${adjuster_last_name} ;;
+  }
+
   dimension: adjuster_city {
     type: string
     label: "Address, City"

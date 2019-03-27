@@ -39,8 +39,8 @@ view: v_claim_detail_claimant {
   # }
 
   dimension: name {
+    label: "Name (WS)"
     type: string
-    hidden: yes
     sql: ${TABLE}.name ;;
   }
 
