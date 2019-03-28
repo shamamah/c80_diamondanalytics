@@ -118,6 +118,7 @@ view: dm_claim_activity {
   ###############
 
   dimension: datediff_recevied_to_assigned {
+    hidden: yes
     view_label: "Claim Dates"
     label: "20 Received to Assigned"
     type: number
@@ -129,7 +130,21 @@ view: dm_claim_activity {
     value_format_name: decimal_4
   }
 
+  dimension: datediff_assigned_to_contact {
+    hidden: yes
+    view_label: "Claim Dates"
+    label: "Assigned to First Contact"
+    type: number
+    #sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
+    sql: case when isnull(${contact_date_time}, '1900-01-01') != '1900-01-01'
+            then  (cast((datediff(minute,${assigned_date_time},${contact_date_time})/60.) as decimal(12,2))/24)
+            else 0
+          end;;
+    value_format_name: decimal_2
+  }
+
   dimension: datediff_assigned_to_accepted {
+    hidden: yes
     view_label: "Claim Dates"
     label: "21 Assigned to Accepted"
     type: number
@@ -138,6 +153,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_accepted_to_contact {
+    hidden: yes
     view_label: "Claim Dates"
     label: "22 Accepted to Contact"
     type: number
@@ -146,6 +162,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_contact_to_inspection {
+    hidden: yes
     view_label: "Claim Dates"
     label: "23 Contact to Inspection"
     type: number
@@ -154,6 +171,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_inspection_to_first_report {
+    hidden: yes
     view_label: "Claim Dates"
     label: "24 Inspection to First Report"
     type: number
@@ -162,6 +180,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_first_report_to_complete {
+    hidden: yes
     view_label: "Claim Dates"
     label: "25 First Report to Complete"
     type: number
@@ -170,6 +189,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_first_complete_to_first_close {
+    hidden: yes
     view_label: "Claim Dates"
     label: "26 Complete to First Close"
     type: number
@@ -178,6 +198,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_first_close_to_reopen {
+    hidden: yes
     view_label: "Claim Dates"
     label: "27 First Close to ReOpen"
     type: number
@@ -186,9 +207,9 @@ view: dm_claim_activity {
   }
 
 
-  ############
+  ###############
   ##  AVERAGE  ##
-  ############
+  ###############
 
 
   measure: average_recevied_to_assigned {
@@ -335,21 +356,21 @@ view: dm_claim_activity {
   ##  AVERAGE DURATION  ##
   ########################
 
-  measure: ave_durationr_recevied_to_assigned {
+  measure: ave_assigned_to_contact {
     view_label: "Claim Dates"
-    label: "1 Ave Duration Received to Assigned"
+    label: "Average Duration To 1st Contact"
     type: average
-    sql: ${duration_to_assign} ;;
-    value_format_name: decimal_1
-#     filters: {
-#       field: assigned_date_date
-#       value: "-NULL"
-#     }
-#     filters: {
-#       field: received_date_date
-#       value: "-NULL"
-#     }
-    drill_fields: [dates_drill*]
+    sql: ${datediff_assigned_to_contact} ;;
+    value_format_name: decimal_2
+    filters: {
+      field: contact_date_date
+      value: "-NULL"
+    }
+    filters: {
+      field: datediff_assigned_to_contact
+      value: ">0"
+    }
+    drill_fields: [dm_claim.dates_drill*]
   }
 
   ########################
@@ -358,8 +379,8 @@ view: dm_claim_activity {
 
   dimension: days_open {
     hidden: yes
-#     view_label: "Claim"
-#     label: "First Days Open"
+    view_label: "Claim"
+    label: "First Days Open"
     type: number
     sql: case when trim(${dm_claim.claim_closed})='No'
           then DATEDIFF(dd, ${received_date_date}, GetDate())
@@ -377,48 +398,4 @@ view: dm_claim_activity {
       value_format: "0"
     }
 
-
-    ####################
-    ##  TYPE DURATION ##
-    ####################
-
-    # dimension_group: duration_recevied_to_assigned {
-    #   view_label: "Type Duratoin"
-    #   label: "20 Received to Assigned"
-    #   type: duration
-    #   timeframes: [hour,date,week]
-    #   sql_start: ${TABLE}.AssignedDate ;;
-    #   sql_end: ${TABLE}.AcceptedDate ;;
-    # }
-
-
-
-
-    ##################
-    ##  DRILL SETS  ##
-    ##################
-
-    set: dates_drill {
-      fields: [dm_claim.file_trac_file_number,
-        received_date_date,
-        duration_to_assign,
-        assigned_date_date,
-        duration_to_accept,
-        accepted_date_date,
-        duration_to_contact,
-        contact_date_date,
-        duration_to_contact,
-        duration_to_inspect,
-        inspection_date_date,
-        first_report_date_date,
-        first_close_date_date,
-        re_open_date_date,
-        closed_date_date]
-    }
-
-
-#   measure: count {
-#     type: count
-#     drill_fields: [id]
-#   }
   }
