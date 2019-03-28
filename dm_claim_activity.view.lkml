@@ -118,8 +118,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_assigned_to_contact {
-    hidden: yes
-    label: "Assigned to First Contact"
+    label: "Time: Assigned to Contact"
     type: number
     #sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
     sql: case when isnull(${contact_date_time}, '1900-01-01') != '1900-01-01'
@@ -130,8 +129,7 @@ view: dm_claim_activity {
   }
 
   dimension: datediff_assigned_to_inspection {
-    hidden: yes
-    label: "Assigned to Inspection"
+    label: "Time: Assigned to Inspection"
     type: number
     sql: case when isnull(${inspection_date_time}, '1900-01-01') != '1900-01-01'
             then  (cast((datediff(minute,${assigned_date_time},${inspection_date_time})/60.) as decimal(12,2))/24)
@@ -180,13 +178,16 @@ view: dm_claim_activity {
     value_format_name: decimal_0
   }
 
-  dimension: datediff_first_complete_to_first_close {
-    hidden: yes
-    label: "26 Complete to First Close"
+  dimension: datediff_complete_to_first_close {
+    label: "Time: Complete to Close"
     type: number
-    sql: datediff(day, ${adjustment_completed_date_date}, ${first_close_date_date}) ;;
-    value_format_name: decimal_0
+    sql: case when isnull(${adjustment_completed_date_date}, '1900-01-01') != '1900-01-01' and isnull(${first_close_date_date}, '1900-01-01') != '1900-01-01'
+            then  (cast((datediff(minute,${adjustment_completed_date_date},${first_close_date_date})/60.) as decimal(12,2))/24)
+            else 0
+          end;;
+    value_format_name: decimal_2
   }
+
 
   dimension: datediff_first_close_to_reopen {
     hidden: yes
@@ -197,9 +198,9 @@ view: dm_claim_activity {
   }
 
 
-  ###############
-  ##  AVERAGE  ##
-  ###############
+###############
+##  AVERAGE  ##
+###############
 
   measure: ave_assigned_to_contact {
     label: "Average Duration To 1st Contact"
@@ -233,9 +234,29 @@ view: dm_claim_activity {
     drill_fields: [dm_claim.dates_drill*]
   }
 
+  measure: ave_complete_to_close {
+    label: "Average Duration To Close"
+    type: average
+    sql: ${datediff_complete_to_first_close} ;;
+    value_format_name: decimal_2
+    filters: {
+      field: adjustment_completed_date_date
+      value: "-NULL"
+    }
+    filters: {
+      field: first_close_date_date
+      value: "-NULL"
+    }
+    filters: {
+      field: datediff_complete_to_first_close
+      value: ">0"
+    }
+    drill_fields: [dm_claim.dates_drill*]
+  }
+
   ############
-  ##  TIME  ##
-  ############
+##  TIME  ##
+############
 
   dimension: time_to_assign {
     hidden: yes
@@ -287,9 +308,9 @@ view: dm_claim_activity {
   }
 
 
-  ################
-  ##  DURATION  ##
-  ################
+################
+##  DURATION  ##
+################
 
   dimension: duration_to_assign {
     hidden: yes
@@ -363,9 +384,9 @@ view: dm_claim_activity {
     value_format_name: decimal_4
   }
 
-  ########################
-  ##                    ##
-  ########################
+########################
+##                    ##
+########################
 
   dimension: days_open {
     hidden: yes
