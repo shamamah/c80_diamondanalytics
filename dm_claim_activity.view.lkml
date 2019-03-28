@@ -198,9 +198,9 @@ view: dm_claim_activity {
   }
 
 
-###############
-##  AVERAGE  ##
-###############
+  ###############
+  ##  AVERAGE  ##
+  ###############
 
   measure: ave_assigned_to_contact {
     label: "Average Duration To 1st Contact"
@@ -255,8 +255,8 @@ view: dm_claim_activity {
   }
 
   ############
-##  TIME  ##
-############
+  ##  TIME  ##
+  ############
 
   dimension: time_to_assign {
     hidden: yes
@@ -308,9 +308,9 @@ view: dm_claim_activity {
   }
 
 
-################
-##  DURATION  ##
-################
+  ################
+  ##  DURATION  ##
+  ################
 
   dimension: duration_to_assign {
     hidden: yes
