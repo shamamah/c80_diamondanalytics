@@ -15,18 +15,16 @@ view: dm_claim_activity {
   }
 
   dimension: first_close_est {
-    view_label: "Claim Dates"
     label: "Is First Close Estimate"
     type: string
     sql: case when ${TABLE}.FirstCloseEst=1 then 'Yes' else 'No' end ;;
   }
 
-  ############
-  ##  DATE  ##
-  ############
+  #############
+  ##  DATES  ##
+  #############
 
   dimension_group: received_date {
-    view_label: "Claim Dates"
     label: "01 Received"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -34,7 +32,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: assigned_date {
-    view_label: "Claim Dates"
     label: "02 Assigned"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -42,7 +39,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: accepted_date {
-    view_label: "Claim Dates"
     label: "03 Accepted"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -50,7 +46,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: contact_date {
-    view_label: "Claim Dates"
     label: "04 Contact"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -58,7 +53,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: inspection_date {
-    view_label: "Claim Dates"
     label: "05 Inspection"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -66,7 +60,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: first_report_date {
-    view_label: "Claim Dates"
     label: "06 First Report"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -74,7 +67,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: adjustment_completed_date {
-    view_label: "Claim Dates"
     label: "07 Adjustment Completion"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -82,7 +74,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: first_close_date {
-    view_label: "Claim Dates"
     label: "08 Close (First)"
     type: time
     timeframes: [date,time,month,quarter,year]
@@ -90,7 +81,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: re_open_date {
-    view_label: "Claim Dates"
     label: "09 Re-open (Last)"
     type: time
     timeframes: [date,month,quarter,year]
@@ -98,7 +88,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: closed_date {
-    view_label: "Claim Dates"
     label: "10 Closed (Last)"
     type: time
     timeframes: [date,month,quarter,year]
@@ -106,7 +95,6 @@ view: dm_claim_activity {
   }
 
   dimension_group: due_date {
-    view_label: "Claim Dates"
     label: "Due"
     type: time
     timeframes: [date,month,quarter,year]
@@ -119,7 +107,6 @@ view: dm_claim_activity {
 
   dimension: datediff_recevied_to_assigned {
     hidden: yes
-    view_label: "Claim Dates"
     label: "20 Received to Assigned"
     type: number
     #sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
@@ -132,7 +119,6 @@ view: dm_claim_activity {
 
   dimension: datediff_assigned_to_contact {
     hidden: yes
-    view_label: "Claim Dates"
     label: "Assigned to First Contact"
     type: number
     #sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
@@ -143,9 +129,19 @@ view: dm_claim_activity {
     value_format_name: decimal_2
   }
 
+  dimension: datediff_assigned_to_inspection {
+    hidden: yes
+    label: "Assigned to Inspection"
+    type: number
+    sql: case when isnull(${inspection_date_time}, '1900-01-01') != '1900-01-01'
+            then  (cast((datediff(minute,${assigned_date_time},${inspection_date_time})/60.) as decimal(12,2))/24)
+            else 0
+          end;;
+    value_format_name: decimal_2
+  }
+
   dimension: datediff_assigned_to_accepted {
     hidden: yes
-    view_label: "Claim Dates"
     label: "21 Assigned to Accepted"
     type: number
     sql: datediff(day, ${assigned_date_date}, ${accepted_date_date}) ;;
@@ -154,7 +150,6 @@ view: dm_claim_activity {
 
   dimension: datediff_accepted_to_contact {
     hidden: yes
-    view_label: "Claim Dates"
     label: "22 Accepted to Contact"
     type: number
     sql: datediff(day, ${accepted_date_date}, ${contact_date_date}) ;;
@@ -163,7 +158,6 @@ view: dm_claim_activity {
 
   dimension: datediff_contact_to_inspection {
     hidden: yes
-    view_label: "Claim Dates"
     label: "23 Contact to Inspection"
     type: number
     sql: datediff(day, ${contact_date_date}, ${inspection_date_date}) ;;
@@ -172,7 +166,6 @@ view: dm_claim_activity {
 
   dimension: datediff_inspection_to_first_report {
     hidden: yes
-    view_label: "Claim Dates"
     label: "24 Inspection to First Report"
     type: number
     sql: datediff(day, ${inspection_date_date}, ${first_close_date_date}) ;;
@@ -181,7 +174,6 @@ view: dm_claim_activity {
 
   dimension: datediff_first_report_to_complete {
     hidden: yes
-    view_label: "Claim Dates"
     label: "25 First Report to Complete"
     type: number
     sql: datediff(day, ${first_close_date_date}, ${adjustment_completed_date_date}) ;;
@@ -190,7 +182,6 @@ view: dm_claim_activity {
 
   dimension: datediff_first_complete_to_first_close {
     hidden: yes
-    view_label: "Claim Dates"
     label: "26 Complete to First Close"
     type: number
     sql: datediff(day, ${adjustment_completed_date_date}, ${first_close_date_date}) ;;
@@ -199,7 +190,6 @@ view: dm_claim_activity {
 
   dimension: datediff_first_close_to_reopen {
     hidden: yes
-    view_label: "Claim Dates"
     label: "27 First Close to ReOpen"
     type: number
     sql: datediff(day, ${first_close_date_date}, ${re_open_date_date}) ;;
@@ -211,153 +201,7 @@ view: dm_claim_activity {
   ##  AVERAGE  ##
   ###############
 
-
-  measure: average_recevied_to_assigned {
-    view_label: "Claim Dates"
-    label: "30 Ave Received to Assigned"
-    type: average
-    sql: ${datediff_recevied_to_assigned} ;;
-    value_format_name: decimal_1
-    filters: {
-      field: assigned_date_date
-      value: "-NULL"
-    }
-    filters: {
-      field: received_date_date
-      value: "-NULL"
-    }
-  }
-
-  #   dimension: datediff_assigned_to_accepted {
-#     view_label: "Claim Dates"
-#     label: "21 Assigned to Accepted"
-#     type: number
-#     sql: datediff(day, ${assigned_date_date}, ${accepted_date_date}) ;;
-#     value_format_name: decimal_0
-#   }
-
-
-
-  ############
-  ##  TIME  ##
-  ############
-
-  dimension: time_to_assign {
-    label: "Time to Assign"
-    type: number
-    sql: ${TABLE}.TimeToAssign ;;
-  }
-
-  dimension: time_to_accept {
-    label: "Time to Accept"
-    type: number
-    sql: ${TABLE}.TimeToAccept ;;
-  }
-
-  dimension: time_to_contact {
-    label: "Time to Contact"
-    type: number
-    sql: ${TABLE}.TimeToContact ;;
-  }
-
-  dimension: time_to_inspect {
-    label: "Time to Inspect"
-    type: number
-    sql: ${TABLE}.TimeToInspect ;;
-  }
-
-  dimension: time_to_first_report {
-    label: "Time to First Report"
-    type: number
-    sql: ${TABLE}.TimeToFirstReport ;;
-  }
-
-  dimension: time_to_complete {
-    label: "Time to Complete"
-    type: number
-    sql: ${TABLE}.TimeToComplete ;;
-  }
-
-  dimension: time_allocated {
-    label: "Time Allocated"
-    type: number
-    sql: ${TABLE}.TimeAllocated ;;
-  }
-
-
-  ################
-  ##  DURATION  ##
-  ################
-
-  dimension: duration_to_assign {
-    label: "1 Duration to Assign"
-    type: number
-    sql: ${TABLE}.DurationToAssign ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: duration_to_accept {
-    label: "2 Duration to Accept"
-    type: number
-    sql: ${TABLE}.DurationToAccept ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: duration_to_contact {
-    label: "3 Duration to Contact"
-    type: number
-    sql: ${TABLE}.DurationToContact ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: duration_to_inspect {
-    label: "4 Duration to Inspect"
-    type: number
-    sql: ${TABLE}.DurationToInspect ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: duration_to_first_report {
-    label: "5 Duration to First Report"
-    type: number
-    sql: ${TABLE}.DurationToFirstReport ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: duration_to_adjust {
-    label: "6 Duration to Adjust"
-    type: number
-    sql: ${TABLE}.DurationToAdjust ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: duration_allocated {
-    label: "9 Duration Allocated"
-    type: number
-    sql: ${TABLE}.DurationAllocated ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: duration_to_first_close {
-    label: "7 Duration to First Close"
-    type: number
-    sql: ${TABLE}.DurationToFirstClose ;;
-    value_format_name: decimal_4
-  }
-
-  dimension: hours_since_last_update {
-    label: "Hours Since Last Update"
-    type: number
-    sql: ${TABLE}.HoursSinceLastUpdate ;;
-    value_format_name: decimal_4
-  }
-
-  ########################
-  ##  AVERAGE DURATION  ##
-  ########################
-
   measure: ave_assigned_to_contact {
-    view_label: "Claim Dates"
     label: "Average Duration To 1st Contact"
     type: average
     sql: ${datediff_assigned_to_contact} ;;
@@ -371,6 +215,152 @@ view: dm_claim_activity {
       value: ">0"
     }
     drill_fields: [dm_claim.dates_drill*]
+  }
+
+  measure: ave_assigned_to_inspection {
+    label: "Average Duration To Inspection"
+    type: average
+    sql: ${datediff_assigned_to_inspection} ;;
+    value_format_name: decimal_2
+    filters: {
+      field: inspection_date_date
+      value: "-NULL"
+    }
+    filters: {
+      field: datediff_assigned_to_inspection
+      value: ">0"
+    }
+    drill_fields: [dm_claim.dates_drill*]
+  }
+
+  ############
+  ##  TIME  ##
+  ############
+
+  dimension: time_to_assign {
+    hidden: yes
+    label: "Time to Assign"
+    type: number
+    sql: ${TABLE}.TimeToAssign ;;
+  }
+
+  dimension: time_to_accept {
+    hidden: yes
+    label: "Time to Accept"
+    type: number
+    sql: ${TABLE}.TimeToAccept ;;
+  }
+
+  dimension: time_to_contact {
+    hidden: yes
+    label: "Time to Contact"
+    type: number
+    sql: ${TABLE}.TimeToContact ;;
+  }
+
+  dimension: time_to_inspect {
+    hidden: yes
+    label: "Time to Inspect"
+    type: number
+    sql: ${TABLE}.TimeToInspect ;;
+  }
+
+  dimension: time_to_first_report {
+    hidden: yes
+    label: "Time to First Report"
+    type: number
+    sql: ${TABLE}.TimeToFirstReport ;;
+  }
+
+  dimension: time_to_complete {
+    hidden: yes
+    label: "Time to Complete"
+    type: number
+    sql: ${TABLE}.TimeToComplete ;;
+  }
+
+  dimension: time_allocated {
+    hidden: yes
+    label: "Time Allocated"
+    type: number
+    sql: ${TABLE}.TimeAllocated ;;
+  }
+
+
+  ################
+  ##  DURATION  ##
+  ################
+
+  dimension: duration_to_assign {
+    hidden: yes
+    label: "1 Duration to Assign"
+    type: number
+    sql: ${TABLE}.DurationToAssign ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: duration_to_accept {
+    hidden: yes
+    label: "2 Duration to Accept"
+    type: number
+    sql: ${TABLE}.DurationToAccept ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: duration_to_contact {
+    hidden: yes
+    label: "3 Duration to Contact"
+    type: number
+    sql: ${TABLE}.DurationToContact ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: duration_to_inspect {
+    hidden: yes
+    label: "4 Duration to Inspect"
+    type: number
+    sql: ${TABLE}.DurationToInspect ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: duration_to_first_report {
+    hidden: yes
+    label: "5 Duration to First Report"
+    type: number
+    sql: ${TABLE}.DurationToFirstReport ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: duration_to_adjust {
+    hidden: yes
+    label: "6 Duration to Adjust"
+    type: number
+    sql: ${TABLE}.DurationToAdjust ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: duration_allocated {
+    hidden: yes
+    label: "9 Duration Allocated"
+    type: number
+    sql: ${TABLE}.DurationAllocated ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: duration_to_first_close {
+    hidden: yes
+    label: "7 Duration to First Close"
+    type: number
+    sql: ${TABLE}.DurationToFirstClose ;;
+    value_format_name: decimal_4
+  }
+
+  dimension: hours_since_last_update {
+    hidden: yes
+    label: "Hours Since Last Update"
+    type: number
+    sql: ${TABLE}.HoursSinceLastUpdate ;;
+    value_format_name: decimal_4
   }
 
   ########################
