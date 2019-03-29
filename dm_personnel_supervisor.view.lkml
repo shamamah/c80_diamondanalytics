@@ -56,7 +56,7 @@ view: dm_personnel_supervisor {
 
   dimension: supervisor_full_name {
     type: string
-    label: "Name, Full"
+    label: "QA's Name"
     sql: ${supervisor_first_name} + ' ' + ${supervisor_last_name} ;;
   }
 

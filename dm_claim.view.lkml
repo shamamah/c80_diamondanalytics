@@ -282,7 +282,7 @@ view: dm_claim {
     }
     link: {
       label: "Sort by Loss Date"
-      url: "{{ link }}&sorts=claim_control.loss_date_date"
+      url: "{{ link }}&sorts=dm_claim.loss_date_date"
     }
     # link: {
     #   label: "Sort by Loss Paid"
@@ -303,10 +303,27 @@ view: dm_claim {
   measure: count_open {
     label: "Open Count"
     type: count
-    drill_fields: [dates_drill*]
+    #drill_fields: [dates_drill*]
+    drill_fields: [detail*]
     filters: {
       field: dm_claim.claim_closed
       value: "No"
+    }
+    link: {
+      label: "Sort by Loss Date"
+      url: "{{ link }}&sorts=dm_claim.loss_date_date"
+    }
+    link: {
+      label: "Sort by Due Date"
+      url: "{{ link }}&sorts=dm_claim_activity.due_date_date"
+    }
+    link: {
+      label: "Sort by QA Name"
+      url: "{{ link }}&sorts=dm_personnel_supervisor.supervisor_full_name"
+    }
+    link: {
+      label: "Sort by Manager Name"
+      url: "{{ link }}&sorts=dm_personnel_manager.manager_full_name"
     }
   }
 
@@ -316,6 +333,7 @@ view: dm_claim {
       file_trac_claim_number,
       file_number,
       dm_personnel_supervisor.supervisor_full_name,
+      dm_personnel_manager.manager_full_name,
       loss_date_date,
       loss_type,
       loss_unit,

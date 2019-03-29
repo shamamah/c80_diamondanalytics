@@ -56,7 +56,7 @@ view: dm_personnel_manager {
 
   dimension: manager_full_name {
     type: string
-    label: "Name, Full"
+    label: "Manager's Name"
     sql: ${manager_first_name} + ' ' + ${manager_last_name} ;;
   }
 

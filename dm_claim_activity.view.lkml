@@ -178,6 +178,16 @@ view: dm_claim_activity {
     value_format_name: decimal_0
   }
 
+  dimension: datediff_assigned_to_first_close {
+    label: "Time: Assigned to Close"
+    type: number
+    sql: case when isnull(${assigned_date_date}, '1900-01-01') != '1900-01-01' and isnull(${first_close_date_date}, '1900-01-01') != '1900-01-01'
+            then  (cast((datediff(minute,${assigned_date_time},${first_close_date_time})/60.) as decimal(12,2))/24)
+            else 0
+          end;;
+    value_format_name: decimal_2
+  }
+
   dimension: datediff_complete_to_first_close {
     label: "Time: Complete to Close"
     type: number
@@ -219,7 +229,7 @@ view: dm_claim_activity {
   }
 
   measure: ave_assigned_to_inspection {
-    label: "Average Duration To Inspection"
+    label: "Average Days To Inspection"
     type: average
     sql: ${datediff_assigned_to_inspection} ;;
     value_format_name: decimal_2
@@ -235,7 +245,27 @@ view: dm_claim_activity {
   }
 
   measure: ave_complete_to_close {
-    label: "Average Duration To Close"
+    label: "Average Days Complete To Close"
+    type: average
+    sql: ${datediff_complete_to_first_close} ;;
+    value_format_name: decimal_2
+    filters: {
+      field: assigned_date_date
+      value: "-NULL"
+    }
+    filters: {
+      field: first_close_date_date
+      value: "-NULL"
+    }
+    filters: {
+      field: datediff_assigned_to_first_close
+      value: ">0"
+    }
+    drill_fields: [dm_claim.dates_drill*]
+  }
+
+  measure: ave_assign_to_close {
+    label: "Average Days Assigned To Close"
     type: average
     sql: ${datediff_complete_to_first_close} ;;
     value_format_name: decimal_2
