@@ -229,7 +229,7 @@ view: dm_claim_activity {
   }
 
   measure: ave_assigned_to_inspection {
-    label: "Average Days To Inspection"
+    label: "Average Duration: To Inspection"
     type: average
     sql: ${datediff_assigned_to_inspection} ;;
     value_format_name: decimal_2
@@ -245,9 +245,9 @@ view: dm_claim_activity {
   }
 
   measure: ave_assign_to_close {
-    label: "Average Days Assigned To Close"
+    label: "Average Duration: Assigned To Close"
     type: average
-    sql: ${datediff_complete_to_first_close} ;;
+    sql: ${datediff_assigned_to_first_close} ;;
     value_format_name: decimal_2
     filters: {
       field: assigned_date_date
@@ -265,7 +265,7 @@ view: dm_claim_activity {
   }
 
   measure: ave_complete_to_close {
-    label: "Average Days Complete To Close"
+    label: "Average Duration: QA Time"
     type: average
     sql: ${datediff_complete_to_first_close} ;;
     value_format_name: decimal_2
