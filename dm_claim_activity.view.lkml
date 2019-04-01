@@ -192,7 +192,7 @@ view: dm_claim_activity {
     label: "Time: Complete to Close"
     type: number
     sql: case when isnull(${adjustment_completed_date_date}, '1900-01-01') != '1900-01-01' and isnull(${first_close_date_date}, '1900-01-01') != '1900-01-01'
-            then  (cast((datediff(minute,${adjustment_completed_date_date},${first_close_date_date})/60.) as decimal(12,2))/24)
+            then  (cast((datediff(minute,${adjustment_completed_date_time},${first_close_date_time})/60.) as decimal(12,2))/24)
             else 0
           end;;
     value_format_name: decimal_2
@@ -244,8 +244,8 @@ view: dm_claim_activity {
     drill_fields: [dm_claim.dates_drill*]
   }
 
-  measure: ave_complete_to_close {
-    label: "Average Days Complete To Close"
+  measure: ave_assign_to_close {
+    label: "Average Days Assigned To Close"
     type: average
     sql: ${datediff_complete_to_first_close} ;;
     value_format_name: decimal_2
@@ -264,8 +264,8 @@ view: dm_claim_activity {
     drill_fields: [dm_claim.dates_drill*]
   }
 
-  measure: ave_assign_to_close {
-    label: "Average Days Assigned To Close"
+  measure: ave_complete_to_close {
+    label: "Average Days Complete To Close"
     type: average
     sql: ${datediff_complete_to_first_close} ;;
     value_format_name: decimal_2

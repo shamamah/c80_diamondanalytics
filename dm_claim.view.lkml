@@ -355,16 +355,17 @@ view: dm_claim {
       current_claim_status,
       loss_category,
       loss_date_date,
-      dm_claim_activity.due_date_date,
+      dm_claim_activity.due_date_time,
       dm_claim_activity.received_date_time,
       dm_claim_activity.assigned_date_time,
       dm_claim_activity.accepted_date_date,
       dm_claim_activity.contact_date_time,
-      dm_claim_activity.inspection_date_date,
-      dm_claim_activity.first_report_date_date,
-      dm_claim_activity.first_close_date_date,
-      dm_claim_activity.re_open_date_date,
-      dm_claim_activity.closed_date_date,
+      dm_claim_activity.inspection_date_time,
+      dm_claim_activity.first_report_date_time,
+      dm_claim_activity.adjustment_completed_date_time,
+      dm_claim_activity.first_close_date_time,
+      dm_claim_activity.re_open_date_time,
+      dm_claim_activity.closed_date_time,
       dm_claim_activity.days_open
     ]
   }
