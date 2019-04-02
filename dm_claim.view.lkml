@@ -294,6 +294,23 @@ view: dm_claim {
     # }
   }
 
+  measure: past_due_count {
+    type: count
+    drill_fields: [dates_drill*]
+    filters: {
+      field: dm_claim_activity.due_date_date
+      value: "before today"
+    }
+    link: {
+      label: "Sort by QA Name"
+      url: "{{ link }}&sorts=dm_personnel_supervisor.supervisor_full_name"
+    }
+    link: {
+      label: "Sort by Due Date"
+      url: "{{ link }}&sorts=dm_claim_activity.due_date_date"
+    }
+  }
+
   measure: count_dates_drill {
     label: "Volume"
     type: count
@@ -344,7 +361,8 @@ view: dm_claim {
       desk_adjustment,
       loaned_examiner,
       dm_claim_financial.claim_acv,
-      dm_claim_financial.claim_rcv
+      dm_claim_financial.claim_rcv,
+      dm_claim_financial.claim_amount
     ]
   }
 
