@@ -355,7 +355,7 @@ view: dm_claim {
       current_claim_status,
       loss_category,
       loss_date_date,
-      dm_claim_activity.due_date_time,
+      dm_claim_activity.due_date_date,
       dm_claim_activity.received_date_time,
       dm_claim_activity.assigned_date_time,
       dm_claim_activity.accepted_date_date,
@@ -367,6 +367,27 @@ view: dm_claim {
       dm_claim_activity.re_open_date_time,
       dm_claim_activity.closed_date_time,
       dm_claim_activity.days_open
+    ]
+  }
+
+  set: duration_drill {
+    fields: [
+      file_trac_claim_number,
+      file_number,
+      current_claim_status,
+      loss_category,
+      loss_date_date,
+      dm_claim_activity.due_date_date,
+      dm_claim_activity.assigned_date_time,
+      dm_claim_activity.contact_date_time,
+      dm_claim_activity.inspection_date_time,
+      dm_claim_activity.first_report_date_time,
+      dm_claim_activity.adjustment_completed_date_time,
+      dm_claim_activity.first_close_date_time,
+      dm_claim_activity.ave_assign_to_contact,
+      dm_claim_activity.ave_assign_to_inspection,
+      dm_claim_activity.ave_assign_to_close,
+      dm_claim_activity.ave_complete_to_close
     ]
   }
 }

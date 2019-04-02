@@ -213,7 +213,7 @@ view: dm_claim_activity {
   ###############
 
   measure: ave_assigned_to_contact {
-    label: "Average Duration To 1st Contact"
+    label: "Average Duration: Assigned To 1st Contact"
     type: average
     sql: ${datediff_assigned_to_contact} ;;
     value_format_name: decimal_2
@@ -225,11 +225,11 @@ view: dm_claim_activity {
       field: datediff_assigned_to_contact
       value: ">0"
     }
-    drill_fields: [dm_claim.dates_drill*]
+    drill_fields: [dm_claim.duration_drill*]
   }
 
   measure: ave_assigned_to_inspection {
-    label: "Average Duration: To Inspection"
+    label: "Average Duration: Assigned To Inspection"
     type: average
     sql: ${datediff_assigned_to_inspection} ;;
     value_format_name: decimal_2
@@ -241,7 +241,7 @@ view: dm_claim_activity {
       field: datediff_assigned_to_inspection
       value: ">0"
     }
-    drill_fields: [dm_claim.dates_drill*]
+    drill_fields: [dm_claim.duration_drill*]
   }
 
   measure: ave_assign_to_close {
@@ -261,7 +261,7 @@ view: dm_claim_activity {
       field: datediff_assigned_to_first_close
       value: ">0"
     }
-    drill_fields: [dm_claim.dates_drill*]
+    drill_fields: [dm_claim.duration_drill*]
   }
 
   measure: ave_complete_to_close {
@@ -281,7 +281,7 @@ view: dm_claim_activity {
       field: datediff_complete_to_first_close
       value: ">0"
     }
-    drill_fields: [dm_claim.dates_drill*]
+    drill_fields: [dm_claim.duration_drill*]
   }
 
   ############
