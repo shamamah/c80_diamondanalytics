@@ -24,7 +24,7 @@ view: dt_coverage_financials_umbi {
                   AND CCOV.claimsubexposure_num = CF.claimsubexposure_num
                   AND CCOV.claimcoverage_num = CF.claimcoverage_num
     LEFT OUTER JOIN dbo.ClaimSubCoverage SCS WITH (NOLOCK)
-           ON CCOV.claimcontrol_id = CF.claimcontrol_id
+           ON SCS.claimcontrol_id = CF.claimcontrol_id
                   AND SCS.claimexposure_id = CF.claimexposure_id
                   AND SCS.claimsubexposure_num = CF.claimsubexposure_num
                   AND SCS.claimcoverage_num = CF.claimcoverage_num
