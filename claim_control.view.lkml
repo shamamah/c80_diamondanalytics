@@ -722,6 +722,10 @@ view: claim_control {
       label: "Sort by Reserve Amount"
       url: "{{ link }}&sorts=v_claim_detail_feature.sum_indemnity_reserve"
     }
+    link: {
+      label: "Sort by CAT Code"
+      url: "{{ link }}&sorts=claim_catastrophe.user_code"
+    }
   }
 
   measure: count_with_indemnity_paid {
@@ -750,6 +754,7 @@ view: claim_control {
       policy.current_policy,
       claim_control_status.dscr,
       claim_loss_type.dscr,
+      claim_catastrophe.user_code,
       claim_type.dscr,
       claim_severity.dscr,
       claim_control.loss_date_date,
