@@ -498,4 +498,11 @@ explore: claim_control {
         sql_on: ${version.companystatelob_id} = ${company_state_lob.companystatelob_id} ;;
         relationship: one_to_one
       }
+
+      join: dt_claim_coverage {
+        view_label: "Claim Coverage"
+        type: left_outer
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id} ;;
+        relationship: one_to_many
+      }
     }
