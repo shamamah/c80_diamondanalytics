@@ -1,4 +1,4 @@
-connection: "c72-datamart"
+connection: "c72-datamart-test"
 
 # include all the views
 include: "dm*.view"
