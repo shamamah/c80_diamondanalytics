@@ -7,7 +7,7 @@ fiscal_month_offset: 0
 week_start_day: sunday
 
 explore: claim_control {
-  group_label: "SCS Claims Analytics"
+  group_label: "SCS Claims Analytics [Prod]"
   label: "C72-Claims"
   #persist_for: "4 hours"
   view_label: "Claim"

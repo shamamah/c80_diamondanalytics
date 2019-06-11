@@ -1,4 +1,4 @@
-connection: "c72-datamart-prod"
+connection: "c72-datamart-test"
 
 # include all the views
 include: "dm*.view"
@@ -7,8 +7,8 @@ fiscal_month_offset: 0
 week_start_day: sunday
 
 explore: dm_claim {
-  group_label: "SCS Claims Analytics [Prod]"
-  label: "C72-DataMart [Prod]"
+  group_label: "SCS Claims Analytics [Test]"
+  label: "C72-DataMart [Test]"
   #persist_for: "4 hours"
   view_label: "Claim"
 
