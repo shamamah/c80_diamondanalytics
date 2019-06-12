@@ -423,7 +423,8 @@ view: dm_claim_activity {
     view_label: "Claim"
     label: "First Days Open"
     type: number
-    sql: case when trim(${dm_claim.claim_closed})='No'
+    sql: --case when trim(${dm_claim.claim_closed})='No'   TRIM does not work in SQL Server 2016, need LTRIM(RTRIM())
+         case when ${dm_claim.claim_closed}='No'
           then DATEDIFF(dd, ${received_date_date}, GetDate())
           else DATEDIFF(dd, ${received_date_date}, ${closed_date_date}) end  ;;
       #--case when ${first_close_date_date} IS NULL
