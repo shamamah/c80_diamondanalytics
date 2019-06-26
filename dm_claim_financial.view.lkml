@@ -28,6 +28,17 @@ view: dm_claim_financial {
     value_format_name: usd
   }
 
+  measure: ave_claim_rcv {
+    label: "Average RCV"
+    type: average
+    sql: ${dim_claim_rcv} ;;
+    value_format_name: usd
+    filters: {
+      field: dim_claim_rcv
+      value: ">0.00"
+    }
+  }
+
   dimension: dim_claim_acv {
     hidden: yes
     type: number
@@ -41,6 +52,17 @@ view: dm_claim_financial {
     value_format_name: usd
   }
 
+  measure: ave_claim_acv {
+    label: "Average ACV"
+    type: average
+    sql: ${dim_claim_acv} ;;
+    value_format_name: usd
+    filters: {
+      field: dim_claim_acv
+      value: ">0.00"
+    }
+  }
+
   dimension: dim_claim_amount {
     hidden: yes
     type: number
@@ -52,6 +74,17 @@ view: dm_claim_financial {
     type: sum
     sql: ${dim_claim_amount} ;;
     value_format_name: usd
+  }
+
+  measure: ave_claim_amount {
+    label: "Average Claim Amount"
+    type: average
+    sql: ${dim_claim_amount} ;;
+    value_format_name: usd
+    filters: {
+      field: dim_claim_amount
+      value: ">0.00"
+    }
   }
 
   dimension: refer_to_underwriters {

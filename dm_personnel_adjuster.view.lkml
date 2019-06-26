@@ -1,6 +1,6 @@
 view: dm_personnel_adjuster {
   derived_table: {
-    sql: select c.id as claimid
+    sql: select distinct c.id as claimid
         ,u.SourceSystem
         ,u.CompanyCode
         ,u.UserTitle
@@ -56,7 +56,7 @@ view: dm_personnel_adjuster {
 
   dimension: adjuster_full_name {
     type: string
-    label: "Name, Full"
+    label: "Adjuster's Name"
     sql: ${adjuster_first_name} + ' ' + ${adjuster_last_name} ;;
   }
 

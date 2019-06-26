@@ -1,6 +1,6 @@
 view: dm_personnel_manager {
   derived_table: {
-    sql: select c.id as claimid
+    sql: select distinct c.id as claimid
         ,u.SourceSystem
         ,u.CompanyCode
         ,u.UserTitle
