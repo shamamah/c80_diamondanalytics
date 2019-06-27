@@ -117,6 +117,17 @@ view: dm_claim_activity {
     value_format_name: decimal_4
   }
 
+  dimension: datediff_received_to_first_report {
+    label: "Time: Received to First Report"
+    type: number
+    #sql: datediff(day, ${received_date_date}, ${assigned_date_date}) ;;
+    sql: case when isnull(${first_report_date_time}, '1900-01-01') != '1900-01-01'
+            then  (cast((datediff(minute,${received_date_time},${first_report_date_time})/60.) as decimal(12,2))/24)
+            else 0
+          end;;
+    value_format_name: decimal_2
+  }
+
   dimension: datediff_assigned_to_contact {
     label: "Time: Assigned to Contact"
     type: number
@@ -223,6 +234,22 @@ view: dm_claim_activity {
     }
     filters: {
       field: datediff_assigned_to_contact
+      value: ">0"
+    }
+    drill_fields: [dm_claim.duration_drill*]
+  }
+
+  measure: ave_received_to_first_report {
+    label: "Average Duration: Received  To 1st Report"
+    type: average
+    sql: ${datediff_received_to_first_report} ;;
+    value_format_name: decimal_2
+    filters: {
+      field: first_report_date_date
+      value: "-NULL"
+    }
+    filters: {
+      field: datediff_received_to_first_report
       value: ">0"
     }
     drill_fields: [dm_claim.duration_drill*]
