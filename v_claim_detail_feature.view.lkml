@@ -288,7 +288,7 @@ view: v_claim_detail_feature {
     type: string
     hidden: no
     label: "Coverage Code"
-    sql: ${TABLE}.coveragecode ;;
+    sql: case when ${TABLE}.coveragecode='UM' then 'UMBI' else ${TABLE}.coveragecode end ;;
   }
 
   # dimension: claimexposure_id {
