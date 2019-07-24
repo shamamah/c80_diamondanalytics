@@ -505,4 +505,12 @@ explore: claim_control {
         sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id} ;;
         relationship: one_to_many
       }
+
+      # Added on 2019-07-24  TT 287000
+      join: dt_days_to_first_loss_payment {
+        view_label: "Checks & Transactions"
+        type: inner
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_days_to_first_loss_payment.claimcontrol_id} ;;
+        relationship: one_to_many
+      }
     }
