@@ -762,6 +762,7 @@ view: claim_control {
       dt_claim_days_open.days_open,
       dt_claim_close_date.claim_close_date_date,
       dt_claim_inside_adjuster.initials,
+      dt_claim_supervisor.supervisor_initials,
       v_claim_detail_feature.sum_indemnity_paid,
       v_claim_detail_feature.sum_indemnity_reserve,
       v_claim_detail_feature.sum_expense_paid

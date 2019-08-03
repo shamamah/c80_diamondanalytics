@@ -78,7 +78,7 @@ explore: claim_control {
     }
 
     join: dt_claims_first_activity {
-      view_label: "Claim Acitivity"
+      view_label: "Claim Activity"
       type: inner
       relationship: one_to_many
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claims_first_activity.claimcontrol_id}
@@ -86,7 +86,7 @@ explore: claim_control {
     }
 
     join: dt_claims_reopen_activity {
-      view_label: "Claim Acitivity"
+      view_label: "Claim Activity"
       type: left_outer
       relationship: one_to_many
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claims_reopen_activity.claimcontrol_id}
@@ -297,6 +297,13 @@ explore: claim_control {
       type: left_outer
       relationship: one_to_many
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_outside_adjuster.claimcontrol_id} ;;
+    }
+
+    join: dt_claim_supervisor {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_supervisor.claimcontrol_id} ;;
     }
 
     join: dt_all_claimants_per_claim {
