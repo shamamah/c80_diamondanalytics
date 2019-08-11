@@ -42,7 +42,7 @@ view: dt_coverage_financials_pip {
                   AND CT.claimfeature_num = V.claimfeature_num
                   AND CT.claimtransaction_num = V.claimtransaction_num
 
-    WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) = 80038
+    WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) = 325   -- changed on 8/8/2019 by saro used to be 80038
                   AND {% condition dt_claim_transactions_as_of.as_of_date %} V.eff_date {% endcondition %}
 
     GROUP BY CF.claimcontrol_id, CF.claimant_num, CF.claimfeature_num
