@@ -1,6 +1,16 @@
 view: dt_loss_location {
   derived_table: {
-    sql: SELECT ccal.claimcontrol_id, ccal.address_id, a.display_address as 'Loss Address', a.house_num, a.street_name, a.apt_num, a.city, s.[state], a.zip, nas.dscr as 'Location Type'
+    sql: SELECT ccal.claimcontrol_id
+      ,ccal.address_id
+      ,a.display_address as 'Loss Address'
+      ,a.house_num
+      ,a.street_name
+      ,a.apt_num
+      ,a.city
+      ,a.county
+      ,s.[state]
+      ,a.zip
+      ,nas.dscr as 'Location Type'
         FROM [dbo].[ClaimControlAddressLink] ccal
         inner join dbo.[address] a on a.address_id = ccal.address_id
         inner join dbo.NameAddressSource nas on nas.nameaddresssource_id = ccal.nameaddresssource_id
@@ -40,7 +50,7 @@ view: dt_loss_location {
   }
 
   dimension: street_name {
-      type: string
+    type: string
     label: "Street Name"
     sql: ${TABLE}.street_name ;;
   }
@@ -55,6 +65,12 @@ view: dt_loss_location {
     type: string
     label: "City"
     sql: ${TABLE}.city ;;
+  }
+
+  dimension: county {
+    type: string
+    label: "County"
+    sql: ${TABLE}.county ;;
   }
 
   dimension: state {
