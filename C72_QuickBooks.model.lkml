@@ -8,7 +8,7 @@ week_start_day: sunday
 
 explore: qb_invoice {
   group_label: "Transcynd Analytics [Test]"
-  label: "C72-QuickBooks [Test]"
+  label: "Financial (QuickBooks)"
   #persist_for: "4 hours"
   view_label: "Invoice"
 

@@ -8,7 +8,7 @@ week_start_day: sunday
 
 explore: dm_claim {
   group_label: "Transcynd Analytics [Test]"
-  label: "C72-DataMart [Test]"
+  label: "DataMart [Test]"
   #persist_for: "4 hours"
   view_label: "Claim"
 
