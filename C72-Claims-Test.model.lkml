@@ -7,7 +7,7 @@ fiscal_month_offset: 0
 week_start_day: sunday
 
 explore: claim_control {
-  group_label: "SCS Claims Analytics [Test]"
+  group_label: "Transcynd Analytics [Test]"
   label: "C72-Claims (Diamond UAT)"
   #persist_for: "4 hours"
   view_label: "Claim"

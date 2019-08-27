@@ -7,7 +7,7 @@ fiscal_month_offset: 0
 week_start_day: sunday
 
 explore: dm_claim {
-  group_label: "SCS Claims Analytics [Test]"
+  group_label: "Transcynd Analytics [Test]"
   label: "C72-DataMart [Test]"
   #persist_for: "4 hours"
   view_label: "Claim"
