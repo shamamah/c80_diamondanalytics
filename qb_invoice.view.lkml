@@ -8,32 +8,32 @@ view: qb_invoice {
     sql: ${TABLE}.TxnID ;;
   }
 
-  dimension: applied_amount {
+  dimension: dim_applied_amount {
     label: "Applied Amount"
     hidden: yes
     type: number
     sql: ${TABLE}.AppliedAmount ;;
   }
 
-  measure: total_applied_amount {
-    label: "Total Applied Amount"
+  measure: applied_amount {
+    label: "Applied Amount"
     type: sum
     value_format_name: usd
-    sql: ${applied_amount} ;;
+    sql: ${dim_applied_amount} ;;
   }
 
-  dimension: balance_remaining {
+  dimension: dim_balance_remaining {
     label: "Balance Remaining"
     hidden: yes
     type: number
     sql: ${TABLE}.BalanceRemaining ;;
   }
 
-  measure: total_balance_remaining {
-    label: "Total Balance Remaining"
+  measure: balance_remaining {
+    label: "Balance Remaining"
     type: sum
     value_format_name: usd
-    sql: ${balance_remaining} ;;
+    sql: ${dim_balance_remaining} ;;
   }
 
   dimension: class_ref_full_name {
@@ -160,7 +160,7 @@ view: qb_invoice {
   }
 
   dimension: memo_client {
-    label: "Client (Memo)"
+    label: "Client Rep (Memo)"
     type: string
     sql: ${TABLE}.MemoClient ;;
   }
@@ -195,32 +195,32 @@ view: qb_invoice {
     sql: ${TABLE}.SalesTaxPercentage*0.01 ;;
   }
 
-  dimension: sales_tax_total {
+  dimension: dim_sales_tax_total {
     hidden: yes
     label: "Sales Tax"
     type: number
     sql: ${TABLE}.SalesTaxTotal ;;
   }
 
-  measure: total_sales_tax_total {
-    label: "Total Sales Tax"
+  measure: sales_tax {
+    label: "Sales Tax"
     type: sum
     value_format_name: usd
-    sql: ${sales_tax_total} ;;
+    sql: ${dim_sales_tax_total} ;;
   }
 
-  dimension: subtotal {
+  dimension: dim_subtotal {
     hidden: yes
-    label: "Subtotal"
+    label: "Subtotal (pre-tax)"
     type: number
     sql: ${TABLE}.Subtotal ;;
   }
 
-  measure: total_subtotal {
-    label: "Total Subtotal"
+  measure: subtotal {
+    label: "Subtotal (pre-tax)"
     type: sum
     value_format_name: usd
-    sql: ${subtotal} ;;
+    sql: ${dim_subtotal} ;;
   }
 
   dimension: template_ref_full_name {
@@ -266,6 +266,20 @@ view: qb_invoice {
     sql: ${TABLE}.TxnNumber ;;
   }
 
+  dimension: dim_invoice_amount {
+    label: "Invoice Amount"
+    hidden: yes
+    type: number
+    sql: ${dim_subtotal} + ${dim_sales_tax_total} ;;
+  }
+
+  measure: invoice_amount {
+    label: "Invoice Amount"
+    type: sum
+    value_format_name: usd
+    sql: ${dim_invoice_amount} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -281,9 +295,11 @@ view: qb_invoice {
       file_trac_file_number,
       due_date,
       is_paid,
-      subtotal,
-      applied_amount,
-      balance_remaining
+      dim_subtotal,
+      dim_sales_tax_total,
+      dim_invoice_amount,
+      dim_applied_amount,
+      dim_balance_remaining
     ]
   }
 }

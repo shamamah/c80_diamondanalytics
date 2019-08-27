@@ -15,12 +15,12 @@ view: qb_invoice_line {
     sql: ${TABLE}.AppliedAmount ;;
   }
 
-  measure: total_applied_amount {
-    label: "Total Applied Amount"
-    type: sum
-    value_format_name: usd
-    sql: ${applied_amount} ;;
-  }
+#   measure: total_applied_amount {
+#     label: "Total Applied Amount"
+#     type: sum
+#     value_format_name: usd
+#     sql: ${applied_amount} ;;
+#   }
 
   dimension: araccount_ref_full_name {
     label: "zAR Account Ref Full Name"
@@ -82,7 +82,7 @@ view: qb_invoice_line {
   }
 
   dimension_group: due {
-    label: "Due"
+    label: "zDue"
     type: time
     timeframes: [
       raw,
@@ -98,7 +98,7 @@ view: qb_invoice_line {
   }
 
   dimension: edit_sequence {
-    label: "Edit Sequence"
+    label: "zEdit Sequence"
     type: string
     sql: ${TABLE}.EditSequence ;;
   }
@@ -116,9 +116,17 @@ view: qb_invoice_line {
   }
 
   dimension: invoice_line_amount {
+    hidden: yes
     label: "Line Amount"
     type: number
     sql: ${TABLE}.InvoiceLineAmount ;;
+  }
+
+  measure: total_line_amount {
+    label: "Line Amount"
+    type: sum
+    value_format_name: usd
+    sql: ${invoice_line_amount} ;;
   }
 
   dimension: invoice_line_class_ref_full_name {
@@ -176,7 +184,7 @@ view: qb_invoice_line {
   }
 
   dimension: invoice_line_seq_no {
-    label: "Line Sequence Number"
+    label: "zLine Sequence Number"
     type: number
     sql: ${TABLE}.InvoiceLineSeqNo ;;
   }
@@ -235,13 +243,13 @@ view: qb_invoice_line {
   }
 
   dimension: is_to_be_emailed {
-    label: "Is To Be Emailed"
+    label: "zIs To Be Emailed"
     type: string
     sql: case when ${TABLE}.IsToBeEmailed=1 then 'Yes' else 'No' end ;;
   }
 
   dimension: is_to_be_printed {
-    label: "Is To Be Printed"
+    label: "zIs To Be Printed"
     type: string
     sql: case when ${TABLE}.IsToBePrinted=1 then 'Yes' else 'No' end ;;
   }
@@ -259,7 +267,7 @@ view: qb_invoice_line {
   }
 
   dimension_group: load_date {
-    label: "Load"
+    label: "zLoad"
     type: time
     timeframes: [
       raw,
@@ -316,37 +324,37 @@ view: qb_invoice_line {
   }
 
   dimension: memo_loss_address {
-    label: "Loss Address (Memo)"
+    label: "zLoss Address (Memo)"
     type: string
     sql: ${TABLE}.MemoLossAddress ;;
   }
 
   dimension: ponumber {
-    label: "PO Number"
+    label: "zPO Number (File Number)"
     type: string
     sql: ${TABLE}.PONumber ;;
   }
 
   dimension: ref_number {
-    label: "Ref Number"
+    label: "zRef Number (Invoice Number)"
     type: string
     sql: ${TABLE}.RefNumber ;;
   }
 
   dimension: sales_rep_ref_full_name {
-    label: "Sales Rep Full Name"
+    label: "zSales Rep Ref Full Name"
     type: string
     sql: ${TABLE}.SalesRepRefFullName ;;
   }
 
   dimension: sales_rep_ref_list_id {
-    label: "zSales Rep List ID"
+    label: "zSales Rep Ref List ID"
     type: string
     sql: ${TABLE}.SalesRepRefListID ;;
   }
 
   dimension: sales_tax_percentage {
-    label: "Sales Tax Percentage"
+    label: "zSales Tax Percentage"
     type: number
     sql: ${TABLE}.SalesTaxPercentage ;;
   }
@@ -358,15 +366,15 @@ view: qb_invoice_line {
     sql: ${TABLE}.SalesTaxTotal ;;
   }
 
-  measure: total_sales_tax {
-    label: "Total Sales Tax"
-    type: sum
-    value_format_name: usd
-    sql: ${sales_tax_total} ;;
-  }
+#   measure: total_sales_tax {
+#     label: "Total Sales Tax"
+#     type: sum
+#     value_format_name: usd
+#     sql: ${sales_tax_total} ;;
+#   }
 
   dimension_group: ship {
-    label: "Ship"
+    label: "zShip"
     type: time
     timeframes: [
       raw,
@@ -388,12 +396,12 @@ view: qb_invoice_line {
     sql: ${TABLE}.Subtotal ;;
   }
 
-  measure: Total_Subtotal {
-    label: "Total Subtotal"
-    type: sum
-    value_format_name: usd
-    sql: ${subtotal} ;;
-  }
+#   measure: Total_Subtotal {
+#     label: "Total Subtotal"
+#     type: sum
+#     value_format_name: usd
+#     sql: ${subtotal} ;;
+#   }
 
   dimension: tax1_total {
     label: "zTax1 Total"
@@ -408,7 +416,7 @@ view: qb_invoice_line {
   }
 
   dimension: template_ref_full_name {
-    label: "Template Ref Full Name"
+    label: "zTemplate Ref Full Name"
     type: string
     sql: ${TABLE}.TemplateRefFullName ;;
   }
@@ -493,6 +501,7 @@ view: qb_invoice_line {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
+      fqprimary_key,
       customer_ref_full_name,
       class_ref_full_name,
       araccount_ref_full_name,
@@ -505,7 +514,10 @@ view: qb_invoice_line {
       invoice_line_item_ref_full_name,
       invoice_line_class_ref_full_name,
       invoice_line_sales_tax_code_ref_full_name,
-      invoice_line_tax_code_ref_full_name
+      invoice_line_tax_code_ref_full_name,
+      invoice_line_amount,
+      sales_tax_total
+
     ]
   }
 }
