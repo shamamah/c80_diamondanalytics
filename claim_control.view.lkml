@@ -81,11 +81,12 @@ view: claim_control {
     sql: case when ISNULL(${TABLE}.claimclosereason_id,-1)>=0 then ${TABLE}.claimclosereason_id else NULL end  ;;
   }
 
-  # dimension: claimcluedisp_id {
-  #   hidden: yes
-  #   type: number
-  #   sql: ${TABLE}.claimcluedisp_id ;;
-  # }
+  # Uncommented on 2019-08-28  TT 286803
+  dimension: claimcluedisp_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimcluedisp_id ;;
+  }
 
   # dimension: claimcontact_id {
   #   hidden: yes

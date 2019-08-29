@@ -531,4 +531,12 @@ explore: claim_control {
         sql_on: ${claim_control.claimcontrol_id} = ${dt_days_to_first_loss_payment.claimcontrol_id} ;;
         relationship: one_to_many
       }
+
+      # Added on 2019-08-28  TT 286803
+      join: claim_clue_disp {
+        view_label: "Claim"
+        type: inner
+        sql_on: ${claim_control.claimcluedisp_id} = ${claim_clue_disp.claimcluedisp_id} ;;
+        relationship: many_to_one
+      }
     }
