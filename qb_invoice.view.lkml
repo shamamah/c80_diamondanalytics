@@ -197,13 +197,13 @@ view: qb_invoice {
 
   dimension: dim_sales_tax_total {
     hidden: yes
-    label: "Sales Tax"
+    label: "Sales Tax Amount"
     type: number
     sql: ${TABLE}.SalesTaxTotal ;;
   }
 
   measure: sales_tax {
-    label: "Sales Tax"
+    label: "Sales Tax Amount"
     type: sum
     value_format_name: usd
     sql: ${dim_sales_tax_total} ;;
@@ -211,14 +211,21 @@ view: qb_invoice {
 
   dimension: dim_subtotal {
     hidden: yes
-    label: "Subtotal (pre-tax)"
+    label: "Invoice (pre-tax)"
     type: number
     sql: ${TABLE}.Subtotal ;;
   }
 
   measure: subtotal {
-    label: "Subtotal (pre-tax)"
+    label: "Invoice Amount (pre-tax)"
     type: sum
+    value_format_name: usd
+    sql: ${dim_subtotal} ;;
+  }
+
+  measure: average_subtotal {
+    label: "Average Invoice Amount (pre-tax)"
+    type: average
     value_format_name: usd
     sql: ${dim_subtotal} ;;
   }
@@ -274,8 +281,15 @@ view: qb_invoice {
   }
 
   measure: invoice_amount {
-    label: "Invoice Amount"
+    label: "Invoice Amount (with tax)"
     type: sum
+    value_format_name: usd
+    sql: ${dim_invoice_amount} ;;
+  }
+
+  measure: average_invoice_amount {
+    label: "Average Invoice Amount (with tax)"
+    type: average
     value_format_name: usd
     sql: ${dim_invoice_amount} ;;
   }
