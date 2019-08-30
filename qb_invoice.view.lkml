@@ -244,7 +244,7 @@ view: qb_invoice {
   }
 
   dimension_group: txn {
-    label: "Transasction"
+    label: "Transaction"
     type: time
     timeframes: [
       raw,
