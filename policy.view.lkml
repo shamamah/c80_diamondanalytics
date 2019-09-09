@@ -51,6 +51,13 @@ view: policy {
     sql: ${TABLE}.activeimage_num ;;
   }
 
+  # ADD by SARO on 09-09-2019 - Policy Form Type (ex. HO3TX, DP3TX, etc.)
+  dimension: external_policy_source {
+    label: "Form Type"
+    type: string
+    sql: ${TABLE}.external_policy_source ;;
+  }
+
   # dimension_group: first_eff {
   #   label: "First Effective"
   #   type: time
