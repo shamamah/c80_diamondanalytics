@@ -339,16 +339,16 @@ explore: claim_control {
       #sql_where: ${v_claim_detail_transaction.check_number} between 1 and 99999999 ;;
       }
 
-    #ADDED by Saro on 2019-08-15
-    join: dt_first_loss_payment {
-      view_label: "Checks & Transactions"
-      type: left_outer
-      relationship: one_to_one
-      sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_first_loss_payment.claimcontrol_id}
+      #ADDED by Saro on 2019-08-15
+      join: dt_first_loss_payment {
+        view_label: "Checks & Transactions"
+        type: left_outer
+        relationship: one_to_one
+        sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_first_loss_payment.claimcontrol_id}
               and ${v_claim_detail_transaction.check_number} = ${dt_first_loss_payment.check_number}
       ;;
-    }
-    #END 2019-08-15
+      }
+      #END 2019-08-15
 
       join: claim_transaction {
         type: inner
@@ -538,5 +538,13 @@ explore: claim_control {
         type: inner
         sql_on: ${claim_control.claimcluedisp_id} = ${claim_clue_disp.claimcluedisp_id} ;;
         relationship: many_to_one
+      }
+
+      # Added on 2019-09-18  TT 289862
+      join: dt_date_latest_indemnity_payment {
+        view_label: "Checks & Transactions"
+        type: left_outer
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_date_latest_indemnity_payment.claimcontrol_id} ;;
+        relationship: one_to_one
       }
     }
