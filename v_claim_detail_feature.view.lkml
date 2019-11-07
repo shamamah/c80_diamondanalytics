@@ -439,7 +439,9 @@ view: v_claim_detail_feature {
   measure: sum_initial_expense_reserve {
     view_label: "Claim Financials (Current)"
     type: sum
-    label: "Loss Initial Expense"
+    #2019-11-07 SH Correct Label
+    #label: "Loss Initial Expense"
+    label: "AO Initial Reserve"
     sql: ${initial_expense_reserve} ;;
     value_format_name: usd
   }
