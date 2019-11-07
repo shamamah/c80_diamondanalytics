@@ -136,6 +136,15 @@ view: dt_claim_transactions_as_of {
     drill_fields: [detail*]
   }
 
+  #2019-11-06 SH added new measure
+  measure:  indemnity_incurred {
+    label: "Loss Incurred"
+    type: sum
+    sql: ${dim_indemnity_paid} + ${dim_indemnity_reserve};;
+    value_format_name: usd
+    drill_fields: [detail*]
+  }
+
   dimension: dim_expense_reserve {
     hidden: yes
     type: string
@@ -171,7 +180,9 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  expense_recovery {
-    label: "Rein Expense Recovery"
+    #2019-11-06 SH Changed label
+    #label: "Rein Expense Recovery"
+    label: "AO Recovery"
     type: sum
     sql: ${dim_expense_recovery} ;;
     value_format_name: usd
