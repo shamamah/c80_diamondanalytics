@@ -217,6 +217,15 @@ view: dt_claim_transactions_as_of {
     drill_fields: [detail*]
   }
 
+  #SH 2019-11-27 Added this measure to replace a calculation on the HO Loss Report
+  measure:  lae_payments {
+    label: "LAE Payments"
+    type: sum
+    sql: ${dim_expense_paid} + ${dim_alae_paid} ;;
+    value_format_name: usd
+    drill_fields: [detail*]
+  }
+
   dimension: dim_salvage {
     hidden: yes
     type: string
