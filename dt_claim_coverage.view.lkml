@@ -1,21 +1,27 @@
 view: dt_claim_coverage {
   derived_table: {
-    sql: select cc.claimcontrol_id as 'claimcontrol_id'
+    sql:
+
+    select cc.claimcontrol_id as 'claimcontrol_id'
         ,cc.claimcoverage_num as 'claimcoverage_num'
         ,ce.dscr as 'Exposure'
         ,cd.dscr as 'Coverage'
         ,cc.limit_dscr as 'Limit'
         ,cc.deductible_dscr as 'Deductible'
+        --SH 2019-12-02 The next two columns and ASL joined table was added
+        ,asl.asl as 'asl_code'
+        ,asl.[description] as 'asl_description'
+
       from claimcoverage cc
         --left join claimcontrol clm on clm.claimcontrol_id = cc. claimcontrol_id
         left join ClaimExposure ce on ce.claimexposure_id = cc.claimexposure_id
         left join CoverageCode cd on cd.coveragecode_id = cc.coveragecode_id
+        left join ASL asl on asl.asl_id = cc.asl_id
+
       where 1=1
         --and cc.limit_dscr <> 'Limits on Policy'
         and cd.dscr <> 'N/A'
-        and cc.claimsubexposure_num < 2
-
-       ;;
+        and cc.claimsubexposure_num < 2 ;;
   }
 
 
@@ -68,6 +74,19 @@ view: dt_claim_coverage {
     sql: ${TABLE}.Deductible ;;
   }
 
+  #SH 2019-12-02 Added ASL Code
+  dimension: asl_code {
+    label: "ASL Code"
+    type: string
+    sql: ${TABLE}.asl_code ;;
+  }
+
+  dimension: asl_description {
+    label: "ASL Description"
+    type: string
+    sql: ${TABLE}.asl_description ;;
+  }
+
   measure: count {
     label: "Count"
     type: count
@@ -79,7 +98,10 @@ view: dt_claim_coverage {
       claim_control.claim_number,
       coverage_with_number,
       limit,
-      deductible
+      deductible,
+      # SH 2019-12-03  Added the asl_code and asl_description to the drill-through list
+      asl_code,
+      asl_description
     ]
   }
 
