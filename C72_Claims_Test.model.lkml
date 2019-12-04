@@ -8,7 +8,7 @@ week_start_day: sunday
 
 explore: claim_control {
   group_label: "Transcynd Analytics [Test]"
-  label: "Diamond (UAT)"
+  label: "Diamond (Test-1)"
   #persist_for: "4 hours"
   view_label: "Claim"
 
