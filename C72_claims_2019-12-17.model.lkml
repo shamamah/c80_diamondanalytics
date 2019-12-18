@@ -17,7 +17,7 @@ explore: claim_control {
     user_attribute:company_name
   }
 
-#Exclude records without claim number
+  #Exclude records without claim number
   sql_always_where: ${claim_number} > ''
     AND {% condition dt_claim_transactions_as_of.as_of_date %} claim_control.reported_date {% endcondition %}
     ;;
@@ -172,6 +172,14 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id} ;;
     }
 
+#     join: v1099_payee_list {
+#       view_label: "Claimant - 1099 Reportable"
+#       type: left_outer
+#       relationship: one_to_many
+#       sql_on: ${claimant.claimpayee_id} = ${v1099_payee_list.claimpayee_id}
+#         and ${v1099_payee_list.reportable} = 'Yes' ;;
+#     }
+
     join: dt_claimant_phone_home {
       view_label: "Claimant"
       type: left_outer
@@ -197,8 +205,7 @@ explore: claim_control {
     }
 
     join: dt_coverage_financials {
-      # SH 2019-12-03 Added "(Auto) to the view_label since the group data points apply to Auto only"
-      view_label: "Feature Financials (Auto)"
+      view_label: "Feature Financials"
       type: inner
       relationship: one_to_many
       sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials.claimcontrol_id}
@@ -321,17 +328,6 @@ explore: claim_control {
               ;;
     }
 
-    # SH 2019-12-03 Moved from above, and added join to v_claim_detail_feature
-    join: dt_claim_coverage {
-      view_label: "Claim Coverage"
-      type: left_outer
-      # SH 2019-12-03 Added the second join "AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}"
-      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id}
-              AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}
-              ;;
-      relationship: one_to_many
-    }
-
     join: v_claim_detail_transaction {
       view_label: "Checks & Transactions"
       type: left_outer
@@ -440,9 +436,7 @@ explore: claim_control {
       }
 
       join: check_status {
-        # SH 2019-12-03 Changed join type from "inner" to "left_outer"
-        #type: inner
-        type: left_outer
+        type: inner
         view_label: "Checks & Transactions"
         relationship: one_to_many
         sql_on: ${v_claim_detail_transaction.checkstatus_id} = ${check_status.checkstatus_id} ;;
@@ -523,13 +517,12 @@ explore: claim_control {
         relationship: one_to_one
       }
 
-      # SH 2019-12-03 Moved to below Feature
-      #join: dt_claim_coverage {
-      #  view_label: "Claim Coverage"
-      #  type: left_outer
-      #  sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id} ;;
-      #  relationship: one_to_many
-      #}
+      join: dt_claim_coverage {
+        view_label: "Claim Coverage"
+        type: left_outer
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id} ;;
+        relationship: one_to_many
+      }
 
       # Added on 2019-07-24  TT 287000
       join: dt_days_to_first_loss_payment {
