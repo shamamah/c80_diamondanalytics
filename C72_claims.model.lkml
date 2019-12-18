@@ -441,8 +441,9 @@ explore: claim_control {
 
       join: check_status {
         # SH 2019-12-03 Changed join type from "inner" to "left_outer"
-        #type: inner
-        type: left_outer
+        # SH 2019-12-18 Changed join back from "left_outer" to "inner", due to issue found with "pending check report"
+        type: inner
+        #type: left_outer
         view_label: "Checks & Transactions"
         relationship: one_to_many
         sql_on: ${v_claim_detail_transaction.checkstatus_id} = ${check_status.checkstatus_id} ;;
