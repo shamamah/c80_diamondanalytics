@@ -169,7 +169,9 @@ explore: claim_control {
       view_label: "Claimant"
       type: inner
       relationship: one_to_many
-      sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id} ;;
+      #SH 2019-12-19  Bug fix, need to add the second line for claimant_num to the join
+      sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id}
+        and ${claimant.claimant_num} = ${v_claim_detail_claimant.claimant_num};;
     }
 
     join: dt_claimant_phone_home {

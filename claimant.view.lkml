@@ -1,6 +1,14 @@
 view: claimant {
   sql_table_name: dbo.Claimant ;;
 
+  #SH 2019-12-19 TT294238
+  dimension: compound_primary_key {
+    type: string
+    primary_key: yes
+    hidden: yes
+    sql: CONCAT(${claimcontrol_id},${claimant_num}) ;;
+  }
+
 #   dimension: activity_involved {
 #     type: string
 #     sql: ${TABLE}.activity_involved ;;
@@ -435,21 +443,15 @@ view: claimant {
 #     ]
 #     sql: ${TABLE}.paid_day_of_injury ;;
 #   }
-#
-#   dimension_group: pcadded {
-#     type: time
-#     timeframes: [
-#       raw,
-#       time,
-#       date,
-#       week,
-#       month,
-#       quarter,
-#       year
-#     ]
-#     sql: ${TABLE}.pcadded_date ;;
-#   }
-#
+
+  # SH 2019-12-18 TT294238, need this dimension to know when a claimant was added on the claim
+  dimension_group: pcadded {
+    label: "Added"
+    type: time
+    timeframes: [time,date,week,month,quarter,year]
+    sql: ${TABLE}.pcadded_date ;;
+  }
+
 #   dimension_group: prepared {
 #     type: time
 #     timeframes: [
@@ -596,7 +598,42 @@ view: claimant {
 #     type: string
 #     sql: ${TABLE}.workcomp ;;
 #   }
+
+  # SH 2019-12-18 TT294238, need this dimension to know when a claimant was added on the claim
+  # dimension: contacted_same_day {
+  #   label: "Contacted Same Day (Y/N)"
+  #   type: string
+  #   sql: case when ${TABLE}.contacted=1 Then (case when datediff(dd,${TABLE}.pcadded_date,${TABLE}.contacted_date)=0 then 'Yes' else 'No' end) else NULL end ;;
+  # }
+
+  # SH 2019-12-18 TT294238, need this dimension to know when a claimant was added on the claim
+  dimension: contact_within {
+    label: "Contacted Within"
+    type: string
+    sql:  case when ${TABLE}.contacted = 1 then (
+            case
+              when datediff(dd,${TABLE}.pcadded_date,${TABLE}.contacted_date) = 0   then 'Same Day'
+              when datediff(hh,${TABLE}.pcadded_date,${TABLE}.contacted_date) <= 24 then 'Within 24 Hours'
+            else 'Over 24 hours'
+            end)
+          else 'Not contacted'
+          end ;;
+  }
+
+#   dimension_group: contacted_date {
+#     label: "Contacted"
+#     type: time
+#     timeframes: [time,date,week,month,quarter,year]
+#     sql: Case When ${TABLE}.contacted_date<'1900-01-01' Then NULL Else ${TABLE}.contacted_date End ;;
+#   }
 #
+#   dimension_group: pcadded {
+#     label: "Added"
+#     type: time
+#     timeframes: [time,date,week,month,quarter,year]
+#     sql: ${TABLE}.pcadded_date ;;
+#   }
+
 #   measure: count {
 #     type: count
 #     drill_fields: [supervisor_name]

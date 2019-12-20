@@ -271,6 +271,14 @@ view: v_claim_detail_claimant {
     drill_fields: [claimant_stats*]
   }
 
+  #SH 2019-12-19  TT294238
+  measure: count_percent {
+    label: "Percent"
+    type: percent_of_total
+    sql: ${count} ;;
+    drill_fields: [claimant_stats*]
+  }
+
   measure: litigated_represented_count {
     label: "Represented Count"
     type: count
@@ -389,7 +397,9 @@ view: v_claim_detail_claimant {
       status_dscr,
       claimanttypedscr,
       display_address,
-      city_state
+      city_state,
+      claimant.contacted_date_time,
+      claimant.pcadded_time
     ]
   }
 

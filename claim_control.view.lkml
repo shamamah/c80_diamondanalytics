@@ -586,7 +586,8 @@ view: claim_control {
   dimension_group: reported_date {
     type: time
     label: "Reported"
-    timeframes: [date,month,quarter,year,day_of_week,hour_of_day]
+    # SH 2019-12-18 TT294238 - Added "time" to the timeframe
+    timeframes: [date,month,quarter,year,day_of_week,hour_of_day,time]
     sql: ${TABLE}.reported_date ;;
   }
 
