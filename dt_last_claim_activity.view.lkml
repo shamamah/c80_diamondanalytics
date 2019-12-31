@@ -7,7 +7,9 @@ view: dt_last_claim_activity {
         ,(select max(ct.last_modified_date) from ClaimTransaction ct where ct.claimcontrol_id = cc.claimcontrol_id) as Claim_Transaction
         ,(select max(cca.last_modified_date) from ClaimControlActivity cca where cca.claimcontrol_id = cc.claimcontrol_id) as Claim_Activity
         ,(select max(ca.last_modified_date) from ClaimantActivity ca where ca.claimcontrol_id = cc.claimcontrol_id) as Claimant_Activity
-        ,(select max(ctp.last_modified_date) from ClaimTransactionPayee  ctp where ctp.claimcontrol_id = cc.claimcontrol_id) as Trans_Payee
+        ,(select max(ctp.last_modified_date) from ClaimTransactionPayee ctp where ctp.claimcontrol_id = cc.claimcontrol_id) as Trans_Payee
+        ,(select max(ccal.last_modified_date) from ClaimControlAttachmentLink ccal where ccal.claimcontrol_id = cc.claimcontrol_id) as attachment_link
+        ,(select max(n.pcadded_date) from vnotes n where n.create_key = cc.claimcontrol_id) as notes
         ,(SELECT MAX(MaxDate) FROM
           (
           SELECT MAX(last_modified_date) AS MaxDate FROM ClaimControl WHERE claimcontrol_id = cc.claimcontrol_id
@@ -21,6 +23,10 @@ view: dt_last_claim_activity {
           SELECT MAX(last_modified_date) AS MaxDate FROM ClaimControlActivity WHERE claimcontrol_id = cc.claimcontrol_id
           UNION
           SELECT MAX(last_modified_date) AS MaxDate FROM ClaimTransactionPayee WHERE claimcontrol_id = cc.claimcontrol_id
+          UNION
+          SELECT MAX(last_modified_date) AS MaxDate FROM ClaimControlAttachmentLink WHERE claimcontrol_id = cc.claimcontrol_id
+          UNION
+          SELECT MAX(pcadded_date) AS MaxDate FROM vNotes WHERE create_key = cc.claimcontrol_id
           ) AS X) AS 'OverallLastModifiedDate'
       FROM ClaimControl cc
        ;;
@@ -72,6 +78,18 @@ view: dt_last_claim_activity {
     hidden: yes
     type: time
     sql: ${TABLE}.Trans_Payee ;;
+  }
+
+  dimension_group: attachment_link {
+    hidden: yes
+    type: time
+    sql: ${TABLE}.Attachment_Link ;;
+  }
+
+  dimension_group: notes {
+    hidden: yes
+    type: time
+    sql: ${TABLE}.Notes ;;
   }
 
   dimension_group: overall_last_modified_date {
