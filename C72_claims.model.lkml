@@ -557,4 +557,12 @@ explore: claim_control {
         sql_on: ${claim_control.claimcontrol_id} = ${dt_date_latest_indemnity_payment.claimcontrol_id} ;;
         relationship: one_to_one
       }
+
+      # Added on 2019-12-30  TT 294433
+      join: dt_last_claim_activity {
+        view_label: "Claim Activity"
+        type: left_outer
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_last_claim_activity.claimcontrol_id} ;;
+        relationship: one_to_one
+      }
     }

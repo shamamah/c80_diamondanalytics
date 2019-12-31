@@ -172,7 +172,7 @@ explore: claim_control {
       #SH 2019-12-19  Bug fix, need to add the second line for claimant_num to the join
       sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id}
         and ${claimant.claimant_num} = ${v_claim_detail_claimant.claimant_num};;
-      }
+    }
 
 #     join: v1099_payee_list {
 #       view_label: "Claimant - 1099 Reportable"
@@ -562,6 +562,14 @@ explore: claim_control {
         view_label: "Checks & Transactions"
         type: left_outer
         sql_on: ${claim_control.claimcontrol_id} = ${dt_date_latest_indemnity_payment.claimcontrol_id} ;;
+        relationship: one_to_one
+      }
+
+      # Added on 2019-12-30  TT 294433
+      join: dt_last_claim_activity {
+        view_label: "Claim Activity"
+        type: left_outer
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_last_claim_activity.claimcontrol_id} ;;
         relationship: one_to_one
       }
     }
