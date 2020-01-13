@@ -387,6 +387,7 @@ view: v_claim_detail_claimant {
   #   sql:  ${expense_recovery} ;;
   # }
 
+  #SH 2020-01-13 Add examiner and supervisor initials to drill-down on claimant count TT 294238
   set: claimant_stats {
     fields: [
       claim_control.claim_number,
@@ -399,7 +400,9 @@ view: v_claim_detail_claimant {
       display_address,
       city_state,
       claimant.contacted_date_time,
-      claimant.pcadded_time
+      claimant.pcadded_time,
+      dt_claim_inside_adjuster.initials,
+      dt_claim_supervisor.supervisor_initials
     ]
   }
 
