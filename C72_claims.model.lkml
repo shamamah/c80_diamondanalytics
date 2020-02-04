@@ -323,6 +323,20 @@ explore: claim_control {
               ;;
     }
 
+    ##VERSION BEFORE MAKING CHANGES 2020-01-29
+    # SH 2019-12-03 Moved from above, and added join to v_claim_detail_feature
+    #join: dt_claim_coverage {
+    #  view_label: "Claim Coverage"
+    # SH 2020-01-07 Modified join type from "left outer" to "inner"Moved from above, and added join to v_claim_detail_feature
+    ##type: left_outer
+    #  type: inner
+    ## SH 2019-12-03 Added the second join "AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}"
+    #  sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id}
+    #          AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}
+    #          ;;
+    #  relationship: one_to_many
+    #}
+
     # SH 2019-12-03 Moved from above, and added join to v_claim_detail_feature
     join: dt_claim_coverage {
       view_label: "Claim Coverage"
@@ -331,6 +345,8 @@ explore: claim_control {
       type: inner
       # SH 2019-12-03 Added the second join "AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}"
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id}
+              AND ${v_claim_detail_feature.claimexposure_id} = ${dt_claim_coverage.claimexposure_id}
+              AND ${v_claim_detail_feature.claimsubexposure_num} = ${dt_claim_coverage.claimsubexposure_num}
               AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}
               ;;
       relationship: one_to_many

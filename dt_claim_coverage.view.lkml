@@ -4,6 +4,8 @@ view: dt_claim_coverage {
 
     select cc.claimcontrol_id as 'claimcontrol_id'
         ,cc.claimcoverage_num as 'claimcoverage_num'
+        ,cc.claimexposure_id as 'claimexposure_id'
+        ,cc.claimsubexposure_num as 'claimsubexposure_num'
         ,ce.dscr as 'Exposure'
         ,cd.dscr as 'Coverage'
         ,cc.limit_dscr as 'Limit'
@@ -14,14 +16,16 @@ view: dt_claim_coverage {
 
       from claimcoverage cc
         --left join claimcontrol clm on clm.claimcontrol_id = cc. claimcontrol_id
-        left join ClaimExposure ce on ce.claimexposure_id = cc.claimexposure_id
-        left join CoverageCode cd on cd.coveragecode_id = cc.coveragecode_id
-        left join ASL asl on asl.asl_id = cc.asl_id
+        inner join ClaimExposure ce on ce.claimexposure_id = cc.claimexposure_id
+        inner join CoverageCode cd on cd.coveragecode_id = cc.coveragecode_id
+        inner join ASL asl on asl.asl_id = cc.asl_id
 
       where 1=1
         --and cc.limit_dscr <> 'Limits on Policy'
         and cd.dscr <> 'N/A'
-        and cc.claimsubexposure_num < 2 ;;
+        --SH 2020-02-03  Determined that "cc.claimsubexposure_num < 2" is filtering out some records when joining to this table. Therefore commented out.
+        --and cc.claimsubexposure_num < 2
+        ;;
   }
 
 
@@ -36,6 +40,18 @@ view: dt_claim_coverage {
     hidden: yes
     type: number
     sql: ${TABLE}.claimcontrol_id ;;
+  }
+
+  dimension: claimexposure_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimexposure_id ;;
+  }
+
+  dimension: claimsubexposure_num {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimsubexposure_num ;;
   }
 
   dimension: claimcoverage_num {
@@ -100,8 +116,8 @@ view: dt_claim_coverage {
       limit,
       deductible,
       # SH 2019-12-03  Added the asl_code and asl_description to the drill-through list
-      asl_code,
-      asl_description
+      asl_code
+      #asl_description
     ]
   }
 

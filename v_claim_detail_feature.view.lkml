@@ -291,17 +291,17 @@ view: v_claim_detail_feature {
     sql: case when ${TABLE}.coveragecode='UM' then 'UMBI' else ${TABLE}.coveragecode end ;;
   }
 
-  # dimension: claimexposure_id {
-  #   type: number
-  #   hidden: yes
-  #   sql: ${TABLE}.claimexposure_id ;;
-  # }
+  dimension: claimexposure_id {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.claimexposure_id ;;
+  }
 
-  # dimension: claimsubexposure_num {
-  #   label: "Claim Subexposure Number"
-  #   type: number
-  #   sql: ${TABLE}.claimsubexposure_num ;;
-  # }
+  dimension: claimsubexposure_num {
+    label: "Claim Subexposure Number"
+    type: number
+    sql: ${TABLE}.claimsubexposure_num ;;
+  }
 
   dimension: claimcoverage_num {
     label: "Claim Coverage Number"
