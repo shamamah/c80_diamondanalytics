@@ -294,7 +294,28 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_outside_adjuster.claimcontrol_id} ;;
     }
 
-    join: dt_claim_supervisor {
+  join: dt_claim_subro_adjuster {
+    view_label: "Claim"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_subro_adjuster.claimcontrol_id} ;;
+  }
+
+  join: dt_claim_siu_adjuster {
+    view_label: "Claim"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_siu_adjuster.claimcontrol_id} ;;
+  }
+
+  join: dt_claim_salvage_adjuster {
+    view_label: "Claim"
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_salvage_adjuster.claimcontrol_id} ;;
+  }
+
+  join: dt_claim_supervisor {
       view_label: "Claim"
       type: left_outer
       relationship: one_to_many
