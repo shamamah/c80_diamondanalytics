@@ -604,4 +604,12 @@ explore: claim_control {
         sql_on: ${claim_control.claimcontrol_id} = ${dt_last_claim_activity.claimcontrol_id} ;;
         relationship: one_to_one
       }
+
+      # Added on 2020-02-29  TT 294681
+      join: dt_asl_claim_level {
+        view_label: "Claim"
+        type: left_outer
+        sql_on: ${dt_asl_claim_level.claimcontrol_id} = ${claim_control.claimcontrol_id} ;;
+        relationship: one_to_one
+      }
     }
