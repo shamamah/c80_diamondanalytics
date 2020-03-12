@@ -7,7 +7,7 @@ view: dt_claim_coverage {
         ,cc.claimexposure_id as 'claimexposure_id'
         ,cc.claimsubexposure_num as 'claimsubexposure_num'
         ,ce.dscr as 'Exposure'
-        ,cd.dscr as 'Coverage'
+        ,cd.caption as 'Coverage'
         ,cc.limit_dscr as 'Limit'
         ,cc.deductible_dscr as 'Deductible'
         --SH 2019-12-02 The next two columns and ASL joined table was added
@@ -17,12 +17,13 @@ view: dt_claim_coverage {
       from claimcoverage cc
         --left join claimcontrol clm on clm.claimcontrol_id = cc. claimcontrol_id
         inner join ClaimExposure ce on ce.claimexposure_id = cc.claimexposure_id
-        inner join CoverageCode cd on cd.coveragecode_id = cc.coveragecode_id
+        --SH 2020-03-12 Changed table from CoverageCode to CoverageCodeVersion, TT
+        inner join CoverageCodeVersion cd on cd.coveragecode_id = cc.coveragecode_id
         inner join ASL asl on asl.asl_id = cc.asl_id
 
       where 1=1
         --and cc.limit_dscr <> 'Limits on Policy'
-        and cd.dscr <> 'N/A'
+        and cd.caption <> 'N/A'
         --SH 2020-02-03  Determined that "cc.claimsubexposure_num < 2" is filtering out some records when joining to this table. Therefore commented out.
         --and cc.claimsubexposure_num < 2
         ;;
