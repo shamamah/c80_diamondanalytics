@@ -299,12 +299,12 @@ view: claim_control {
   #   sql: case when ${TABLE}.has_other_insurance = 'true' then 'Yes' else 'No' end ;;
   # }
 
-  # dimension: has_public_adjuster {
-  #   # NOT USED
-  #   hidden: yes
-  #   type: yesno
-  #   sql: case when ${TABLE}.has_public_adjuster = 'true' then 'Yes' else 'No' end ;;
-  # }
+  # SH 2020-03-25 Made this data point available per Steve Backman's request via email
+  dimension: has_public_adjuster {
+    label: "Has Public Adjuster"
+    type: string
+    sql: case when ${TABLE}.has_public_adjuster = 'true' then 'Yes' else 'No' end ;;
+  }
 
   # dimension: has_related_treatments {
   #   # NOT USED
