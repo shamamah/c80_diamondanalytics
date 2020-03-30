@@ -9,7 +9,8 @@ view: dt_last_claim_activity {
         ,(select max(ca.last_modified_date) from ClaimantActivity ca where ca.claimcontrol_id = cc.claimcontrol_id) as Claimant_Activity
         ,(select max(ctp.last_modified_date) from ClaimTransactionPayee ctp where ctp.claimcontrol_id = cc.claimcontrol_id) as Trans_Payee
         ,(select max(ccal.last_modified_date) from ClaimControlAttachmentLink ccal where ccal.claimcontrol_id = cc.claimcontrol_id) as attachment_link
-        ,(select max(n.pcadded_date) from vnotes n where n.create_key = cc.claimcontrol_id) as notes
+        --,(select max(n.pcadded_date) from vnotes n where n.create_key = cc.claimcontrol_id) as notes
+        ,(SELECT max(n.pcadded_date) from NotesKeyLink NKL INNER JOIN vNotes N (NOLOCK) ON N.note_id = NKL.note_Id WHERE NKL.key_value > 0 AND NKL.Key_Value = cc.claimcontrol_id) as notes
         ,(SELECT MAX(MaxDate) FROM
           (
           SELECT MAX(last_modified_date) AS MaxDate FROM ClaimControl WHERE claimcontrol_id = cc.claimcontrol_id
@@ -25,8 +26,10 @@ view: dt_last_claim_activity {
           SELECT MAX(last_modified_date) AS MaxDate FROM ClaimTransactionPayee WHERE claimcontrol_id = cc.claimcontrol_id
           UNION
           SELECT MAX(last_modified_date) AS MaxDate FROM ClaimControlAttachmentLink WHERE claimcontrol_id = cc.claimcontrol_id
+          --UNION
+          --SELECT MAX(pcadded_date) AS MaxDate FROM vNotes WHERE create_key = cc.claimcontrol_id
           UNION
-          SELECT MAX(pcadded_date) AS MaxDate FROM vNotes WHERE create_key = cc.claimcontrol_id
+          SELECT MAX(n.pcadded_date) AS MaxDate FROM NotesKeyLink NKL INNER JOIN vNotes N (NOLOCK) ON N.note_id = NKL.note_Id WHERE NKL.key_value > 0 AND NKL.Key_Value = cc.claimcontrol_id
           ) AS X) AS 'OverallLastModifiedDate'
       FROM ClaimControl cc
        ;;
@@ -95,7 +98,7 @@ view: dt_last_claim_activity {
   dimension_group: overall_last_modified_date {
     label: "Last Acitivity/Update"
     type: time
-    timeframes: [date,week,month,quarter,year]
+    timeframes: [date,week,month,quarter,year,time]
     sql: ${TABLE}.OverallLastModifiedDate ;;
   }
 }
