@@ -740,6 +740,17 @@ view: claim_control {
     }
   }
 
+  #SH 2020-04-20 Add a new data point to help with MCAS 20 counts
+  measure: count_without_indemnity_paid {
+    label: "Claim Count without Paid Loss"
+    type: count
+    drill_fields: [claim_stat*]
+    filters: {
+      field: v_claim_detail_feature.indemnity_paid
+      value: "=0"
+    }
+  }
+
   measure: count_with_expense_paid {
     label: "Claim Count with Paid Expense"
     type: count
