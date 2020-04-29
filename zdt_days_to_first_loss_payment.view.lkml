@@ -1,4 +1,4 @@
-view: dt_days_to_first_loss_payment {
+view: zdt_days_to_first_loss_payment {
   derived_table: {
     sql: select v_claim_detail_transaction.claimcontrol_id as "claimcontrol_id"
         ,claim_control.claim_number as "claim_number"
