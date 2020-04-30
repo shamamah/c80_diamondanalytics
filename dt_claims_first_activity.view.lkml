@@ -77,6 +77,18 @@ view: dt_claims_first_activity {
     value_format: "0"
   }
 
+  #SH 2020-04-29 Added data point with more tiers for MCAS reporting 23-28
+  dimension : closed_within_more {
+    type: tier
+    label: "First Closed Within (More Tiers)"
+    tiers: [31,61,91,181,366]
+    style: integer
+    sql: case when ${first_close_date_date} IS NULL
+      then NULL
+      else ${first_days_open} end ;;
+    value_format: "0"
+  }
+
   dimension : days_open_tier {
     type: tier
     label: "First Days Open (Tiers)"
