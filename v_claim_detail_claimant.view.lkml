@@ -271,6 +271,28 @@ view: v_claim_detail_claimant {
     drill_fields: [claimant_stats*]
   }
 
+  #SH 2020-06-03 Add a new data point to help with MCAS, TT 302005
+  measure: count_with_indemnity_paid {
+    label: "Count with Paid Loss"
+    type: count
+    drill_fields: [claimant_stats*]
+    filters: {
+      field: v_claim_detail_feature.indemnity_paid
+      value: ">0"
+    }
+  }
+
+  #SH 2020-06-03 Add a new data point to help with MCAS, TT 302005
+  measure: count_without_indemnity_paid {
+    label: "Count without Paid Loss"
+    type: count
+    drill_fields: [claimant_stats*]
+    filters: {
+      field: v_claim_detail_feature.indemnity_paid
+      value: "=0"
+    }
+  }
+
   #SH 2019-12-19  TT294238
   measure: count_percent {
     label: "Percent"
