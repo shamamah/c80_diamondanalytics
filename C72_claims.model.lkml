@@ -576,10 +576,13 @@ explore: claim_control {
       # Added on 2019-07-24  TT 287000
       #join: dt_days_to_first_loss_payment {
       # Replaced with new view on 2020-04-29 to add new data points for MCAS reporting
+      # SH 2020-06-18 - TT 302617 Added join on claimant_num and claimfeature_num
       join: dt_days_to_loss_payments {
         view_label: "Checks & Transactions"
         type: inner
-        sql_on: ${claim_control.claimcontrol_id} = ${dt_days_to_loss_payments.claimcontrol_id} ;;
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_days_to_loss_payments.claimcontrol_id}
+          and ${v_claim_detail_claimant.claimant_num} = ${dt_days_to_loss_payments.claimant_num}
+          and ${v_claim_detail_feature.claimfeature_num} = ${dt_days_to_loss_payments.claimfeature_num} ;;
         relationship: one_to_many
       }
 
@@ -592,10 +595,13 @@ explore: claim_control {
       }
 
       # Added on 2019-09-18  TT 289862
+      # SH 2020-06-18 - TT 302617 Added join on claimant_num and claimfeature_num
       join: dt_date_latest_indemnity_payment {
         view_label: "Checks & Transactions"
         type: left_outer
-        sql_on: ${claim_control.claimcontrol_id} = ${dt_date_latest_indemnity_payment.claimcontrol_id} ;;
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_date_latest_indemnity_payment.claimcontrol_id}
+          and ${v_claim_detail_claimant.claimant_num} = ${dt_date_latest_indemnity_payment.claimant_num}
+          and ${v_claim_detail_feature.claimfeature_num} = ${dt_date_latest_indemnity_payment.claimfeature_num} ;;
         relationship: one_to_one
       }
 

@@ -1,7 +1,10 @@
 view: dt_date_latest_indemnity_payment {
   derived_table: {
     sql: SELECT claim_control.claimcontrol_id AS claimcontrol_id
-      ,max(v_claim_detail_transaction.check_date) as max_check_date
+              --SH 2020-06-18 - TT 302617 Added claimant_num and claimfeature_num to join in the model
+              ,v_claim_detail_claimant.claimant_num as claimant_num
+              ,v_claim_detail_feature.claimfeature_num as claimfeature_num
+              ,max(v_claim_detail_transaction.check_date) as max_check_date
 
       FROM dbo.ClaimControl  AS claim_control
       INNER JOIN dbo.vClaimDetail_Claimant  AS v_claim_detail_claimant ON claim_control.claimcontrol_id = v_claim_detail_claimant.claimcontrol_id
@@ -19,6 +22,8 @@ view: dt_date_latest_indemnity_payment {
         and v_claim_detail_transaction.check_number between 1 and 99999999
         and check_status.[description] <> 'Void'
       GROUP BY claim_control.claimcontrol_id
+              ,v_claim_detail_claimant.claimant_num
+              ,v_claim_detail_feature.claimfeature_num
  ;;
   }
 
@@ -27,6 +32,18 @@ view: dt_date_latest_indemnity_payment {
     hidden: yes
     type: number
     sql: ${TABLE}.claimcontrol_id ;;
+  }
+
+  dimension: claimant_num {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimant_num ;;
+  }
+
+  dimension: claimfeature_num {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimfeature_num ;;
   }
 
   dimension_group: max_check_date {

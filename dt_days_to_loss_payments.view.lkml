@@ -2,6 +2,9 @@ view: dt_days_to_loss_payments {
   derived_table: {
     sql: select v_claim_detail_transaction.claimcontrol_id as "claimcontrol_id"
         ,claim_control.claim_number as "claim_number"
+        --SH 2020-06-18 - TT 302617 Added claimant_num and claimfeature_num to join in the model
+        ,v_claim_detail_claimant.claimant_num as "claimant_num"
+        ,v_claim_detail_feature.claimfeature_num as "claimfeature_num"
         ,CONVERT(VARCHAR(10),claim_control_activity.pcadded_date ,120) AS "claim_open_date"
         ,min(CONVERT(VARCHAR(10),v_claim_detail_transaction.check_date ,120)) AS "earliest_loss_payment_check_date"
         --SH 2020-04-29 Added latest loss payment to calculate median date to last payment, a MCAS requirement
@@ -39,6 +42,8 @@ view: dt_days_to_loss_payments {
 
       group by v_claim_detail_transaction.claimcontrol_id
         ,claim_control.claim_number
+        ,v_claim_detail_claimant.claimant_num
+        ,v_claim_detail_feature.claimfeature_num
         ,CONVERT(VARCHAR(10),claim_control_activity.pcadded_date ,120)
 
       having ISNULL(DATEDIFF(day,CONVERT(VARCHAR(10),claim_control_activity.pcadded_date ,120),min(CONVERT(VARCHAR(10),v_claim_detail_transaction.check_date ,120))),'') <> ''
@@ -58,6 +63,18 @@ view: dt_days_to_loss_payments {
     hidden: yes
     type: string
     sql: ${TABLE}.claim_number ;;
+  }
+
+  dimension: claimant_num {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.claimant_num ;;
+  }
+
+  dimension: claimfeature_num {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.claimfeature_num ;;
   }
 
   dimension: claim_open_date {
