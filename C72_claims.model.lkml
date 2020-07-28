@@ -63,6 +63,14 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_is_claim_litigated_represented.claimcontrol_id} ;;
     }
 
+    #SH 2020-07-17 TT 303899 - Added new data point, Coverage A limit at Claim-level regardless of coverage-level limit.
+    join: dt_coverage_a_limit {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_a_limit.claimcontrol_id} ;;
+    }
+
     join: dt_claim_days_open {
       view_label: "Claim"
       type: inner
@@ -294,28 +302,28 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_outside_adjuster.claimcontrol_id} ;;
     }
 
-  join: dt_claim_subro_adjuster {
-    view_label: "Claim"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_subro_adjuster.claimcontrol_id} ;;
-  }
+    join: dt_claim_subro_adjuster {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_subro_adjuster.claimcontrol_id} ;;
+    }
 
-  join: dt_claim_siu_adjuster {
-    view_label: "Claim"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_siu_adjuster.claimcontrol_id} ;;
-  }
+    join: dt_claim_siu_adjuster {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_siu_adjuster.claimcontrol_id} ;;
+    }
 
-  join: dt_claim_salvage_adjuster {
-    view_label: "Claim"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_salvage_adjuster.claimcontrol_id} ;;
-  }
+    join: dt_claim_salvage_adjuster {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_salvage_adjuster.claimcontrol_id} ;;
+    }
 
-  join: dt_claim_supervisor {
+    join: dt_claim_supervisor {
       view_label: "Claim"
       type: left_outer
       relationship: one_to_many
