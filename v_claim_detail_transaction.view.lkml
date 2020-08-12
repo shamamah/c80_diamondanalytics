@@ -65,11 +65,12 @@ view: v_claim_detail_transaction {
   }
 
   dimension_group: eff {
-    hidden: yes
-    label: "Date &"
+    #TT 305193 Made this data point visible and updated the label.
+    #hidden: yes
+    label: "Transaction"
     type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.eff_date ;;
+    timeframes: [time, date, week, month, quarter, year]
+    sql: case when (${TABLE}.eff_date > '1900-01-01') then ${TABLE}.eff_date else NULL end ;;
   }
 
   # dimension_group: added_date {
@@ -118,8 +119,9 @@ view: v_claim_detail_transaction {
   # }
 
   dimension: status {
-    label: "Status"
-    hidden: yes
+    #TT 305193 Made this data point visible and updated the label.
+    label: "Transaction Status"
+    #hidden: yes
     type: string
     sql: ${TABLE}.status ;;
   }
@@ -324,7 +326,8 @@ view: v_claim_detail_transaction {
 
   measure: count {
     type: count
-    drill_fields: [check_number, check_date_date, dim_amount, claim_control.claim_number, type_dscr, remark, pay_to_the_order_of, reissued, status, pay_type, bulk_check]
+    #TT 305193 Added eff_date to the list below
+    drill_fields: [check_number, check_date_date, dim_amount, claim_control.claim_number, type_dscr, remark, pay_to_the_order_of, reissued, status, eff_date, pay_type, bulk_check]
   }
 
   measure: amount {
