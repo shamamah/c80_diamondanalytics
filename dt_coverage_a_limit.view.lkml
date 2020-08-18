@@ -5,7 +5,8 @@ view: dt_coverage_a_limit {
         inner join ClaimCoverage ccov on ccov.claimcontrol_id = cc.claimcontrol_id
         inner join CoverageCode covc on covc.coveragecode_id = ccov.coveragecode_id
       where
-        covc.coveragecode = 'LOCA' --and ccov.limit_dscr NOT LIKE '%Limits%'
+        --TT 303899 re-opened - Added 'DWELLV' to include dwelling fire policies.
+        covc.coveragecode IN ('LOCA','DWELLV') --and ccov.limit_dscr NOT LIKE '%Limits%'
        ;;
   }
 
