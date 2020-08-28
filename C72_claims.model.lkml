@@ -2,6 +2,7 @@ connection: "c72-prod"
 
 # include all the views
 include: "*.view"
+include: "views/*.view"
 
 fiscal_month_offset: 0
 week_start_day: sunday
@@ -627,5 +628,14 @@ explore: claim_control {
         type: left_outer
         sql_on: ${dt_asl_claim_level.claimcontrol_id} = ${claim_control.claimcontrol_id} ;;
         relationship: one_to_one
+      }
+
+      # Added on 2020-08-28  TT 305900
+      join: claim_office {
+        view_label: "Claim"
+        fields: [claim_office.dscr]
+        type: left_outer
+        sql_on: ${claim_office.claimoffice_id} = ${claim_control.claimoffice_id} ;;
+        relationship: one_to_many
       }
     }
