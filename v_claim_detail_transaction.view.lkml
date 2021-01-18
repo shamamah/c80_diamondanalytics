@@ -112,11 +112,11 @@ view: v_claim_detail_transaction {
   #   sql: ${TABLE}.approvedby_user_name ;;
   # }
 
-  # dimension: claimtransactionstatus_id {
-  #   type: number
-  #   hidden: yes
-  #   sql: ${TABLE}.claimtransactionstatus_id ;;
-  # }
+  dimension: claimtransactionstatus_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimtransactionstatus_id ;;
+  }
 
   dimension: status {
     #TT 305193 Made this data point visible and updated the label.

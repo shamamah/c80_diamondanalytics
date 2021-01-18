@@ -206,11 +206,11 @@ view: claim_transaction {
   #   sql: ${TABLE}.claimtransactionsplit_num ;;
   # }
 
-  # dimension: claimtransactionstatus_id {
-  #   hidden: yes
-  #   type: number
-  #   sql: ${TABLE}.claimtransactionstatus_id ;;
-  # }
+  dimension: claimtransactionstatus_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimtransactionstatus_id ;;
+  }
 
   # dimension: claimtransactiontrackingcode_id {
   #   hidden: yes
@@ -218,11 +218,11 @@ view: claim_transaction {
   #   sql: ${TABLE}.claimtransactiontrackingcode_id ;;
   # }
 
-  # dimension: claimtransactiontype_id {
-  #   hidden: yes
-  #   type: number
-  #   sql: ${TABLE}.claimtransactiontype_id ;;
-  # }
+  dimension: claimtransactiontype_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimtransactiontype_id ;;
+  }
 
   # dimension: claimtransactionvoidreason_id {
   #   hidden: yes
