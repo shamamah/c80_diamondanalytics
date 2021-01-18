@@ -198,7 +198,10 @@ view: v1099_payee_list {
 
   dimension: vendor {
     type: string
-    sql: case when ${TABLE}.vendor = 0 then 'No' else 'Yes' end ;;
+    #TT 311584 2021-01-15. Seems that column 'vendor' was changed to 'vendor_yesno_id', and values changed to Yes=1 and No=2
+    #TT 255027 2019-04-24. DBD team changed the column name in view in Diamond DB
+    #sql: case when ${TABLE}.vendor = 0 then 'No' else 'Yes' end ;;
+    sql: case when ${TABLE}.vendor_yesno_id = 1 then 'Yes' else 'No' end ;;
   }
 
   dimension: zip {
