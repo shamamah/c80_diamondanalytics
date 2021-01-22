@@ -389,8 +389,6 @@ explore: claim_control {
       sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${v_claim_detail_transaction.claimcontrol_id}
               AND ${v_claim_detail_feature.claimant_num} = ${v_claim_detail_transaction.claimant_num}
               AND ${v_claim_detail_feature.claimfeature_num} = ${v_claim_detail_transaction.claimfeature_num}
-              --SH 2020-09-16 Added the next statement to exclude rejected transactions [Claim Number 2013861]
-              AND ${v_claim_detail_transaction.claimtransactionstatus_id} IN (1,4,7) --active, void, reinstate
               ;;
       #sql_where: ${v_claim_detail_transaction.check_number} between 1 and 99999999 ;;
       }
@@ -414,8 +412,6 @@ explore: claim_control {
               AND ${v_claim_detail_transaction.claimant_num} = ${claim_transaction.claimant_num}
               AND ${v_claim_detail_transaction.claimfeature_num} = ${claim_transaction.claimfeature_num}
               AND ${v_claim_detail_transaction.claimtransaction_num} = ${claim_transaction.claimtransaction_num}
-              --SH 2020-09-16 Added the next statement to exclude rejected transactions [Claim Number 2013861]
-              AND ${claim_transaction.claimtransactionstatus_id} IN (1,4,7) --active, void, reinstate
               ;;
       }
 
