@@ -130,11 +130,12 @@ view: v_claim_detail_claimant {
   #   sql: ${TABLE}.indemnity_reserve ;;
   # }
 
-  # dimension: indemnity_paid {
-  #   type: number
-  #   hidden: yes
-  #   sql: ${TABLE}.indemnity_paid ;;
-  # }
+  #SH 2021-03-30 Uncommented the financials at the claimant level, needed for TT 315090, but still hidden from user
+  dimension: indemnity_paid {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.indemnity_paid ;;
+  }
 
   # dimension: expense_reserve {
   #   type: number
@@ -277,7 +278,9 @@ view: v_claim_detail_claimant {
     type: count
     drill_fields: [claimant_stats*]
     filters: {
-      field: v_claim_detail_feature.indemnity_paid
+      #SH 2021-03-30 Change the condition from feature.indemnity_paid to claimant.indemnity_paid.  TT 315090
+      #field: v_claim_detail_feature.indemnity_paid
+      field: v_claim_detail_claimant.indemnity_paid
       value: ">0"
     }
   }
@@ -288,7 +291,9 @@ view: v_claim_detail_claimant {
     type: count
     drill_fields: [claimant_stats*]
     filters: {
-      field: v_claim_detail_feature.indemnity_paid
+      #SH 2021-03-30 Change the condition from feature.indemnity_paid to claimant.indemnity_paid.  TT 315090
+      #field: v_claim_detail_feature.indemnity_paid
+      field: v_claim_detail_claimant.indemnity_paid
       value: "=0"
     }
   }
