@@ -94,6 +94,7 @@ explore: claim_control {
         and ${dt_claims_first_activity.num} = 1 ;;
     }
 
+    #SH 2021-04-01 Added Latest Close Date and Latest Close Tiers
     join: dt_latest_closed_date {
       view_label: "Claim Activity"
       type: inner
