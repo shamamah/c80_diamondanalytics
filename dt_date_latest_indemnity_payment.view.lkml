@@ -4,6 +4,8 @@ view: dt_date_latest_indemnity_payment {
               --SH 2020-06-18 - TT 302617 Added claimant_num and claimfeature_num to join in the model
               ,v_claim_detail_claimant.claimant_num as claimant_num
               ,v_claim_detail_feature.claimfeature_num as claimfeature_num
+              --SH 2021-04-01 - TT 315226 Added added_date to measure days open to lastest indemnity date
+              ,claim_control.added_date as added_date
               ,max(v_claim_detail_transaction.check_date) as max_check_date
 
       FROM dbo.ClaimControl  AS claim_control
@@ -21,9 +23,12 @@ view: dt_date_latest_indemnity_payment {
       WHERE claim_transaction_category.dscr = 'Loss Payment'
         and v_claim_detail_transaction.check_number between 1 and 99999999
         and check_status.[description] <> 'Void'
+
       GROUP BY claim_control.claimcontrol_id
               ,v_claim_detail_claimant.claimant_num
               ,v_claim_detail_feature.claimfeature_num
+              --SH 2021-04-01 - TT 315226 Added added_date to measure days open to lastest indemnity date
+              ,claim_control.added_date
  ;;
   }
 
@@ -46,11 +51,39 @@ view: dt_date_latest_indemnity_payment {
     sql: ${TABLE}.claimfeature_num ;;
   }
 
+  dimension_group: added_date {
+    hidden: yes
+    type: time
+    timeframes: [date]
+    sql: ${TABLE}.added_date ;;
+  }
+
   dimension_group: max_check_date {
     label: "Date of Latest Indemnity Payment"
     type: time
-    timeframes: [date]
+    timeframes: [date,month,year]
     sql: ${TABLE}.max_check_date ;;
+  }
+
+  #SH 2021-04-01 Added data point with more tiers for MCAS reporting 23-28 TT 315226
+  dimension: days_open_to_last_indeminity_payment {
+    label: "Days to Last Indemnity Payment"
+    type: number
+    sql: case when ${max_check_date_date} IS NULL
+      then NULL
+      else DATEDIFF(dd, ${added_date_date}, ${max_check_date_date}) end  ;;
+  }
+
+  #SH 2021-04-01 Added data point with more tiers for MCAS reporting 23-28 TT 315226
+  dimension : latest_indemnity_payment_within_more {
+    type: tier
+    label: "Last Indemnity Payment Within (More Tiers)"
+    tiers: [31,61,91,181,366]
+    style: integer
+    sql: case when ${dt_date_latest_indemnity_payment.max_check_date_date} IS NULL
+      then NULL
+      else ${days_open_to_last_indeminity_payment} end ;;
+    value_format: "0"
   }
 
 }
