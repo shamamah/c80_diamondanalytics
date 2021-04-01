@@ -94,6 +94,14 @@ explore: claim_control {
         and ${dt_claims_first_activity.num} = 1 ;;
     }
 
+    join: dt_latest_closed_date {
+      view_label: "Claim Activity"
+      type: inner
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_latest_closed_date.claimcontrol_id}
+        ;;
+    }
+
     join: dt_claims_reopen_activity {
       view_label: "Claim Activity"
       type: left_outer
