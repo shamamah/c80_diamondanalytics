@@ -33,7 +33,7 @@ view: claim_control {
   dimension: claim_number {
     link: {
       label: "Open in Diamond"
-      url: "https://c72-prod.diamondasaservice.com/DiamondWeb/Employee/Claim/{{ value }}"
+      url: "https://c80-prod.diamondasaservice.com/DiamondWeb/Employee/Claim/{{ value }}"
       icon_url: "http://www.insuresoft.com/favicon.ico"
     }
     type: string

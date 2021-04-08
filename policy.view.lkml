@@ -35,7 +35,7 @@ view: policy {
   dimension: current_policy {
     # link: {
     #   label: "Open in Diamond"
-    #   url: "https://c72-prod.diamondasaservice.com/DiamondWeb/Employee/Policy/{{ value }}"
+    #   url: "https://c80-prod.diamondasaservice.com/DiamondWeb/Employee/Policy/{{ value }}"
     #   icon_url: "http://www.insuresoft.com/favicon.ico"
     # }
     type: string
