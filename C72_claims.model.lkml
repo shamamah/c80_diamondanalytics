@@ -1,8 +1,7 @@
-connection: "c72-prod"
+connection: "diamond_prod"
 
 # include all the views
 include: "*.view"
-include: "views/*.view"
 
 fiscal_month_offset: 0
 week_start_day: sunday

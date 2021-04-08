@@ -1,4 +1,4 @@
-connection: "c72-test"
+connection: "diamond_test"
 
 # include all the views
 include: "*.view"
