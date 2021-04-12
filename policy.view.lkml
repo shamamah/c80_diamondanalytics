@@ -39,7 +39,7 @@ view: policy {
     #   icon_url: "http://www.insuresoft.com/favicon.ico"
     # }
     type: string
-    label: "Number"
+    label: "Policy Number"
     sql: ${TABLE}.current_policy ;;
   }
 

@@ -37,7 +37,7 @@ view: claim_control {
       icon_url: "http://www.insuresoft.com/favicon.ico"
     }
     type: string
-    label: "Number"
+    label: "Claim Number"
     sql: ${TABLE}.claim_number ;;
   }
 
