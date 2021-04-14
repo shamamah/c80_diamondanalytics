@@ -361,6 +361,15 @@ explore: claim_control {
               ;;
     }
 
+    #SH 2021-04-13  TT 315292  Get feature status with As-Of-Date.
+    join: dt_claim_feature_as_of_date {
+      view_label: "Claim Feature"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${dt_claim_feature_as_of_date.claimcontrol_id}
+        and ${v_claim_detail_feature.claimant_num} = ${dt_claim_feature_as_of_date.claimant_num} ;;
+    }
+
     ##VERSION BEFORE MAKING CHANGES 2020-01-29
     # SH 2019-12-03 Moved from above, and added join to v_claim_detail_feature
     #join: dt_claim_coverage {
