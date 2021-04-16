@@ -7,7 +7,7 @@ fiscal_month_offset: 0
 week_start_day: sunday
 
 explore: claim_control {
-  group_label: "Claims Analytics [Prod]"
+  group_label: "Claims Analytics [Test]"
   label: "Diamond Claims"
   #persist_for: "4 hours"
   view_label: "Claim"
