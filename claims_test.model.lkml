@@ -7,8 +7,8 @@ fiscal_month_offset: 0
 week_start_day: sunday
 
 explore: claim_control {
-  group_label: "Claims Analytics [Test]"
-  label: "Diamond (Test-1)"
+  group_label: "Claims Analytics [Prod]"
+  label: "Diamond Claims"
   #persist_for: "4 hours"
   view_label: "Claim"
 
@@ -17,7 +17,7 @@ explore: claim_control {
     user_attribute:company_name
   }
 
-  #Exclude records without claim number
+#Exclude records without claim number
   sql_always_where: ${claim_number} > ''
     AND {% condition dt_claim_transactions_as_of.as_of_date %} claim_control.reported_date {% endcondition %}
     ;;
@@ -63,6 +63,14 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_is_claim_litigated_represented.claimcontrol_id} ;;
     }
 
+    #SH 2020-07-17 TT 303899 - Added new data point, Coverage A limit at Claim-level regardless of coverage-level limit.
+    join: dt_coverage_a_limit {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_one
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_a_limit.claimcontrol_id} ;;
+    }
+
     join: dt_claim_days_open {
       view_label: "Claim"
       type: inner
@@ -83,6 +91,15 @@ explore: claim_control {
       relationship: one_to_many
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claims_first_activity.claimcontrol_id}
         and ${dt_claims_first_activity.num} = 1 ;;
+    }
+
+    #SH 2021-04-01 Added Latest Close Date and Latest Close Tiers
+    join: dt_latest_closed_date {
+      view_label: "Claim Activity"
+      type: inner
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_latest_closed_date.claimcontrol_id}
+        ;;
     }
 
     join: dt_claims_reopen_activity {
@@ -173,14 +190,6 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${claimant.claimcontrol_id}
         and ${claimant.claimant_num} = ${v_claim_detail_claimant.claimant_num};;
     }
-
-#     join: v1099_payee_list {
-#       view_label: "Claimant - 1099 Reportable"
-#       type: left_outer
-#       relationship: one_to_many
-#       sql_on: ${claimant.claimpayee_id} = ${v1099_payee_list.claimpayee_id}
-#         and ${v1099_payee_list.reportable} = 'Yes' ;;
-#     }
 
     join: dt_claimant_phone_home {
       view_label: "Claimant"
@@ -302,6 +311,27 @@ explore: claim_control {
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_outside_adjuster.claimcontrol_id} ;;
     }
 
+    join: dt_claim_subro_adjuster {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_subro_adjuster.claimcontrol_id} ;;
+    }
+
+    join: dt_claim_siu_adjuster {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_siu_adjuster.claimcontrol_id} ;;
+    }
+
+    join: dt_claim_salvage_adjuster {
+      view_label: "Claim"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_salvage_adjuster.claimcontrol_id} ;;
+    }
+
     join: dt_claim_supervisor {
       view_label: "Claim"
       type: left_outer
@@ -331,12 +361,39 @@ explore: claim_control {
               ;;
     }
 
+    #SH 2021-04-13  TT 315292  Get feature status with As-Of-Date.
+    join: dt_claim_feature_as_of_date {
+      view_label: "Claim Feature"
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${dt_claim_feature_as_of_date.claimcontrol_id}
+        and ${v_claim_detail_feature.claimant_num} = ${dt_claim_feature_as_of_date.claimant_num} ;;
+    }
+
+    ##VERSION BEFORE MAKING CHANGES 2020-01-29
+    # SH 2019-12-03 Moved from above, and added join to v_claim_detail_feature
+    #join: dt_claim_coverage {
+    #  view_label: "Claim Coverage"
+    # SH 2020-01-07 Modified join type from "left outer" to "inner"Moved from above, and added join to v_claim_detail_feature
+    ##type: left_outer
+    #  type: inner
+    ## SH 2019-12-03 Added the second join "AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}"
+    #  sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id}
+    #          AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}
+    #          ;;
+    #  relationship: one_to_many
+    #}
+
     # SH 2019-12-03 Moved from above, and added join to v_claim_detail_feature
     join: dt_claim_coverage {
       view_label: "Claim Coverage"
-      type: left_outer
+      # SH 2020-01-07 Modified join type from "left outer" to "inner"Moved from above, and added join to v_claim_detail_feature
+      #type: left_outer
+      type: inner
       # SH 2019-12-03 Added the second join "AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}"
       sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_coverage.claimcontrol_id}
+              AND ${v_claim_detail_feature.claimexposure_id} = ${dt_claim_coverage.claimexposure_id}
+              AND ${v_claim_detail_feature.claimsubexposure_num} = ${dt_claim_coverage.claimsubexposure_num}
               AND ${v_claim_detail_feature.claimcoverage_num} = ${dt_claim_coverage.claimcoverage_num}
               ;;
       relationship: one_to_many
@@ -369,9 +426,9 @@ explore: claim_control {
         view_label: "Checks & Transactions"
         relationship: one_to_one
         sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${claim_transaction.claimcontrol_id}
-              and ${v_claim_detail_transaction.claimant_num} = ${claim_transaction.claimant_num}
-              and ${v_claim_detail_transaction.claimfeature_num} = ${claim_transaction.claimfeature_num}
-              and ${v_claim_detail_transaction.claimtransaction_num} = ${claim_transaction.claimtransaction_num}
+              AND ${v_claim_detail_transaction.claimant_num} = ${claim_transaction.claimant_num}
+              AND ${v_claim_detail_transaction.claimfeature_num} = ${claim_transaction.claimfeature_num}
+              AND ${v_claim_detail_transaction.claimtransaction_num} = ${claim_transaction.claimtransaction_num}
               ;;
       }
 
@@ -420,7 +477,7 @@ explore: claim_control {
       join: dt_transaction_payee_address {
         type: left_outer
         view_label: "Checks & Transactions"
-        relationship: one_to_many
+        relationship: one_to_one
         sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_transaction_payee_address.claimcontrol_id}
               and ${v_claim_detail_transaction.claimant_num} = ${dt_transaction_payee_address.claimant_num}
               and ${v_claim_detail_transaction.claimfeature_num} = ${dt_transaction_payee_address.claimfeature_num}
@@ -451,8 +508,9 @@ explore: claim_control {
 
       join: check_status {
         # SH 2019-12-03 Changed join type from "inner" to "left_outer"
-        #type: inner
-        type: left_outer
+        # SH 2019-12-18 Changed join back from "left_outer" to "inner", due to issue found with "pending check report"
+        type: inner
+        #type: left_outer
         view_label: "Checks & Transactions"
         relationship: one_to_many
         sql_on: ${v_claim_detail_transaction.checkstatus_id} = ${check_status.checkstatus_id} ;;
@@ -542,10 +600,15 @@ explore: claim_control {
       #}
 
       # Added on 2019-07-24  TT 287000
+      #join: dt_days_to_first_loss_payment {
+      # Replaced with new view on 2020-04-29 to add new data points for MCAS reporting
+      # SH 2020-06-18 - TT 302617 Added join on claimant_num and claimfeature_num
       join: dt_days_to_loss_payments {
         view_label: "Checks & Transactions"
         type: inner
-        sql_on: ${claim_control.claimcontrol_id} = ${dt_days_to_loss_payments.claimcontrol_id} ;;
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_days_to_loss_payments.claimcontrol_id}
+          and ${v_claim_detail_claimant.claimant_num} = ${dt_days_to_loss_payments.claimant_num}
+          and ${v_claim_detail_feature.claimfeature_num} = ${dt_days_to_loss_payments.claimfeature_num} ;;
         relationship: one_to_many
       }
 
@@ -558,10 +621,13 @@ explore: claim_control {
       }
 
       # Added on 2019-09-18  TT 289862
+      # SH 2020-06-18 - TT 302617 Added join on claimant_num and claimfeature_num
       join: dt_date_latest_indemnity_payment {
         view_label: "Checks & Transactions"
         type: left_outer
-        sql_on: ${claim_control.claimcontrol_id} = ${dt_date_latest_indemnity_payment.claimcontrol_id} ;;
+        sql_on: ${claim_control.claimcontrol_id} = ${dt_date_latest_indemnity_payment.claimcontrol_id}
+          and ${v_claim_detail_claimant.claimant_num} = ${dt_date_latest_indemnity_payment.claimant_num}
+          and ${v_claim_detail_feature.claimfeature_num} = ${dt_date_latest_indemnity_payment.claimfeature_num} ;;
         relationship: one_to_one
       }
 
@@ -571,5 +637,22 @@ explore: claim_control {
         type: left_outer
         sql_on: ${claim_control.claimcontrol_id} = ${dt_last_claim_activity.claimcontrol_id} ;;
         relationship: one_to_one
+      }
+
+      # Added on 2020-02-29  TT 294681
+      join: dt_asl_claim_level {
+        view_label: "Claim"
+        type: left_outer
+        sql_on: ${dt_asl_claim_level.claimcontrol_id} = ${claim_control.claimcontrol_id} ;;
+        relationship: one_to_one
+      }
+
+      # Added on 2020-08-28  TT 305900
+      join: claim_office {
+        view_label: "Claim"
+        fields: [claim_office.dscr]
+        type: left_outer
+        sql_on: ${claim_office.claimoffice_id} = ${claim_control.claimoffice_id} ;;
+        relationship: one_to_many
       }
     }
