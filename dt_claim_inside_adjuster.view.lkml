@@ -1,26 +1,47 @@
 view: dt_claim_inside_adjuster {
   derived_table: {
-    sql: select cc.claimcontrol_id, cc.claim_number
-        --,'ClaimControlPersonnel' as ClaimControlPersonnel, ccp.*
-        --,'ClaimPersonnel' as ClaimPersonnel, cp.*
-        ,cp.[enabled] as Is_Claim_Personnel_Enabled, cp.initials, cp.claimoffice_id
-        --,'ClaimPersonnelType' as ClaimPersonnelType, cpt.*
-        ,cpt.claimpersonneltype_id as claim_personnel_type_id, cpt.dscr as ClaimPersonnelType_dscr
-        --,'ClaimAdjusterType' as ClaimAdjusterType, cat.*
-        ,cat.claimadjustertype_id as claim_adjuster_type_id, cat.dscr as ClaimAdjusterType_dscr, cat.[enabled] as Is_Adjuster_Enabled
-        --,'vUsers' as vUsers
-        ,u.display_name as Adjuster_Name
-        ,u.active as Active
-      from ClaimControlPersonnel ccp
-        inner join ClaimControl cc on cc.claimcontrol_id = ccp.claimcontrol_id
-        inner join ClaimPersonnel cp on cp.claimpersonnel_id = ccp.claimpersonnel_id
-        inner join ClaimPersonnelType cpt on cpt.claimpersonneltype_id = ccp.claimpersonneltype_id
-        inner join ClaimAdjusterType cat on cat.claimadjustertype_id = ccp.claimadjustertype_id
-        inner join vUsers u on u.users_id = cp.users_id
-      where ccp.claimpersonnel_id <> 0
+    sql:
+
+    select cc.claimcontrol_id
+        ,cc.claim_number as "Claim_Number"
+        ,cca.last_modified_date as "Assigned_Date"
+            ,cp.[enabled] as "Is_Claim_Personnel_Enabled"
+        ,cp.initials
+        ,cp.claimoffice_id
+            ,cpt.claimpersonneltype_id as "claim_personnel_type_id"
+        ,cpt.dscr as "ClaimPersonnelType_dscr"
+            ,cat.claimadjustertype_id as "claim_adjuster_type_id"
+        ,cat.dscr as "ClaimAdjusterType_dscr"
+        ,cat.[enabled] as "Is_Adjuster_Enabled"
+            ,u.display_name as "Adjuster_Name"
+            ,u.active as Active
+        ,p.phone_num as "Adjuster_Phone"
+        ,u.user_emailaddr as "Adjuster_Email"
+
+    from dbo.ClaimControlPersonnel (NOLOCK) ccp
+        left join dbo.ClaimControl (NOLOCK) cc on cc.claimcontrol_id = ccp.claimcontrol_id
+        left join dbo.ClaimPersonnel (NOLOCK) cp on cp.claimpersonnel_id = ccp.claimpersonnel_id
+        left join dbo.ClaimPersonnelType (NOLOCK) cpt on cpt.claimpersonneltype_id = ccp.claimpersonneltype_id
+        left join dbo.ClaimAdjusterType (NOLOCK) cat on cat.claimadjustertype_id = ccp.claimadjustertype_id
+        left join dbo.vUsers (NOLOCK) u on u.users_id = cp.users_id
+        --SH 2021-06-10  TT 318436 - Join to cca, uel, e, epl, and p to get the requested data
+        left join ClaimControlActivity cca on cca.claimcontrol_id = ccp.claimcontrol_id
+          and cca.claimactivitycode_id = 5
+          and cca.num = (
+                    select max(num)
+                    from dbo.claimcontrolactivity cca1
+                    where cca1.claimcontrol_id = cca.claimcontrol_id
+                  )
+        left join dbo.UserEmployeeLink uel (NOLOCK) on UEL.users_id = u.users_id
+        left join dbo.Employee e (NOLOCK) on e.employee_id = uel.employee_id
+        left join dbo.EmployeePhoneLink epl (NOLOCK) on epl.employee_id = e.employee_id
+        left join dbo.Phone p (NOLOCK) on p.phone_id = epl.phone_id
+
+    where ccp.claimpersonnel_id <> 0
         and cat.[enabled] <> 0
         and cpt.claimpersonneltype_id = 3  --adjusters only
         and cat.claimadjustertype_id = 1   --inside only
+
        ;;
   }
 
@@ -87,5 +108,25 @@ view: dt_claim_inside_adjuster {
     label: "Examiner Active (Yes/No)"
     type: string
     sql: case when ${TABLE}.Active=1 then 'Yes' else (case when ${TABLE}.Active=0 then 'No' else 'N/A' end) end ;;
+  }
+
+  #SH 2021-06-10  TT 318436 - Join to cca, uel, e, epl, and p to get the requested data
+  dimension: adjuster_phone {
+    label: "Examiner Phone"
+    type: string
+    sql: ${TABLE}.adjuster_phone ;;
+  }
+
+  dimension: adjuster_email {
+    label: "Examiner Email"
+    type: string
+    sql: ${TABLE}.adjuster_email ;;
+  }
+
+  dimension_group: assigned_date {
+    label: "Examiner Assigned"
+    type: time
+    timeframes: [date,week,month,year]
+    sql: ${TABLE}.assigned_date ;;
   }
 }
