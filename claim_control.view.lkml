@@ -537,12 +537,12 @@ view: claim_control {
     sql: ${TABLE}.policy_id ;;
   }
 
-  # dimension: policyimage_num {
-  #   # NOT USED
-  #   hidden: yes
-  #   type: number
-  #   sql: ${TABLE}.policyimage_num ;;
-  # }
+  dimension: policyimage_num {
+    # NOT USED
+    hidden: yes
+    type: number
+    sql: ${TABLE}.policyimage_num ;;
+  }
 
   # dimension: previous_claim_number {
   #   # NOT USED

@@ -547,8 +547,9 @@ explore: claim_control {
 
       join: policy_image {
         type: inner
-        sql_on: ${claim_control.policy_id} = ${policy_image.policy_id} ;;
-        relationship: many_to_many
+        sql_on: ${claim_control.policy_id} = ${policy_image.policy_id}
+          and ${claim_control.policyimage_num} = ${policy_image.policyimage_num} ;;
+        relationship: many_to_one
       }
 
       # join: policy_image_address_link {
