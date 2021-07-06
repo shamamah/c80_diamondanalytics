@@ -552,7 +552,7 @@ explore: claim_control {
 
         join: dt_policy_agency {
           view_label: "Policy"
-          type: inner
+          type: left_outer
           relationship: one_to_many
           sql_on: ${policy.policy_id} = ${dt_policy_agency.policy_id} ;;
         }
