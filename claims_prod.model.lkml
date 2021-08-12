@@ -29,21 +29,30 @@ explore: claim_control {
 #   }
 
     join: dt_reserves_loss {
-      view_label: "Claim Financials (Totals)"
+      #SH 2021-08-11 Per DG, there is no business need for the measures, just the dimension
+      #view_label: "Claim Financials (Totals)"
+      view_label: "Claim Financials (Current)"
+      fields: [dt_reserves_loss.reserve_set]
       type: inner
       relationship: one_to_one
       sql_on: ${claim_control.claimcontrol_id} = ${dt_reserves_loss.claimcontrol_id} ;;
     }
 
     join: dt_reserves_ao {
-      view_label: "Claim Financials (Totals)"
+      #SH 2021-08-11 Per DG, there is no business need for the measures, just the dimension
+      #view_label: "Claim Financials (Totals)"
+      view_label: "Claim Financials (Current)"
+      fields: [dt_reserves_ao.reserve_set]
       type: inner
       relationship: one_to_one
       sql_on: ${claim_control.claimcontrol_id} = ${dt_reserves_ao.claimcontrol_id} ;;
     }
 
     join: dt_reserves_dcc {
-      view_label: "Claim Financials (Totals)"
+      #SH 2021-08-11 Per DG, there is no business need for the measures, just the dimension
+      #view_label: "Claim Financials (Totals)"
+      view_label: "Claim Financials (Current)"
+      fields: [dt_reserves_dcc.reserve_set]
       type: inner
       relationship: one_to_one
       sql_on: ${claim_control.claimcontrol_id} = ${dt_reserves_dcc.claimcontrol_id} ;;
