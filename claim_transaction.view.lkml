@@ -290,10 +290,10 @@ view: claim_transaction {
   # }
 
   dimension: manual_check {
-    hidden: no
-    label: "Is Manual Check"
-    type: string
-    sql: case when ${TABLE}.manual_check=1 then 'Yes' else 'No' end ;;
+    view_label: "Claim Transaction"
+    label: "Manual Check"
+    type: yesno
+    sql: ${TABLE}.manual_check = 1 ;;
   }
 
   dimension: memo {
@@ -418,6 +418,20 @@ view: claim_transaction {
     type: time
     timeframes: [date,week,month,quarter,year]
     sql: case when ${TABLE}.voided_date < '1900-01-01' then NULL else ${TABLE}.voided_date end ;;
+  }
+
+  #SH 2021-08-17  Added
+  dimension: claimdigitalpaymentstatus_id {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimdigitalpaymentstatus_id ;;
+  }
+
+  dimension: is_digital_payment {
+    view_label: "Claim Transaction"
+    label: "Digital Payment"
+    type: yesno
+    sql: ${TABLE}.claimdigitalpaymentstatus_id <> 0 ;;
   }
 
   # measure: count {

@@ -38,11 +38,12 @@ view: v_claim_detail_claimant {
   #   sql: case when ${TABLE}.is_insured2=1 then 'Yes' else 'No' end ;;
   # }
 
-  dimension: name {
-    label: "Name (WS)"
-    type: string
-    sql: ${TABLE}.name ;;
-  }
+  #SH 2021-08-17 Remove
+  # dimension: name {
+  #   label: "Name (WS)"
+  #   type: string
+  #   sql: ${TABLE}.name ;;
+  # }
 
   dimension: display_name {
     type: string
@@ -420,7 +421,7 @@ view: v_claim_detail_claimant {
       claim_control.claim_number,
       policy.current_policy,
       claimant_num,
-      name,
+      display_name,
       relationshiptypedscr,
       status_dscr,
       claimanttypedscr,

@@ -52,8 +52,15 @@ view: dt_days_to_loss_payments {
        ;;
   }
 
-  dimension: claimcontrol_id {
+  #SH 2021-08-17 Added
+  dimension: compound_primary_key {
+    type: string
     primary_key: yes
+    hidden: yes
+    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num}) ;;
+  }
+
+  dimension: claimcontrol_id {
     hidden: yes
     type: number
     sql: ${TABLE}.claimcontrol_id ;;

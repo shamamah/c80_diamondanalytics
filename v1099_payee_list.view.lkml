@@ -24,6 +24,7 @@ view: v1099_payee_list {
   }
 
   dimension: business_type {
+    label: "Payee Business Type"
     type: string
     sql: ${TABLE}.business_type ;;
   }

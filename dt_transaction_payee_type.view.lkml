@@ -47,11 +47,12 @@ view: dt_transaction_payee_type {
     sql: ${TABLE}.claimtransaction_num ;;
   }
 
-  dimension: claimpayeesubtype_id {
-    label: "Payee Type Code"
-    type: number
-    sql: ${TABLE}.claimpayeesubtype_id ;;
-  }
+  #SH 2021-08-17 Remove
+  # dimension: claimpayeesubtype_id {
+  #   label: "Payee Type Code"
+  #   type: number
+  #   sql: ${TABLE}.claimpayeesubtype_id ;;
+  # }
 
   dimension: claimpayee_id {
     hidden: yes
@@ -77,9 +78,10 @@ view: dt_transaction_payee_type {
     sql: ${TABLE}.dscr ;;
   }
 
-  dimension: is_lender {
-    label: "Is Lender"
-    type: string
-    sql: case when ${TABLE}.is_lender=1 then 'Y' else 'N' end  ;;
-  }
+  #SH 2021-08-17 Remove
+  # dimension: is_lender {
+  #   label: "Is Lender"
+  #   type: yesno
+  #   sql: ${TABLE}.is_lender = 1 ;;
+  # }
 }

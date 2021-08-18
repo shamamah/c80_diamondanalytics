@@ -155,6 +155,7 @@ view: claim_transaction_type {
   }
 
   dimension: dscr {
+    label: "Type"
     type: string
     sql: ${TABLE}.dscr ;;
   }

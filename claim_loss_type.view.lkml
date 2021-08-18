@@ -10,7 +10,7 @@ view: claim_loss_type {
     label: "Loss Type Code"
     view_label: "Claim"
     primary_key: yes
-    hidden: no
+    hidden: yes
     type: number
     sql: ${TABLE}.claimlosstype_id ;;
   }

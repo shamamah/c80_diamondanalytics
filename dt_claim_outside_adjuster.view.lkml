@@ -78,7 +78,7 @@ dimension: initials {
 #   }
 
 dimension: adjuster_name {
-  label: "Outside Adjuster"
+  label: "Adjuster-Outside"
   type: string
   sql: ${TABLE}.Adjuster_Name ;;
 }

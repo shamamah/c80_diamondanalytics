@@ -57,7 +57,7 @@ view: dt_claim_feature_as_of_date {
   }
 
   dimension: claimfeature_num {
-    label: "Feature Number"
+    label: "Unique Number"
     type: number
     sql: ${TABLE}.claimfeature_num ;;
   }

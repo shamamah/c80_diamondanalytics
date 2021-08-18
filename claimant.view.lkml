@@ -79,8 +79,7 @@ view: claimant {
 #   }
 
   dimension: claimant_num {
-    label: "Number"
-    hidden: no
+    label: "Unique Number"
     type: number
     sql: ${TABLE}.claimant_num ;;
   }

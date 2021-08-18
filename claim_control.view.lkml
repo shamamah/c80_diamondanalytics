@@ -75,11 +75,12 @@ view: claim_control {
     sql: ${TABLE}.claimcatastrophe_id ;;
   }
 
-  dimension: claimclosereason_id {
-    label: "Close Reason Code"
-    type: number
-    sql: case when ISNULL(${TABLE}.claimclosereason_id,-1)>=0 then ${TABLE}.claimclosereason_id else NULL end  ;;
-  }
+  #SH 2021-08-17 Removed
+  # dimension: claimclosereason_id {
+  #   label: "Close Reason Code"
+  #   type: number
+  #   sql: case when ISNULL(${TABLE}.claimclosereason_id,-1)>=0 then ${TABLE}.claimclosereason_id else NULL end  ;;
+  # }
 
   # Uncommented on 2019-08-28  TT 286803
   dimension: claimcluedisp_id {
@@ -102,9 +103,8 @@ view: claim_control {
   }
 
   dimension: claimcontrolstatus_id {
-    label: "Status Code"
     type: number
-    hidden: no
+    hidden: yes
     sql: ${TABLE}.claimcontrolstatus_id ;;
   }
 
@@ -247,9 +247,8 @@ view: claim_control {
   # }
 
   dimension: claimseverity_id {
-    label: "Severity Code"
     type: number
-    hidden: no
+    hidden: yes
     sql: ${TABLE}.claimseverity_id ;;
   }
 

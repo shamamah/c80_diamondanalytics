@@ -31,9 +31,10 @@ view: v_claim_detail_transaction {
     sql: ${TABLE}.claimfeature_num ;;
   }
 
+  #SH 2021-05-26 Made this dimension visible to allow seeing rows of duplicate data.  Used for uniqueness.
   dimension: claimtransaction_num {
+    label: "Unique Number"
     type: number
-    hidden: yes
     sql: ${TABLE}.claimtransaction_num ;;
   }
 
@@ -58,11 +59,12 @@ view: v_claim_detail_transaction {
     sql: ${TABLE}.claimtransactiontype_id ;;
   }
 
-  dimension: type_dscr {
-    label: "Trans Type Detail"
-    type: string
-    sql: ${TABLE}.type_dscr ;;
-  }
+  #SARO 2021-08-17 Remove
+  # dimension: type_dscr {
+  #   label: "Trans Type Detail"
+  #   type: string
+  #   sql: ${TABLE}.type_dscr ;;
+  # }
 
   dimension_group: eff {
     #TT 305193 Made this data point visible and updated the label.
@@ -80,10 +82,12 @@ view: v_claim_detail_transaction {
   #   sql: ${TABLE}.added_date ;;
   # }
 
+  #SH 2021-08-17 Hidden - Same as claimtranaction.amount
   dimension: dim_amount {
+    view_label: "Claim Transaction"
     label: "Check Amount"
     type: number
-    hidden: no
+    hidden: yes
     sql: ${TABLE}.amount ;;
     value_format_name: usd
   }
@@ -120,7 +124,7 @@ view: v_claim_detail_transaction {
 
   dimension: status {
     #TT 305193 Made this data point visible and updated the label.
-    label: "Transaction Status"
+    label: "Status"
     #hidden: yes
     type: string
     sql: ${TABLE}.status ;;
@@ -239,9 +243,10 @@ view: v_claim_detail_transaction {
   }
 
   dimension: bulk_check {
-    label: "Is Bulk Check"
-    type: string
-    sql: case when ${TABLE}.bulk_check=1 then 'Yes' else 'No' end ;;
+    view_label: "Claim Transaction"
+    label: "Bulk Check"
+    type: yesno
+    sql: ${TABLE}.bulk_check = 1 ;;
   }
 
   dimension: checkstatus_id {
@@ -256,7 +261,7 @@ view: v_claim_detail_transaction {
   # }
 
   dimension: pay_to_the_order_of {
-    #hidden: yes
+    view_label: "Claim Transaction"
     label: "Pay To"
     type: string
     sql: ${TABLE}.pay_to_the_order_of ;;
@@ -285,14 +290,17 @@ view: v_claim_detail_transaction {
   }
 
   dimension: check_number {
+    view_label: "Claim Transaction"
     label: "Check Number"
     type: number
     #sql: case when ${TABLE}.check_number between ;;
-    sql: (case when (${TABLE}.check_number between 1 and 99999999) then ${TABLE}.check_number else null end) ;;
+    #sql: (case when (${TABLE}.check_number between 1 and 99999999) then ${TABLE}.check_number else null end) ;;
+    sql: ${TABLE}.check_number ;;
     value_format_name: id
   }
 
   dimension_group: check_date {
+    view_label: "Claim Transaction"
     label: "Check"
     type: time
     timeframes: [date]
@@ -324,17 +332,17 @@ view: v_claim_detail_transaction {
   #   sql: ${TABLE}.claimstoppmtstatus_id ;;
   # }
 
-  measure: count {
-    type: count
-    #TT 305193 Added eff_date to the list below
-    drill_fields: [check_number, check_date_date, dim_amount, claim_control.claim_number, type_dscr, remark, pay_to_the_order_of, reissued, status, eff_date, pay_type, bulk_check]
-  }
-
   measure: amount {
-    label: "Check Amount"
-    type: number
-    hidden: yes
+    label: "Amount"
+    type: sum
     sql: ${dim_amount} ;;
     value_format_name: usd
   }
+
+  measure: count {
+    type: count
+    #TT 305193 Added eff_date to the list below
+    drill_fields: [check_number, check_date_date, amount, claim_control.claim_number, remark, pay_to_the_order_of, reissued, status, eff_date, pay_type, bulk_check]
+  }
+
 }

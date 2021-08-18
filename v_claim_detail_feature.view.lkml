@@ -283,13 +283,13 @@ view: v_claim_detail_feature {
   #   sql: ${TABLE}.subcoveragecode_id ;;
   # }
 
-  dimension: coveragecode {
-    view_label: "Checks & Transactions"
-    type: string
-    hidden: no
-    label: "Coverage Code"
-    sql: case when ${TABLE}.coveragecode='UM' then 'UMBI' else ${TABLE}.coveragecode end ;;
-  }
+  #SH 2021-08-17 Remove
+  # dimension: coveragecode {
+  #   view_label: "Claim Transaction"
+  #   type: string
+  #   label: "Coverage Code"
+  #   sql: case when ${TABLE}.coveragecode='UM' then 'UMBI' else ${TABLE}.coveragecode end ;;
+  # }
 
   dimension: claimexposure_id {
     type: number
@@ -465,7 +465,7 @@ view: v_claim_detail_feature {
   set: feature_stats {
     fields: [
       exposure_dscr,
-      coveragecode,
+      #coveragecode,
       coverage_dscr,
       indemnity_reserve,
       indemnity_paid,
@@ -489,7 +489,7 @@ view: v_claim_detail_feature {
       status_dscr,
       #exposure_dscr,
       #subexposure_dscr,
-      coveragecode,
+      #coveragecode,
       coverage_dscr,
       indemnity_paid,
       expense_paid,
