@@ -21,9 +21,9 @@ view: dt_weather_related {
   }
 
   dimension: weather_related {
-    label: "Is Weather Related"
-    type: string
-    sql: ${TABLE}.weather_related ;;
+    label: "Weather Related"
+    type: yesno
+    sql: ${TABLE}.weather_related = 'Yes';;
   }
 
 #   set: detail {

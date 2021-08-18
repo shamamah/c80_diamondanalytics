@@ -9,8 +9,7 @@ view: claim_fault {
   }
 
   dimension: dscr {
-    label: "Is At-Fault"
-    view_label: "Claim"
+    label: "At-Fault Type"
     type: string
     sql: ${TABLE}.dscr ;;
   }

@@ -43,7 +43,7 @@ view: dt_claim_transactions_as_of {
 
   filter: as_of_date {
     type: date
-    hidden: no
+    hidden: yes
     label: "As of Date"
   }
 
@@ -115,6 +115,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  indemnity_reserve {
+    hidden: yes
     label: "Loss Reserve"
     type: sum
     sql: ${dim_indemnity_reserve} ;;
@@ -129,6 +130,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  indemnity_paid {
+    hidden: yes
     label: "Loss Paid"
     type: sum
     sql: ${dim_indemnity_paid} ;;
@@ -138,6 +140,7 @@ view: dt_claim_transactions_as_of {
 
   #2019-11-06 SH added new measure
   measure:  indemnity_incurred {
+    hidden: yes
     label: "Loss Incurred"
     type: sum
     sql: ${dim_indemnity_paid} + ${dim_indemnity_reserve};;
@@ -152,6 +155,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  expense_reserve {
+    hidden: yes
     label: "AO Reserve"
     type: sum
     sql: ${dim_expense_reserve} ;;
@@ -166,6 +170,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  expense_paid {
+    hidden: yes
     label: "AO Paid"
     type: sum
     sql: ${dim_expense_paid} ;;
@@ -180,6 +185,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  expense_recovery {
+    hidden: yes
     #2019-11-06 SH Changed label
     #label: "Rein Expense Recovery"
     label: "AO Recovery"
@@ -196,6 +202,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  alae_reserve {
+    hidden: yes
     label: "DCC Reserve"
     type: sum
     sql: ${dim_alae_reserve} ;;
@@ -210,6 +217,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  alae_paid {
+    hidden: yes
     label: "DCC Paid"
     type: sum
     sql: ${dim_alae_paid} ;;
@@ -219,6 +227,7 @@ view: dt_claim_transactions_as_of {
 
   #SH 2019-11-27 Added this measure to replace a calculation on the HO Loss Report
   measure:  lae_payments {
+    hidden: yes
     label: "LAE Payments"
     type: sum
     sql: ${dim_expense_paid} + ${dim_alae_paid} ;;
@@ -233,6 +242,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  salvage {
+    hidden: yes
     label: "Salvage"
     type: sum
     sql: ${dim_salvage} ;;
@@ -247,6 +257,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  subro {
+    hidden: yes
     label: "Subro"
     type: sum
     sql: ${dim_subro} ;;

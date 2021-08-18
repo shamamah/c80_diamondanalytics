@@ -261,9 +261,9 @@ view: v_claim_detail_claimant {
   }
 
   dimension: is_litigated_represented {
-    type: string
-    label: "Is Litigated/Represented"
-    sql: case when (${is_represented} = 'Yes' OR ${in_litigation} = 'Yes') then 'Yes' else 'No' end ;;
+    label: "Litigated/Represented"
+    type: yesno
+    sql: (${is_represented} = 'Yes' OR ${in_litigation} = 'Yes') ;;
   }
 
   #DATA ELEMENTS COMPLETED------------------------------------------------------------

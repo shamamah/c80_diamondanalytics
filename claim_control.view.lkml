@@ -52,9 +52,9 @@ view: claim_control {
   # }
 
   dimension: claim_type_id {
-    label: "Is Record-Only"
-    type: string
-    sql: CASE WHEN  ${TABLE}.claim_type_id=3 THEN 'Yes' ELSE 'No' END ;;
+    label: "Record-Only"
+    type: yesno
+    sql: ${TABLE}.claim_type_id = 3 ;;
   }
 
   # dimension: claimadministrator_id {
@@ -300,9 +300,9 @@ view: claim_control {
 
   # SH 2020-03-25 Made this data point available per Steve Backman's request via email
   dimension: has_public_adjuster {
-    label: "Has Public Adjuster"
-    type: string
-    sql: case when ${TABLE}.has_public_adjuster = 'true' then 'Yes' else 'No' end ;;
+    label: "Public Adjuster"
+    type: yesno
+    sql: ${TABLE}.has_public_adjuster = 'true' ;;
   }
 
   # dimension: has_related_treatments {
@@ -525,9 +525,9 @@ view: claim_control {
   # }
 
   dimension: police_notified {
-    type: string
-    label: "Is Police Notified"
-    sql: CASE WHEN ${TABLE}.police_notified=1  THEN 'Yes' ELSE 'No' END ;;
+    label: "Police Notified"
+    type: yesno
+    sql: ${TABLE}.police_notified = 1 ;;
   }
 
   dimension: policy_id {

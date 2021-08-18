@@ -10,7 +10,6 @@ view: dt_claim_feature_activity {
             SELECT claimcontrol_id, claimant_num, claimfeature_num, num, added_date, ROW_NUMBER() OVER (PARTITION BY claimcontrol_id, claimant_num, claimfeature_num ORDER BY num) AS RN
             FROM dbo.ClaimFeatureActivity
             WHERE claimactivitycode_id = 1
-              AND {% condition dt_claim_feature_as_of_date.as_of_date %} added_date {% endcondition %}
           ) O
 
         LEFT OUTER JOIN
@@ -134,7 +133,9 @@ view: dt_claim_feature_activity {
     value_format: "0"
   }
 
+  #SH 2021-08-17 Made hidden
   measure: count {
+    hidden: yes
     label: "Count"
     type: count
     #sql: ${claimcontrol_id} and ${num} ;;

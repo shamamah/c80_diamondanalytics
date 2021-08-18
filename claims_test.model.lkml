@@ -174,6 +174,7 @@ explore: claim_control {
   }
 
   join: claim_fault {
+    view_label: "Claim"
     type: left_outer
     relationship: one_to_many
     sql_on: ${claim_fault.claimfault_id} = ${claim_control.claimfault_id} ;;
@@ -217,86 +218,95 @@ explore: claim_control {
       and ${dt_claimant_phone_cellular.claimant_num} = 1 ;;
   }
 
-  join: dt_coverage_financials_bi {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_bi.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_bi.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_bi {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_bi.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_bi.claimant_num};;
+  # }
 
   join: dt_coverage_financials {
     # SH 2019-12-03 Added "(Auto) to the view_label since the group data points apply to Auto only"
-    view_label: "Feature Financials (Auto)"
+    view_label: "Feature Financials"
     type: left_outer
     relationship: one_to_many
     sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials.claimcontrol_id}
       and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials.claimant_num};;
   }
 
-  join: dt_coverage_financials_pd {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pd.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_pd.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_pd {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pd.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_pd.claimant_num};;
+  # }
 
-  join: dt_coverage_financials_med {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_med.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_med.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_med {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_med.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_med.claimant_num};;
+  # }
 
-  join: dt_coverage_financials_umbi {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_umbi.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_umbi.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_umbi {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_umbi.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_umbi.claimant_num};;
+  # }
 
-  join: dt_coverage_financials_umpd {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_umpd.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_umpd.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_umpd {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_umpd.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_umpd.claimant_num};;
+  # }
 
-  join: dt_coverage_financials_pip {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pip.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_pip.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_pip {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_pip.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_pip.claimant_num};;
+  # }
 
-  join: dt_coverage_financials_comp {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_comp.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_comp.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_comp {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_comp.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_comp.claimant_num};;
+  # }
 
-  join: dt_coverage_financials_coll {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_coll.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_coll.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_coll {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_coll.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_coll.claimant_num};;
+  # }
 
-  join: dt_coverage_financials_rr {
-    view_label: "Coverage Financials"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_rr.claimcontrol_id}
-      and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_rr.claimant_num};;
-  }
+  #SH 2021-08-17 Remove - Applies to AUTO only
+  # join: dt_coverage_financials_rr {
+  #   view_label: "Coverage Financials"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_coverage_financials_rr.claimcontrol_id}
+  #     and ${v_claim_detail_claimant.claimant_num} = ${dt_coverage_financials_rr.claimant_num};;
+  # }
 
   join: dt_claim_inside_adjuster {
     view_label: "Claim Personnel"
@@ -355,6 +365,7 @@ explore: claim_control {
   }
 
   join: v_claim_detail_feature {
+    view_label: "Claim Feature"
     type: left_outer
     relationship: one_to_many
     sql_on: ${v_claim_detail_claimant.claimcontrol_id} = ${v_claim_detail_feature.claimcontrol_id}
@@ -362,15 +373,16 @@ explore: claim_control {
               ;;
   }
 
+  #SH 2021-08-17  Remove per David Gerth
   #SH 2021-04-13  TT 315292  Get feature status with As-Of-Date.
-  join: dt_claim_feature_as_of_date {
-    view_label: "Claim Feature"
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${dt_claim_feature_as_of_date.claimcontrol_id}
-        and ${v_claim_detail_feature.claimant_num} = ${dt_claim_feature_as_of_date.claimant_num}
-        and ${v_claim_detail_feature.claimfeature_num} = ${dt_claim_feature_as_of_date.claimfeature_num} ;;
-  }
+  # join: dt_claim_feature_as_of_date {
+  #   view_label: "Claim Feature"
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${v_claim_detail_feature.claimcontrol_id} = ${dt_claim_feature_as_of_date.claimcontrol_id}
+  #       and ${v_claim_detail_feature.claimant_num} = ${dt_claim_feature_as_of_date.claimant_num}
+  #       and ${v_claim_detail_feature.claimfeature_num} = ${dt_claim_feature_as_of_date.claimfeature_num} ;;
+  # }
 
   #SH 2021-04-13  TT 315292  Get feature status with As-Of-Date.
   join: dt_claim_feature_activity {
@@ -507,12 +519,13 @@ explore: claim_control {
               and ${v_claim_detail_transaction.claimtransaction_num} = ${dt_transaction_payee_address.claimtransaction_num} ;;
   }
 
-  join: dt_claim_status_as_of {
-    type: left_outer
-    view_label: "Claim Financials (As of Date)"
-    relationship: one_to_one
-    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_status_as_of.claimcontrol_id} ;;
-  }
+  #SH 2021-08-17 Removed per DG
+  # join: dt_claim_status_as_of {
+  #   type: left_outer
+  #   view_label: "Claim Financials (As of Date)"
+  #   relationship: one_to_one
+  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_status_as_of.claimcontrol_id} ;;
+  # }
 
   join: claim_transaction_category {
     type: left_outer

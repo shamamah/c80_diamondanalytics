@@ -21,8 +21,8 @@ view: dt_is_claim_litigated_represented {
   }
 
   dimension: is_represented_litigated {
-    label: "Is Litigated/Represented"
-    type: string
-    sql: ${TABLE}.Is_Represented_Litigated ;;
+    label: "Litigated/Represented"
+    type: yesno
+    sql: ${TABLE}.Is_Represented_Litigated = 'Yes' ;;
   }
 }

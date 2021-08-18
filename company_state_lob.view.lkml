@@ -31,8 +31,9 @@ view: company_state_lob {
     sql: ${TABLE}.companystatelob_id ;;
   }
 
+  #SH 2021-08-17 Remove - Made hidden
   dimension: lob_id {
-    hidden: no
+    hidden: yes
     label: "LOB ID"
     type: number
     sql: ${TABLE}.lob_id ;;

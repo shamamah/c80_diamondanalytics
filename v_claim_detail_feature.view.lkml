@@ -2,7 +2,7 @@ view: v_claim_detail_feature {
   #Commented Dimensions are not used for SCS
 
   sql_table_name: dbo.vClaimDetail_Feature ;;
-  view_label: "Claimant Coverage"
+  #view_label: "Claimant Coverage"
 
   dimension: compound_primary_key {
     type: string
@@ -26,8 +26,7 @@ view: v_claim_detail_feature {
   }
 
   dimension: claimfeature_num {
-    label: "Claim Feature Number"
-    hidden:  yes
+    label: "Unique Number"
     type: number
     sql: ${TABLE}.claimfeature_num ;;
   }
@@ -186,7 +185,9 @@ view: v_claim_detail_feature {
   #   value_format: "$#,##0.00"
   # }
 
+  #SH 2021-08-17 Made hidden
   dimension: salvage {
+    hidden: yes
     type: number
     sql: ${TABLE}.salvage ;;
     value_format: "$#,##0.00"
@@ -198,7 +199,9 @@ view: v_claim_detail_feature {
   #   value_format: "$#,##0.00"
   # }
 
+  #SH 2021-08-17 Made hidden
   dimension: subro {
+    hidden: yes
     type: number
     sql: ${TABLE}.subro ;;
     value_format: "$#,##0.00"
@@ -271,9 +274,11 @@ view: v_claim_detail_feature {
   #   sql: ${TABLE}.claimdenial_date ;;
   # }
 
+  #SH 2021-08-17 Remove - made hidden
   dimension: coveragecode_id {
     view_label: "Claimant Coverage"
     label: "CoverageCode ID"
+    hidden: yes
     type: number
     sql: ${TABLE}.coveragecode_id ;;
   }
@@ -299,6 +304,7 @@ view: v_claim_detail_feature {
 
   dimension: claimsubexposure_num {
     label: "Claim Subexposure Number"
+    hidden: yes
     type: number
     sql: ${TABLE}.claimsubexposure_num ;;
   }
@@ -350,7 +356,7 @@ view: v_claim_detail_feature {
   measure:  percent_indemnity_paid {
     view_label: "Claim Financials (Current)"
     type: percent_of_total
-    label: "% Loss Paid"
+    label: "Loss % Paid"
     direction: "column"
     sql: ${sum_indemnity_paid} ;;
     value_format_name: decimal_1
@@ -401,6 +407,15 @@ view: v_claim_detail_feature {
     value_format_name: usd
   }
 
+  measure: sum_total_ao_incurred{
+    view_label: "Claim Financials (Current)"
+    type: number
+    #label: "Total Indemnity Incurred"
+    label: "AO Incurred"
+    sql: ${sum_expense_paid} + ${sum_expense_reserve};;
+    value_format_name: usd
+  }
+
   measure:  sum_expense_recovery {
     view_label: "Claim Financials (Current)"
     type:  sum
@@ -428,6 +443,15 @@ view: v_claim_detail_feature {
     value_format_name: usd
   }
 
+  measure: sum_total_dcc_incurred{
+    view_label: "Claim Financials (Current)"
+    type: number
+    #label: "Total Indemnity Incurred"
+    label: "DCC Incurred"
+    sql: ${sum_alae_paid} + ${sum_alae_reserve};;
+    value_format_name: usd
+  }
+
   measure: sum_initial_indemnity_reserve {
     view_label: "Claim Financials (Current)"
     type: sum
@@ -449,7 +473,7 @@ view: v_claim_detail_feature {
   measure: sum_salvage {
     view_label: "Claim Financials (Current)"
     type: sum
-    label: "Salvage"
+    label: "Salvage Recovered"
     sql: ${salvage} ;;
     value_format_name: usd
   }
@@ -457,7 +481,7 @@ view: v_claim_detail_feature {
   measure: sum_subro {
     view_label: "Claim Financials (Current)"
     type: sum
-    label: "Subro"
+    label: "Subro Recovered"
     sql: ${subro} ;;
     value_format_name: usd
   }

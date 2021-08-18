@@ -28,7 +28,7 @@ view: claim_catastrophe {
   }
 
   dimension_group: enddate {
-    label: "End Date"
+    label: "End"
     type: time
     timeframes: [date]
     sql: ${TABLE}.enddate ;;
@@ -49,7 +49,7 @@ view: claim_catastrophe {
 #   }
 
   dimension_group: startdate {
-    label: "Begin Date"
+    label: "Begin"
     type: time
     timeframes: [date]
     sql: ${TABLE}.startdate ;;

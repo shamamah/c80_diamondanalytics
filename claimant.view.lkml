@@ -167,9 +167,9 @@ view: claimant {
   }
 
   dimension: contacted {
-    label: "Is Contacted"
-    type: string
-    sql: Case When ${TABLE}.contacted=1 Then 'Yes' Else 'No' End ;;
+    label: "Contacted"
+    type: yesno
+    sql: ${TABLE}.contacted = 1 ;;
   }
 
   dimension_group: contacted_date {

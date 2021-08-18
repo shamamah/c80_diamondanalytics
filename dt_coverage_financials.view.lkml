@@ -34,8 +34,8 @@ view: dt_coverage_financials {
         INNER JOIN CoverageCode COVCD WITH(NOLOCK)
           ON covcd.coveragecode_id = ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id)
 
-
-        WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) IN (1,5,3,6,4,80038,14,8,9)
+        --SH 2021-08-17 Commented below WHERE clause to apply for all LOBs, not just Auto
+        --WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) IN (1,5,3,6,4,80038,14,8,9)
 
         GROUP BY CF.claimcontrol_id, CF.claimant_num, CF.claimfeature_num, COVCD.coveragecode
           ;;
@@ -187,7 +187,7 @@ view: dt_coverage_financials {
 
   dimension: dim_salvage {
     hidden: yes
-    type: string
+    type: number
     sql: ${TABLE}.salvage ;;
   }
 
@@ -224,7 +224,7 @@ view: dt_coverage_financials {
 
   dimension: dim_subro {
     hidden: yes
-    type: string
+    type: number
     sql: ${TABLE}.subro ;;
   }
 
