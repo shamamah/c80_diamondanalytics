@@ -365,11 +365,18 @@ view: claim_transaction {
   #   sql: ${TABLE}.rejectedby_users_id ;;
   # }
 
-  # dimension: related_claimtransaction_num {
-  #   hidden: yes
-  #   type: number
-  #   sql: ${TABLE}.related_claimtransaction_num ;;
-  # }
+  #SH 2021-08-24 Enable "related_claimtransaction_num" and add dim "include_offsets"
+  dimension: related_claimtransaction_num {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.related_claimtransaction_num ;;
+  }
+
+  dimension: include_offsets {
+    label: "Include Offsets"
+    type: yesno
+    sql: ${related_claimtransaction_num} <> 0 ;;
+  }
 
   # dimension: remark {
   #   hidden: yes

@@ -161,6 +161,8 @@ view: claim_transaction_type {
   }
 
   dimension: dscr2 {
+    #SH 2021-08-24 Added label and made visible in model
+    label: "Group"
     type: string
     sql: ${TABLE}.dscr2 ;;
   }

@@ -435,7 +435,8 @@ explore: claim_control {
 
   #SH 2021-08-17 Added
   join: claim_transaction_type {
-    fields: [claim_transaction_type.dscr]
+    #SH 2021-08-24 Added dscr2
+    fields: [claim_transaction_type.dscr,claim_transaction_type.dscr2]
     view_label: "Claim Transaction"
     type: left_outer
     relationship: one_to_many
