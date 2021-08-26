@@ -8,6 +8,8 @@ view: dt_policy_agency {
               left join dbo.[Name] n on n.name_id = anl.name_id
               left join dbo.AgencyAddressLink aal on aal.agency_id = pim.agency_id
               left join dbo.[Address] a on a.address_id = aal.address_id
+          --SH 2021-08-25 add WHERE clause to exclude multiple address rows, and only pick agency address option
+          where a.nameaddresssource_id = 8   --8 is for agency address
              ;;
   }
 
