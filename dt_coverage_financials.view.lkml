@@ -4,7 +4,8 @@ view: dt_coverage_financials {
 
       SELECT CF.claimcontrol_id
               ,CF.claimant_num
-              ,COVCD.coveragecode
+              ,CF.claimfeature_num
+              --,COVCD.coveragecode
               ,SUM(V.indemnity_reserve) as 'loss_reserves'
               ,SUM(V.indemnity_paid) as 'loss_paid'
               ,SUM(V.salvage) as 'salvage'
@@ -37,15 +38,16 @@ view: dt_coverage_financials {
         --SH 2021-08-17 Commented below WHERE clause to apply for all LOBs, not just Auto
         --WHERE ISNULL(SCS.coveragecode_id, CCOV.coveragecode_id) IN (1,5,3,6,4,80038,14,8,9)
 
-        GROUP BY CF.claimcontrol_id, CF.claimant_num, CF.claimfeature_num, COVCD.coveragecode
+        GROUP BY CF.claimcontrol_id, CF.claimant_num, CF.claimfeature_num
+          --, COVCD.coveragecode
           ;;
   }
 
   dimension: compound_primary_key {
-    type: string
     primary_key: yes
     hidden: yes
-    sql: CONCAT(${claimcontrol_id},${claimant_num},${coveragecode}) ;;
+    type: string
+    sql: CONCAT(${claimcontrol_id},' ',${claimant_num},' ',${claimfeature_num}) ;;
   }
 
   dimension: claimcontrol_id {
@@ -60,11 +62,17 @@ view: dt_coverage_financials {
     sql: ${TABLE}.claimant_num ;;
   }
 
-  dimension: coveragecode {
-    label: "Feature Description"
-    type: string
-    sql: ${TABLE}.coveragecode ;;
+  dimension: claimfeature_num {
+    hidden: yes
+    type: number
+    sql: ${TABLE}.claimfeature_num ;;
   }
+
+  # dimension: coveragecode {
+  #   label: "Feature Description"
+  #   type: string
+  #   sql: ${TABLE}.coveragecode ;;
+  # }
 
 
 
