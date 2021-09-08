@@ -13,10 +13,11 @@ explore: claim_control {
   #persist_for: "4 hours"
   view_label: "Claim"
 
-  access_filter: {
-    field:company_state_lob.commercial_name1
-    user_attribute:company_name
-  }
+  #THIS CODE IS FOR C72-TRANSCYND AND SIMILAR IMPLEMENTATIONS
+  # access_filter: {
+  #   field:company_state_lob.commercial_name1
+  #   user_attribute:company_name
+  # }
 
   #Exclude records without claim number
   sql_always_where: ${claim_number} > ''
@@ -492,7 +493,8 @@ explore: claim_control {
   join: dt_claim_transactions_as_of {
     type: left_outer
     view_label: "Claim Financials (As of Date)"
-    relationship: many_to_many
+    #SH 2021-09-08 Change relationship from many_to_many to many_to_one
+    relationship: many_to_one
     sql_on: ${v_claim_detail_transaction.claimcontrol_id} = ${dt_claim_transactions_as_of.claimcontrol_id}
               and ${v_claim_detail_transaction.claimant_num} = ${dt_claim_transactions_as_of.claimant_num}
               and ${v_claim_detail_transaction.claimfeature_num} = ${dt_claim_transactions_as_of.claimfeature_num}
@@ -521,12 +523,13 @@ explore: claim_control {
   }
 
   #SH 2021-08-17 Removed per DG
-  # join: dt_claim_status_as_of {
-  #   type: left_outer
-  #   view_label: "Claim Financials (As of Date)"
-  #   relationship: one_to_one
-  #   sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_status_as_of.claimcontrol_id} ;;
-  # }
+  #SH 2021-09-08 Re-enabled per request from Jeff Hart at SageSure
+  join: dt_claim_status_as_of {
+    type: left_outer
+    view_label: "Claim Financials (As of Date)"
+    relationship: one_to_one
+    sql_on: ${claim_control.claimcontrol_id} = ${dt_claim_status_as_of.claimcontrol_id} ;;
+  }
 
   join: claim_transaction_category {
     type: left_outer

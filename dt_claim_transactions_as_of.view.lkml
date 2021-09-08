@@ -1,8 +1,9 @@
 view: dt_claim_transactions_as_of {
   derived_table: {
     sql:  SELECT cc.claimcontrol_id
-          ,cc.policy_id
-          ,cc.policyimage_num
+          --SH 2021-09-08  Removed policy_id and policyimage_num
+          --,cc.policy_id
+          --,cc.policyimage_num
           ,V.claimant_num
           ,V.claimfeature_num
           ,V.claimtransaction_num
@@ -32,7 +33,7 @@ view: dt_claim_transactions_as_of {
                           AND V.claimant_num = CT.claimant_num
                           AND V.claimfeature_num = CT.claimfeature_num
                           AND V.claimtransaction_num = CT.claimtransaction_num
-                                        AND  V.claimtransactionstatus_id IN (1, 4, 7)
+                          AND  V.claimtransactionstatus_id IN (1, 4, 7)  --1=Active, 4=Voided, 7=Reinstated
 
              LEFT OUTER JOIN dbo.ClaimTransactionType CTT (NOLOCK)
                    ON CT.claimtransactiontype_id = CTT.claimtransactiontype_id
@@ -43,7 +44,7 @@ view: dt_claim_transactions_as_of {
 
   filter: as_of_date {
     type: date
-    hidden: yes
+    hidden: no
     label: "As of Date"
   }
 
@@ -51,20 +52,24 @@ view: dt_claim_transactions_as_of {
     type: string
     primary_key: yes
     hidden: yes
-    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num},${claimtransaction_num},${policy_id},${policyimage_num}) ;;
+    #SH 2021-09-08  Removed policy_id and policyimage_num
+    #sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num},${claimtransaction_num},${policy_id},${policyimage_num}) ;;
+    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num},${claimtransaction_num}) ;;
   }
 
-  dimension: policy_id {
-    hidden: yes
-    type: number
-    sql: ${TABLE}.policy_id ;;
-  }
+  #SH 2021-09-08  Removed policy_id and policyimage_num
+  # dimension: policy_id {
+  #   hidden: yes
+  #   type: number
+  #   sql: ${TABLE}.policy_id ;;
+  # }
 
-  dimension: policyimage_num {
-    hidden: yes
-    type: number
-    sql: ${TABLE}.policyimage_num ;;
-  }
+  #SH 2021-09-08  Removed policy_id and policyimage_num
+  # dimension: policyimage_num {
+  #   hidden: yes
+  #   type: number
+  #   sql: ${TABLE}.policyimage_num ;;
+  # }
 
   dimension: claimcontrol_id {
     hidden: yes
@@ -115,7 +120,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  indemnity_reserve {
-    hidden: yes
+    #hidden: yes
     label: "Loss Reserve"
     type: sum
     sql: ${dim_indemnity_reserve} ;;
@@ -130,7 +135,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  indemnity_paid {
-    hidden: yes
+    #hidden: yes
     label: "Loss Paid"
     type: sum
     sql: ${dim_indemnity_paid} ;;
@@ -140,7 +145,7 @@ view: dt_claim_transactions_as_of {
 
   #2019-11-06 SH added new measure
   measure:  indemnity_incurred {
-    hidden: yes
+    #hidden: yes
     label: "Loss Incurred"
     type: sum
     sql: ${dim_indemnity_paid} + ${dim_indemnity_reserve};;
@@ -155,7 +160,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  expense_reserve {
-    hidden: yes
+    #hidden: yes
     label: "AO Reserve"
     type: sum
     sql: ${dim_expense_reserve} ;;
@@ -170,7 +175,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  expense_paid {
-    hidden: yes
+    #hidden: yes
     label: "AO Paid"
     type: sum
     sql: ${dim_expense_paid} ;;
@@ -185,7 +190,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  expense_recovery {
-    hidden: yes
+    #hidden: yes
     #2019-11-06 SH Changed label
     #label: "Rein Expense Recovery"
     label: "AO Recovery"
@@ -202,7 +207,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  alae_reserve {
-    hidden: yes
+    #hidden: yes
     label: "DCC Reserve"
     type: sum
     sql: ${dim_alae_reserve} ;;
@@ -217,7 +222,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  alae_paid {
-    hidden: yes
+    #hidden: yes
     label: "DCC Paid"
     type: sum
     sql: ${dim_alae_paid} ;;
@@ -242,7 +247,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  salvage {
-    hidden: yes
+    #hidden: yes
     label: "Salvage"
     type: sum
     sql: ${dim_salvage} ;;
@@ -257,7 +262,7 @@ view: dt_claim_transactions_as_of {
   }
 
   measure:  subro {
-    hidden: yes
+    #hidden: yes
     label: "Subro"
     type: sum
     sql: ${dim_subro} ;;

@@ -17,11 +17,11 @@ view: dt_claim_status_as_of {
       ;;
   }
 
-  # filter: as_of_date {
-  #   type: date
-  #   hidden: yes
-  #   label: "As of Date"
-  # }
+  filter: as_of_date {
+    type: date
+    hidden: yes
+    label: "As of Date"
+  }
 
   dimension: claimcontrol_id {
     primary_key: yes
@@ -41,5 +41,4 @@ view: dt_claim_status_as_of {
     label: "Status"
     sql: ${TABLE}.claim_status ;;
   }
-
 }
