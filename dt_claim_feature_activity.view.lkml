@@ -139,42 +139,56 @@ view: dt_claim_feature_activity {
     label: "Count"
     type: count
     #sql: ${claimcontrol_id} and ${num} ;;
-    drill_fields: [detail*]
   }
 
   measure: count_with_indemnity_paid {
     label: "Count with Paid Loss"
-    type: count
-    drill_fields: [claim_stat*]
+    type: count_distinct
+    #drill_fields: [claim_stat*]
+    drill_fields: [detail*]
+    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num}) ;;
     filters: {
       field: v_claim_detail_feature.indemnity_paid
       value: ">0"
+    }
+    #SH 2021-09-13 Added this filter
+    filters: {
+      field: v_claim_detail_feature.claimfeature_num
+      value: "NOT NULL"
     }
   }
 
   #SH 2020-04-20 Add a new data point to help with MCAS 20 counts
   measure: count_without_indemnity_paid {
     label: "Count without Paid Loss"
-    type: count
-    drill_fields: [claim_stat*]
+    type: count_distinct
+    #drill_fields: [claim_stat*]
+    drill_fields: [detail*]
+    sql: CONCAT(${claimcontrol_id},${claimant_num},${claimfeature_num}) ;;
     filters: {
       field: v_claim_detail_feature.indemnity_paid
       value: "=0"
+    }
+    #SH 2021-09-13 Added this filter
+    filters: {
+      field: v_claim_detail_feature.claimfeature_num
+      value: "NOT NULL"
     }
   }
 
   set: detail {
     fields: [
       claim_control.claim_number,
-      claimant_num,
+      claimant.claimant_num,
       claimfeature_num,
-      num,
-      open_date_date,
-      close_date_date,
-      first_open_date_date,
-      latest_close_date_date,
-      days_open,
-      dt_date_latest_indemnity_payment.max_check_date_date,
+      #SH 2021-09-13 Removed the commented columns from the drill-through, was causing issues
+      #num,
+      #open_date_date,
+      #close_date_date,
+      #first_open_date_date,
+      #latest_close_date_date,
+      #days_open,
+      #dt_date_latest_indemnity_payment.max_check_date_date,
       v_claim_detail_feature.sum_indemnity_paid,
       v_claim_detail_feature.sum_indemnity_reserve,
       v_claim_detail_feature.sum_expense_paid
@@ -184,8 +198,8 @@ view: dt_claim_feature_activity {
   set: claim_stat {
     fields: [
       claim_control.claim_number,
-      claimant_num,
-      claimfeature_num,
+      claimant.claimant_num,
+      v_claim_detail_feature.claimfeature_num,
       num,
       open_date_date,
       close_date_date,

@@ -327,7 +327,13 @@ view: v_claim_detail_feature {
   measure: count {
     type: count
     label: "Count"
-    drill_fields: [feature_stats*]
+    #SH 2021-09-13 Changed drill_fields and added filter
+    #drill_fields: [feature_stats*]
+    drill_fields: [detail*]
+    filters: {
+      field: v_claim_detail_feature.claimfeature_num
+      value: "NOT NULL"
+    }
   }
 
   measure:  sum_indemnity_paid {
@@ -502,7 +508,7 @@ view: v_claim_detail_feature {
     fields: [
       claim_control.claim_number,
       claim_control.dscr,
-      #claimant_num,
+      claimant.claimant_num,
       #claimfeature_num,
       #claimcoverage_num,
       claim_loss_type.dscr,
@@ -520,4 +526,21 @@ view: v_claim_detail_feature {
       alae_paid
     ]
   }
+
+  #SH 2021-09-13 Added this drill_filter
+  set: detail {
+    fields: [
+      claim_control.claim_number,
+      claimant.claimant_num,
+      claimfeature_num,
+      claim_control.open_date_date,
+      claim_control.close_date_date,
+      dt_date_latest_indemnity_payment.max_check_date_date,
+      v_claim_detail_feature.sum_indemnity_paid,
+      v_claim_detail_feature.sum_indemnity_reserve,
+      v_claim_detail_feature.sum_expense_paid
+    ]
+  }
+
+
 }
