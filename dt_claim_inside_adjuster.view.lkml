@@ -26,11 +26,14 @@ view: dt_claim_inside_adjuster {
         left join dbo.vUsers (NOLOCK) u on u.users_id = cp.users_id
         --SH 2021-06-10  TT 318436 - Join to cca, uel, e, epl, and p to get the requested data
         left join ClaimControlActivity cca on cca.claimcontrol_id = ccp.claimcontrol_id
-          and cca.claimactivitycode_id = 5
+          --and cca.claimactivitycode_id = 5
           and cca.num = (
                     select max(num)
                     from dbo.claimcontrolactivity cca1
                     where cca1.claimcontrol_id = cca.claimcontrol_id
+                      --SH 2021-10-05 - TT 323410 - Correct join to retrieve Examiner Assigned Date
+                      and cca1.claimactivitycode_id = 5
+                      and cca1.claimpersonneltype_id = 3
                   )
         left join dbo.UserEmployeeLink uel (NOLOCK) on UEL.users_id = u.users_id
         left join dbo.Employee e (NOLOCK) on e.employee_id = uel.employee_id
